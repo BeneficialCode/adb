@@ -1,0 +1,28 @@
+LIBRARY
+
+EXPORTS
+	AdbEnumInterfaces
+	AdbNextInterface
+	AdbResetInterfaceEnum
+	AdbCreateInterfaceByName
+	AdbCreateInterface
+	AdbGetInterfaceName
+	AdbGetSerialNumber
+	AdbGetUsbDeviceDescriptor
+	AdbGetUsbConfigurationDescriptor
+	AdbGetUsbInterfaceDescriptor
+	AdbGetEndpointInformation
+	AdbGetDefaultBulkReadEndpointInformation
+	AdbGetDefaultBulkWriteEndpointInformation
+	AdbOpenEndpoint
+	AdbOpenDefaultBulkReadEndpoint
+	AdbOpenDefaultBulkWriteEndpoint
+	AdbGetEndpointInterface
+	AdbQueryInformationEndpoint
+	AdbReadEndpointAsync
+	AdbWriteEndpointAsync
+	AdbReadEndpointSync
+	AdbWriteEndpointSync
+	AdbGetOvelappedIoResult
+	AdbHasOvelappedIoComplated
+	AdbCloseHandle
