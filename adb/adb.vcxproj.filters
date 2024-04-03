@@ -13,10 +13,315 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="android-base">
+      <UniqueIdentifier>{fb31283d-78eb-4482-87e5-6e86260f0db6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sysdeps">
+      <UniqueIdentifier>{0b61bafd-e075-43e9-a914-549bd878b392}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="fdevent">
+      <UniqueIdentifier>{965f50b6-bc0f-42c1-9305-be4dac3f0c0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cutils">
+      <UniqueIdentifier>{e7ae46de-78b4-49d8-b108-50c10cdad7c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dirent">
+      <UniqueIdentifier>{57945104-f8bd-4f57-8a26-5cbff4161e27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="diagnose_usb">
+      <UniqueIdentifier>{c7ad2fc6-c4b8-46d0-97fd-5888caf43b43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="crypto">
+      <UniqueIdentifier>{365d1524-ca57-4ab1-88f4-ab0ccdfa79cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="crypto_utils">
+      <UniqueIdentifier>{627527bd-a499-4e2a-a499-27a496d8712f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="client">
+      <UniqueIdentifier>{6d3a4f06-e189-4347-b848-8fc5e2e97b11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tls">
+      <UniqueIdentifier>{c9e32ceb-07df-4d5a-8604-bc0b1cbf227c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="discovery">
+      <UniqueIdentifier>{d7ece50a-5a92-42a6-9158-87ceb31cc131}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="platform">
+      <UniqueIdentifier>{9e3acf8f-2dea-4619-9ff0-3569c254ec6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="platform\base">
+      <UniqueIdentifier>{9bfb6646-99e7-465e-ae06-46e08ca0a444}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="discovery\public">
+      <UniqueIdentifier>{b45bbeda-715c-481e-b9ce-cd5ae75323a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="platform\api">
+      <UniqueIdentifier>{3eec9094-0e24-449a-986d-00ad6352bd60}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="adb.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="errors_windows.cpp">
+      <Filter>android-base</Filter>
+    </ClCompile>
+    <ClCompile Include="stringprintf.cpp">
+      <Filter>android-base</Filter>
+    </ClCompile>
+    <ClCompile Include="strings.cpp">
+      <Filter>android-base</Filter>
+    </ClCompile>
+    <ClCompile Include="utf8.cpp">
+      <Filter>android-base</Filter>
+    </ClCompile>
+    <ClCompile Include="logging.cpp">
+      <Filter>android-base</Filter>
+    </ClCompile>
+    <ClCompile Include="adb_trace.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="sysdeps_win32.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="file.cpp">
+      <Filter>android-base</Filter>
+    </ClCompile>
+    <ClCompile Include="diagnose_usb.cpp">
+      <Filter>diagnose_usb</Filter>
+    </ClCompile>
+    <ClCompile Include="auth.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="key_type.pb.cc">
+      <Filter>crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="key.cpp">
+      <Filter>crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="adb_io.cpp">
+      <Filter>头文件</Filter>
+    </ClCompile>
+    <ClCompile Include="adb_listeners.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="socket_spec.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="adb_mdns.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="adb_utils.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="stat.cpp">
+      <Filter>sysdeps</Filter>
+    </ClCompile>
+    <ClCompile Include="transport.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="x509_generator.cpp">
+      <Filter>crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="android_pubkey.cpp">
+      <Filter>crypto_utils</Filter>
+    </ClCompile>
+    <ClCompile Include="parsenetaddress.cpp">
+      <Filter>android-base</Filter>
+    </ClCompile>
+    <ClCompile Include="transport_local.cpp">
+      <Filter>client</Filter>
+    </ClCompile>
+    <ClCompile Include="transport_usb.cpp">
+      <Filter>client</Filter>
+    </ClCompile>
+    <ClCompile Include="transport_mdns.cpp">
+      <Filter>client</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="commandline.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="errors.h">
+      <Filter>android-base</Filter>
+    </ClInclude>
+    <ClInclude Include="stringprintf.h">
+      <Filter>android-base</Filter>
+    </ClInclude>
+    <ClInclude Include="strings.h">
+      <Filter>android-base</Filter>
+    </ClInclude>
+    <ClInclude Include="utf8.h">
+      <Filter>android-base</Filter>
+    </ClInclude>
+    <ClInclude Include="logging.h">
+      <Filter>android-base</Filter>
+    </ClInclude>
+    <ClInclude Include="macros.h">
+      <Filter>android-base</Filter>
+    </ClInclude>
+    <ClInclude Include="parseint.h">
+      <Filter>android-base</Filter>
+    </ClInclude>
+    <ClInclude Include="file.h">
+      <Filter>android-base</Filter>
+    </ClInclude>
+    <ClInclude Include="unique_fd.h">
+      <Filter>android-base</Filter>
+    </ClInclude>
+    <ClInclude Include="parsenetaddress.h">
+      <Filter>android-base</Filter>
+    </ClInclude>
+    <ClInclude Include="test_utils.h">
+      <Filter>android-base</Filter>
+    </ClInclude>
+    <ClInclude Include="thread_annotations.h">
+      <Filter>android-base</Filter>
+    </ClInclude>
+    <ClInclude Include="properties.h">
+      <Filter>android-base</Filter>
+    </ClInclude>
+    <ClInclude Include="off64_t.h">
+      <Filter>android-base</Filter>
+    </ClInclude>
+    <ClInclude Include="no_destructor.h">
+      <Filter>android-base</Filter>
+    </ClInclude>
+    <ClInclude Include="cmsg.h">
+      <Filter>android-base</Filter>
+    </ClInclude>
+    <ClInclude Include="collections.h">
+      <Filter>android-base</Filter>
+    </ClInclude>
+    <ClInclude Include="endian.h">
+      <Filter>android-base</Filter>
+    </ClInclude>
+    <ClInclude Include="mapped_file.h">
+      <Filter>android-base</Filter>
+    </ClInclude>
+    <ClInclude Include="chrono_utils.h">
+      <Filter>android-base</Filter>
+    </ClInclude>
+    <ClInclude Include="adb_trace.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="sysdeps.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="adb_unique_fd.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="network.h">
+      <Filter>sysdeps</Filter>
+    </ClInclude>
+    <ClInclude Include="stat.h">
+      <Filter>sysdeps</Filter>
+    </ClInclude>
+    <ClInclude Include="adb.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="fdevent.h">
+      <Filter>fdevent</Filter>
+    </ClInclude>
+    <ClInclude Include="socket.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="types.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="uio.h">
+      <Filter>sysdeps</Filter>
+    </ClInclude>
+    <ClInclude Include="sockets.h">
+      <Filter>cutils</Filter>
+    </ClInclude>
+    <ClInclude Include="adb_utils.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="dirent-win32.h">
+      <Filter>dirent</Filter>
+    </ClInclude>
+    <ClInclude Include="diagnose_usb.h">
+      <Filter>diagnose_usb</Filter>
+    </ClInclude>
+    <ClInclude Include="adb_auth.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="rsa_2048_key.h">
+      <Filter>crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="key.h">
+      <Filter>crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="key_type.pb.h">
+      <Filter>crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="adb_io.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="adb_listeners.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="socket_spec.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="adb_mdns.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="chrono.h">
+      <Filter>sysdeps</Filter>
+    </ClInclude>
+    <ClInclude Include="transport.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="x509_generator.h">
+      <Filter>crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="android_pubkey.h">
+      <Filter>crypto_utils</Filter>
+    </ClInclude>
+    <ClInclude Include="usb.h">
+      <Filter>client</Filter>
+    </ClInclude>
+    <ClInclude Include="tls_connection.h">
+      <Filter>tls</Filter>
+    </ClInclude>
+    <ClInclude Include="config.h">
+      <Filter>discovery</Filter>
+    </ClInclude>
+    <ClInclude Include="interface_info.h">
+      <Filter>platform\base</Filter>
+    </ClInclude>
+    <ClInclude Include="ip_address.h">
+      <Filter>platform\base</Filter>
+    </ClInclude>
+    <ClInclude Include="error.h">
+      <Filter>platform\base</Filter>
+    </ClInclude>
+    <ClInclude Include="reporting_client.h">
+      <Filter>discovery</Filter>
+    </ClInclude>
+    <ClInclude Include="dns_sd_service.h">
+      <Filter>discovery</Filter>
+    </ClInclude>
+    <ClInclude Include="dns_sd_service_factory.h">
+      <Filter>discovery\public</Filter>
+    </ClInclude>
+    <ClInclude Include="serial_delete_ptr.h">
+      <Filter>platform\api</Filter>
+    </ClInclude>
+    <ClInclude Include="task_runner.h">
+      <Filter>platform\api</Filter>
+    </ClInclude>
+    <ClInclude Include="time.h">
+      <Filter>platform\api</Filter>
+    </ClInclude>
+    <ClInclude Include="trivial_clock_traits.h">
+      <Filter>platform\base</Filter>
+    </ClInclude>
+    <ClInclude Include="network_interface.h">
+      <Filter>platform\api</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

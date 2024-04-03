@@ -70,12 +70,23 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <VcpkgUseStatic>false</VcpkgUseStatic>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <VcpkgUseStatic>false</VcpkgUseStatic>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;WIN32_LEAN_AND_MEAN;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard_C>Default</LanguageStandard_C>
+      <UndefinePreprocessorDefinitions>
+      </UndefinePreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -88,8 +99,13 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;WIN32_LEAN_AND_MEAN;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard_C>Default</LanguageStandard_C>
+      <UndefinePreprocessorDefinitions>
+      </UndefinePreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -128,6 +144,94 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="adb.cpp" />
+    <ClCompile Include="adb_io.cpp" />
+    <ClCompile Include="adb_listeners.cpp" />
+    <ClCompile Include="adb_mdns.cpp" />
+    <ClCompile Include="adb_trace.cpp" />
+    <ClCompile Include="adb_utils.cpp" />
+    <ClCompile Include="android_pubkey.cpp" />
+    <ClCompile Include="auth.cpp" />
+    <ClCompile Include="diagnose_usb.cpp" />
+    <ClCompile Include="errors_windows.cpp" />
+    <ClCompile Include="file.cpp" />
+    <ClCompile Include="key.cpp" />
+    <ClCompile Include="key_type.pb.cc" />
+    <ClCompile Include="logging.cpp" />
+    <ClCompile Include="parsenetaddress.cpp" />
+    <ClCompile Include="socket_spec.cpp" />
+    <ClCompile Include="stat.cpp" />
+    <ClCompile Include="stringprintf.cpp" />
+    <ClCompile Include="strings.cpp" />
+    <ClCompile Include="sysdeps_win32.cpp" />
+    <ClCompile Include="transport.cpp" />
+    <ClCompile Include="transport_local.cpp" />
+    <ClCompile Include="transport_mdns.cpp" />
+    <ClCompile Include="transport_usb.cpp" />
+    <ClCompile Include="utf8.cpp" />
+    <ClCompile Include="x509_generator.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="adb.h" />
+    <ClInclude Include="adb_auth.h" />
+    <ClInclude Include="adb_io.h" />
+    <ClInclude Include="adb_listeners.h" />
+    <ClInclude Include="adb_mdns.h" />
+    <ClInclude Include="adb_trace.h" />
+    <ClInclude Include="adb_unique_fd.h" />
+    <ClInclude Include="adb_utils.h" />
+    <ClInclude Include="android_pubkey.h" />
+    <ClInclude Include="chrono.h" />
+    <ClInclude Include="chrono_utils.h" />
+    <ClInclude Include="cmsg.h" />
+    <ClInclude Include="collections.h" />
+    <ClInclude Include="commandline.h" />
+    <ClInclude Include="config.h" />
+    <ClInclude Include="diagnose_usb.h" />
+    <ClInclude Include="dirent-win32.h" />
+    <ClInclude Include="dns_sd_service.h" />
+    <ClInclude Include="dns_sd_service_factory.h" />
+    <ClInclude Include="endian.h" />
+    <ClInclude Include="error.h" />
+    <ClInclude Include="errors.h" />
+    <ClInclude Include="fdevent.h" />
+    <ClInclude Include="file.h" />
+    <ClInclude Include="interface_info.h" />
+    <ClInclude Include="ip_address.h" />
+    <ClInclude Include="key.h" />
+    <ClInclude Include="key_type.pb.h" />
+    <ClInclude Include="logging.h" />
+    <ClInclude Include="macros.h" />
+    <ClInclude Include="mapped_file.h" />
+    <ClInclude Include="network.h" />
+    <ClInclude Include="network_interface.h" />
+    <ClInclude Include="no_destructor.h" />
+    <ClInclude Include="off64_t.h" />
+    <ClInclude Include="parseint.h" />
+    <ClInclude Include="parsenetaddress.h" />
+    <ClInclude Include="properties.h" />
+    <ClInclude Include="reporting_client.h" />
+    <ClInclude Include="rsa_2048_key.h" />
+    <ClInclude Include="serial_delete_ptr.h" />
+    <ClInclude Include="socket.h" />
+    <ClInclude Include="sockets.h" />
+    <ClInclude Include="socket_spec.h" />
+    <ClInclude Include="stat.h" />
+    <ClInclude Include="stringprintf.h" />
+    <ClInclude Include="strings.h" />
+    <ClInclude Include="sysdeps.h" />
+    <ClInclude Include="task_runner.h" />
+    <ClInclude Include="test_utils.h" />
+    <ClInclude Include="thread_annotations.h" />
+    <ClInclude Include="time.h" />
+    <ClInclude Include="tls_connection.h" />
+    <ClInclude Include="transport.h" />
+    <ClInclude Include="trivial_clock_traits.h" />
+    <ClInclude Include="types.h" />
+    <ClInclude Include="uio.h" />
+    <ClInclude Include="unique_fd.h" />
+    <ClInclude Include="usb.h" />
+    <ClInclude Include="utf8.h" />
+    <ClInclude Include="x509_generator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
