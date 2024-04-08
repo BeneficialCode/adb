@@ -144,41 +144,55 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="adb.cpp" />
+    <ClCompile Include="adb_client.cpp" />
     <ClCompile Include="adb_io.cpp" />
+    <ClCompile Include="adb_known_hosts.pb.cc" />
     <ClCompile Include="adb_listeners.cpp" />
     <ClCompile Include="adb_mdns.cpp" />
     <ClCompile Include="adb_trace.cpp" />
+    <ClCompile Include="adb_unique_fd.cpp" />
     <ClCompile Include="adb_utils.cpp" />
+    <ClCompile Include="adb_wifi.cpp" />
     <ClCompile Include="android_pubkey.cpp" />
     <ClCompile Include="auth.cpp" />
     <ClCompile Include="diagnose_usb.cpp" />
     <ClCompile Include="errors_windows.cpp" />
+    <ClCompile Include="fdevent.cpp" />
     <ClCompile Include="file.cpp" />
     <ClCompile Include="key.cpp" />
     <ClCompile Include="key_type.pb.cc" />
     <ClCompile Include="logging.cpp" />
+    <ClCompile Include="mdns_service_info.cpp" />
+    <ClCompile Include="mdns_service_watcher.cpp" />
     <ClCompile Include="parsenetaddress.cpp" />
     <ClCompile Include="socket_spec.cpp" />
     <ClCompile Include="stat.cpp" />
+    <ClCompile Include="std_util.cc" />
     <ClCompile Include="stringprintf.cpp" />
     <ClCompile Include="strings.cpp" />
     <ClCompile Include="sysdeps_win32.cpp" />
+    <ClCompile Include="task_runner.cpp" />
     <ClCompile Include="transport.cpp" />
     <ClCompile Include="transport_local.cpp" />
     <ClCompile Include="transport_mdns.cpp" />
     <ClCompile Include="transport_usb.cpp" />
+    <ClCompile Include="usb_windows.cpp" />
     <ClCompile Include="utf8.cpp" />
     <ClCompile Include="x509_generator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="adb.h" />
+    <ClInclude Include="adb_api.h" />
     <ClInclude Include="adb_auth.h" />
+    <ClInclude Include="adb_client.h" />
     <ClInclude Include="adb_io.h" />
+    <ClInclude Include="adb_known_hosts.pb.h" />
     <ClInclude Include="adb_listeners.h" />
     <ClInclude Include="adb_mdns.h" />
     <ClInclude Include="adb_trace.h" />
     <ClInclude Include="adb_unique_fd.h" />
     <ClInclude Include="adb_utils.h" />
+    <ClInclude Include="adb_wifi.h" />
     <ClInclude Include="android_pubkey.h" />
     <ClInclude Include="chrono.h" />
     <ClInclude Include="chrono_utils.h" />
@@ -188,13 +202,20 @@
     <ClInclude Include="config.h" />
     <ClInclude Include="diagnose_usb.h" />
     <ClInclude Include="dirent-win32.h" />
+    <ClInclude Include="dns_sd_instance.h" />
+    <ClInclude Include="dns_sd_instance_endpoint.h" />
+    <ClInclude Include="dns_sd_querier.h" />
     <ClInclude Include="dns_sd_service.h" />
     <ClInclude Include="dns_sd_service_factory.h" />
+    <ClInclude Include="dns_sd_service_watcher.h" />
+    <ClInclude Include="dns_sd_txt_record.h" />
     <ClInclude Include="endian.h" />
     <ClInclude Include="error.h" />
     <ClInclude Include="errors.h" />
     <ClInclude Include="fdevent.h" />
+    <ClInclude Include="fdevent_poll.h" />
     <ClInclude Include="file.h" />
+    <ClInclude Include="hashing.h" />
     <ClInclude Include="interface_info.h" />
     <ClInclude Include="ip_address.h" />
     <ClInclude Include="key.h" />
@@ -202,10 +223,15 @@
     <ClInclude Include="logging.h" />
     <ClInclude Include="macros.h" />
     <ClInclude Include="mapped_file.h" />
+    <ClInclude Include="mdns_service_info.h" />
+    <ClInclude Include="mdns_service_watcher.h" />
+    <ClInclude Include="mdns_utils.h" />
     <ClInclude Include="network.h" />
     <ClInclude Include="network_interface.h" />
     <ClInclude Include="no_destructor.h" />
     <ClInclude Include="off64_t.h" />
+    <ClInclude Include="pairing_client.h" />
+    <ClInclude Include="pairing_connection.h" />
     <ClInclude Include="parseint.h" />
     <ClInclude Include="parsenetaddress.h" />
     <ClInclude Include="properties.h" />
@@ -216,6 +242,7 @@
     <ClInclude Include="sockets.h" />
     <ClInclude Include="socket_spec.h" />
     <ClInclude Include="stat.h" />
+    <ClInclude Include="std_util.h" />
     <ClInclude Include="stringprintf.h" />
     <ClInclude Include="strings.h" />
     <ClInclude Include="sysdeps.h" />
@@ -232,6 +259,11 @@
     <ClInclude Include="usb.h" />
     <ClInclude Include="utf8.h" />
     <ClInclude Include="x509_generator.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AdbWinApi\AdbWinApi.vcxproj">
+      <Project>{edb5299e-5d4e-49f7-a6e9-ae1be8ed158b}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

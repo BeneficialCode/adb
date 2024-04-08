@@ -58,6 +58,27 @@
     <Filter Include="platform\api">
       <UniqueIdentifier>{3eec9094-0e24-449a-986d-00ad6352bd60}</UniqueIdentifier>
     </Filter>
+    <Filter Include="client\openscreen">
+      <UniqueIdentifier>{69c13865-e343-405e-9eb7-b3c07e1ba049}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="discovery\dnssd">
+      <UniqueIdentifier>{c209c70f-67af-47e4-a698-822a6d58b986}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="discovery\dnssd\public">
+      <UniqueIdentifier>{80ffcbec-58ae-4308-84b8-b42cfc2af06b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="util">
+      <UniqueIdentifier>{826d4d23-3e74-44dc-be81-6a49c424f89b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="client\pairing">
+      <UniqueIdentifier>{2bc8cbf9-acc1-4116-865b-1aa51b4ed6a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="pairing_connection">
+      <UniqueIdentifier>{1c1d64c1-1a99-47ac-8572-ee50ea95d378}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="proto">
+      <UniqueIdentifier>{a5e92974-0173-4bf2-b7dd-3227b59d2a98}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="adb.cpp">
@@ -92,9 +113,6 @@
     </ClCompile>
     <ClCompile Include="auth.cpp">
       <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="key_type.pb.cc">
-      <Filter>crypto</Filter>
     </ClCompile>
     <ClCompile Include="key.cpp">
       <Filter>crypto</Filter>
@@ -136,6 +154,39 @@
       <Filter>client</Filter>
     </ClCompile>
     <ClCompile Include="transport_mdns.cpp">
+      <Filter>client</Filter>
+    </ClCompile>
+    <ClCompile Include="adb_client.cpp">
+      <Filter>client</Filter>
+    </ClCompile>
+    <ClCompile Include="std_util.cc">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="mdns_service_info.cpp">
+      <Filter>client\openscreen</Filter>
+    </ClCompile>
+    <ClCompile Include="mdns_service_watcher.cpp">
+      <Filter>client\openscreen</Filter>
+    </ClCompile>
+    <ClCompile Include="task_runner.cpp">
+      <Filter>platform\api</Filter>
+    </ClCompile>
+    <ClCompile Include="adb_unique_fd.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="fdevent.cpp">
+      <Filter>fdevent</Filter>
+    </ClCompile>
+    <ClCompile Include="adb_wifi.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="adb_known_hosts.pb.cc">
+      <Filter>proto</Filter>
+    </ClCompile>
+    <ClCompile Include="key_type.pb.cc">
+      <Filter>proto</Filter>
+    </ClCompile>
+    <ClCompile Include="usb_windows.cpp">
       <Filter>client</Filter>
     </ClCompile>
   </ItemGroup>
@@ -254,9 +305,6 @@
     <ClInclude Include="key.h">
       <Filter>crypto</Filter>
     </ClInclude>
-    <ClInclude Include="key_type.pb.h">
-      <Filter>crypto</Filter>
-    </ClInclude>
     <ClInclude Include="adb_io.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -322,6 +370,60 @@
     </ClInclude>
     <ClInclude Include="network_interface.h">
       <Filter>platform\api</Filter>
+    </ClInclude>
+    <ClInclude Include="adb_client.h">
+      <Filter>client</Filter>
+    </ClInclude>
+    <ClInclude Include="adb_wifi.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mdns_utils.h">
+      <Filter>client</Filter>
+    </ClInclude>
+    <ClInclude Include="mdns_service_watcher.h">
+      <Filter>client\openscreen</Filter>
+    </ClInclude>
+    <ClInclude Include="mdns_service_info.h">
+      <Filter>client\openscreen</Filter>
+    </ClInclude>
+    <ClInclude Include="dns_sd_instance_endpoint.h">
+      <Filter>discovery\dnssd\public</Filter>
+    </ClInclude>
+    <ClInclude Include="dns_sd_instance.h">
+      <Filter>discovery\dnssd\public</Filter>
+    </ClInclude>
+    <ClInclude Include="dns_sd_txt_record.h">
+      <Filter>discovery\dnssd\public</Filter>
+    </ClInclude>
+    <ClInclude Include="std_util.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="dns_sd_service_watcher.h">
+      <Filter>discovery\public</Filter>
+    </ClInclude>
+    <ClInclude Include="dns_sd_querier.h">
+      <Filter>discovery\dnssd\public</Filter>
+    </ClInclude>
+    <ClInclude Include="hashing.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="fdevent_poll.h">
+      <Filter>fdevent</Filter>
+    </ClInclude>
+    <ClInclude Include="pairing_client.h">
+      <Filter>client\pairing</Filter>
+    </ClInclude>
+    <ClInclude Include="pairing_connection.h">
+      <Filter>pairing_connection</Filter>
+    </ClInclude>
+    <ClInclude Include="adb_known_hosts.pb.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="key_type.pb.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="adb_api.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
