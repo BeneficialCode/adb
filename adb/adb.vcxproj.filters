@@ -79,6 +79,21 @@
     <Filter Include="proto">
       <UniqueIdentifier>{a5e92974-0173-4bf2-b7dd-3227b59d2a98}</UniqueIdentifier>
     </Filter>
+    <Filter Include="mdnsresponder">
+      <UniqueIdentifier>{dc3999a4-3577-466f-adb9-2b43d1028911}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mdnsresponder\mDNSShared">
+      <UniqueIdentifier>{75ba4aaa-20ac-45a9-b3bf-d92fba315553}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="discovery\dnssd\impl">
+      <UniqueIdentifier>{d0be6ece-3c57-4ab8-8f3b-80753e9c531b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="discovery\mdns">
+      <UniqueIdentifier>{c20743a1-75ff-4c90-8a89-171273883ff0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="discovery\mdns\public">
+      <UniqueIdentifier>{aa442487-0d28-4e8a-ae05-644bcbb0de83}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="adb.cpp">
@@ -188,6 +203,30 @@
     </ClCompile>
     <ClCompile Include="usb_windows.cpp">
       <Filter>client</Filter>
+    </ClCompile>
+    <ClCompile Include="sockets.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="services.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="mdnsresponder_client.cpp">
+      <Filter>client</Filter>
+    </ClCompile>
+    <ClCompile Include="types.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="fdevent_poll.cpp">
+      <Filter>fdevent</Filter>
+    </ClCompile>
+    <ClCompile Include="rsa_2048_key.cpp">
+      <Filter>crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="service_dispatcher.cc">
+      <Filter>discovery\dnssd\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="interface_info.cc">
+      <Filter>platform\base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -424,6 +463,66 @@
     </ClInclude>
     <ClInclude Include="adb_api.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="services.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="adb_ca_list.h">
+      <Filter>tls</Filter>
+    </ClInclude>
+    <ClInclude Include="dns_sd.h">
+      <Filter>mdnsresponder\mDNSShared</Filter>
+    </ClInclude>
+    <ClInclude Include="env.h">
+      <Filter>sysdeps</Filter>
+    </ClInclude>
+    <ClInclude Include="service_dispatcher.h">
+      <Filter>discovery\dnssd\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="querier_impl.h">
+      <Filter>discovery\dnssd\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="constants.h">
+      <Filter>discovery\dnssd\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="mdns_records.h">
+      <Filter>discovery\mdns</Filter>
+    </ClInclude>
+    <ClInclude Include="mdns_constants.h">
+      <Filter>discovery\mdns\public</Filter>
+    </ClInclude>
+    <ClInclude Include="service_instance.h">
+      <Filter>discovery\dnssd\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="network_interface_config.h">
+      <Filter>discovery\dnssd\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="publisher_impl.h">
+      <Filter>discovery\dnssd\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="conversion_layer.h">
+      <Filter>discovery\dnssd\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="dns_sd_publisher.h">
+      <Filter>discovery\dnssd\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="mdns_domain_confirmed_provider.h">
+      <Filter>discovery\mdns</Filter>
+    </ClInclude>
+    <ClInclude Include="mdns_service.h">
+      <Filter>discovery\mdns\public</Filter>
+    </ClInclude>
+    <ClInclude Include="dns_data_graph.h">
+      <Filter>discovery\dnssd\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="mdns_record_changed_callback.h">
+      <Filter>discovery\mdns</Filter>
+    </ClInclude>
+    <ClInclude Include="instance_key.h">
+      <Filter>discovery\dnssd</Filter>
+    </ClInclude>
+    <ClInclude Include="service_key.h">
+      <Filter>discovery\dnssd\impl</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
