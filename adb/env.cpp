@@ -1,0 +1,100 @@
+#include "env.h"
+
+#ifdef _WIN32
+#include <lmcons.h>
+#include <windows.h>
+#endif  // _WIN32
+
+#include "utf8.h"
+
+namespace adb {
+    namespace sysdeps {
+
+        std::optional<std::string> GetEnvironmentVariable(std::string_view var) {
+            if (var.empty()) {
+                return std::nullopt;
+            }
+
+#ifdef _WIN32
+            constexpr size_t kMaxEnvVarSize = 32767;
+            wchar_t wbuf[kMaxEnvVarSize];
+            std::wstring wvar;
+            if (!android::base::UTF8ToWide(var.data(), &wvar)) {
+                return std::nullopt;
+            }
+
+            auto sz = ::GetEnvironmentVariableW(wvar.data(), wbuf, sizeof(wbuf));
+            if (sz == 0) {
+                return std::nullopt;
+            }
+
+            std::string val;
+            if (!android::base::WideToUTF8(wbuf, &val)) {
+                return std::nullopt;
+            }
+
+            return std::make_optional(val);
+#else  // !_WIN32
+
+#endif
+        }
+
+#ifdef _WIN32
+        constexpr char kHostNameEnvVar[] = "COMPUTERNAME";
+        constexpr char kUserNameEnvVar[] = "USERNAME";
+#else
+        constexpr char kHostNameEnvVar[] = "HOSTNAME";
+        constexpr char kUserNameEnvVar[] = "LOGNAME";
+#endif
+
+        std::string GetHostNameUTF8() {
+            const auto hostName = GetEnvironmentVariable(kHostNameEnvVar);
+            if (hostName && !hostName->empty()) {
+                return *hostName;
+            }
+
+#ifdef _WIN32
+            wchar_t wbuf[MAX_COMPUTERNAME_LENGTH + 1];
+            DWORD size = sizeof(wbuf);
+            if (!GetComputerNameW(wbuf, &size) || size == 0) {
+                return "";
+            }
+
+            std::string name;
+            if (!android::base::WideToUTF8(wbuf, &name)) {
+                return "";
+            }
+
+            return name;
+#else   // !_WIN32
+            char buf[256];
+            return (gethostname(buf, sizeof(buf)) == -1) ? "" : buf;
+#endif  // _WIN32
+        }
+
+        std::string GetLoginNameUTF8() {
+            const auto userName = GetEnvironmentVariable(kUserNameEnvVar);
+            if (userName && !userName->empty()) {
+                return *userName;
+            }
+
+#ifdef _WIN32
+            wchar_t wbuf[UNLEN + 1];
+            DWORD size = sizeof(wbuf);
+            if (!GetUserNameW(wbuf, &size) || size == 0) {
+                return "";
+            }
+
+            std::string login;
+            if (!android::base::WideToUTF8(wbuf, &login)) {
+                return "";
+            }
+
+            return login;
+#else   // !_WIN32
+
+#endif  // _WIN32
+        }
+
+    }  // namespace sysdeps
+}  // namespace adb

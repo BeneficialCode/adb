@@ -144,6 +144,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="adb.cpp" />
+    <ClCompile Include="adb_ca_list.cpp" />
     <ClCompile Include="adb_client.cpp" />
     <ClCompile Include="adb_io.cpp" />
     <ClCompile Include="adb_known_hosts.pb.cc" />
@@ -153,24 +154,37 @@
     <ClCompile Include="adb_unique_fd.cpp" />
     <ClCompile Include="adb_utils.cpp" />
     <ClCompile Include="adb_wifi.cpp" />
+    <ClCompile Include="aes_128_gcm.cpp" />
     <ClCompile Include="android_pubkey.cpp" />
     <ClCompile Include="auth.cpp" />
     <ClCompile Include="diagnose_usb.cpp" />
+    <ClCompile Include="env.cpp" />
+    <ClCompile Include="error.cc" />
     <ClCompile Include="errors_windows.cpp" />
     <ClCompile Include="fdevent.cpp" />
     <ClCompile Include="fdevent_poll.cpp" />
     <ClCompile Include="file.cpp" />
     <ClCompile Include="interface_info.cc" />
+    <ClCompile Include="ip_address.cc" />
     <ClCompile Include="key.cpp" />
     <ClCompile Include="key_type.pb.cc" />
     <ClCompile Include="logging.cpp" />
     <ClCompile Include="mdnsresponder_client.cpp" />
+    <ClCompile Include="mdns_service_impl.cc" />
     <ClCompile Include="mdns_service_info.cpp" />
     <ClCompile Include="mdns_service_watcher.cpp" />
+    <ClCompile Include="mdns_utils.cpp" />
+    <ClCompile Include="network_interface.cc" />
+    <ClCompile Include="network_interface_win.cc" />
+    <ClCompile Include="pairing.pb.cc" />
+    <ClCompile Include="pairing_auth.cpp" />
+    <ClCompile Include="pairing_client.cpp" />
+    <ClCompile Include="pairing_connection.cpp" />
     <ClCompile Include="parsenetaddress.cpp" />
     <ClCompile Include="rsa_2048_key.cpp" />
     <ClCompile Include="services.cpp" />
     <ClCompile Include="service_dispatcher.cc" />
+    <ClCompile Include="service_instance.cc" />
     <ClCompile Include="sockets.cpp" />
     <ClCompile Include="socket_spec.cpp" />
     <ClCompile Include="stat.cpp" />
@@ -179,6 +193,7 @@
     <ClCompile Include="strings.cpp" />
     <ClCompile Include="sysdeps_win32.cpp" />
     <ClCompile Include="task_runner.cpp" />
+    <ClCompile Include="tls_connection.cpp" />
     <ClCompile Include="transport.cpp" />
     <ClCompile Include="transport_local.cpp" />
     <ClCompile Include="transport_mdns.cpp" />
@@ -202,6 +217,8 @@
     <ClInclude Include="adb_unique_fd.h" />
     <ClInclude Include="adb_utils.h" />
     <ClInclude Include="adb_wifi.h" />
+    <ClInclude Include="aes_128_gcm.h" />
+    <ClInclude Include="alarm.h" />
     <ClInclude Include="android_pubkey.h" />
     <ClInclude Include="chrono.h" />
     <ClInclude Include="chrono_utils.h" />
@@ -214,7 +231,6 @@
     <ClInclude Include="diagnose_usb.h" />
     <ClInclude Include="dirent-win32.h" />
     <ClInclude Include="dns_data_graph.h" />
-    <ClInclude Include="dns_sd.h" />
     <ClInclude Include="dns_sd_instance.h" />
     <ClInclude Include="dns_sd_instance_endpoint.h" />
     <ClInclude Include="dns_sd_publisher.h" />
@@ -241,9 +257,16 @@
     <ClInclude Include="mapped_file.h" />
     <ClInclude Include="mdns_constants.h" />
     <ClInclude Include="mdns_domain_confirmed_provider.h" />
+    <ClInclude Include="mdns_probe_manager.h" />
+    <ClInclude Include="mdns_publisher.h" />
+    <ClInclude Include="mdns_querier.h" />
+    <ClInclude Include="mdns_random.h" />
+    <ClInclude Include="mdns_receiver.h" />
     <ClInclude Include="mdns_records.h" />
     <ClInclude Include="mdns_record_changed_callback.h" />
+    <ClInclude Include="mdns_responder.h" />
     <ClInclude Include="mdns_service.h" />
+    <ClInclude Include="mdns_service_impl.h" />
     <ClInclude Include="mdns_service_info.h" />
     <ClInclude Include="mdns_service_watcher.h" />
     <ClInclude Include="mdns_utils.h" />
@@ -252,6 +275,8 @@
     <ClInclude Include="network_interface_config.h" />
     <ClInclude Include="no_destructor.h" />
     <ClInclude Include="off64_t.h" />
+    <ClInclude Include="pairing.pb.h" />
+    <ClInclude Include="pairing_auth.h" />
     <ClInclude Include="pairing_client.h" />
     <ClInclude Include="pairing_connection.h" />
     <ClInclude Include="parseint.h" />
@@ -282,6 +307,8 @@
     <ClInclude Include="transport.h" />
     <ClInclude Include="trivial_clock_traits.h" />
     <ClInclude Include="types.h" />
+    <ClInclude Include="udp_packet.h" />
+    <ClInclude Include="udp_socket.h" />
     <ClInclude Include="uio.h" />
     <ClInclude Include="unique_fd.h" />
     <ClInclude Include="usb.h" />

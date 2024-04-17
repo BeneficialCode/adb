@@ -2,18 +2,19 @@
 
 #include <vector>
 
+#include <absl/types/optional.h>
+
 #include "interface_info.h"
 
 namespace openscreen {
 
-	// Returns an InterfaceInfo for each currently active network interface on the
-	// system. No two entries in this vector can have the same NetworkInterfaceIndex
-	// value.
-	//
-	// This can return an empty vector if: 1) there are no active network
-	// interfaces, 2) an error occurred querying the system for them, or 3) Open
-	// Screen features that involve broadcast listening/publishing (e.g., mDNS
-	// discovery) are not being used.
+	// The below functions are responsible for returning the network interfaces
+	// provided of the current machine. GetAllInterfaces() returns all interfaces,
+	// real or virtual. GetLoopbackInterfaceForTesting() returns one such interface
+	// which is associated with the machine's loopback interface, while
+	// GetNetworkInterfaces() returns all non-loopback interfaces.
+	std::vector<InterfaceInfo> GetAllInterfaces();
+	absl::optional<InterfaceInfo> GetLoopbackInterfaceForTesting();
 	std::vector<InterfaceInfo> GetNetworkInterfaces();
 
 }  // namespace openscreen

@@ -823,11 +823,11 @@ int launch_server(const std::string& socket_spec, const char* one_device) {
     WCHAR args[4096];
     if (one_device) {
         swprintf(args, arraysize(args),
-            L"adb -L %s fork-server server --reply-fd %d --one-device %s",
+            L"adb -L %Ts fork-server server --reply-fd %d --one-device %s",
             socket_spec.c_str(), ack_write_as_int, one_device);
     }
     else {
-        swprintf(args, arraysize(args), L"adb -L %s fork-server server --reply-fd %d",
+        swprintf(args, arraysize(args), L"adb -L %Ts fork-server server --reply-fd %d",
             socket_spec.c_str(), ack_write_as_int);
     }
 

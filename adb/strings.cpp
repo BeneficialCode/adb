@@ -160,5 +160,18 @@ namespace android {
         bool EqualsIgnoreCase(const std::string& lhs, const std::string& rhs) {
             return _stricmp(lhs.c_str(), rhs.c_str()) == 0;
         }
+
+        bool EndsWith(std::string_view s, std::string_view suffix) {
+            return s.size() >= suffix.size() && s.substr(s.size() - suffix.size(), suffix.size()) == suffix;
+        }
+
+        bool EndsWith(std::string_view s, char suffix) {
+            return !s.empty() && s.back() == suffix;
+        }
+
+        bool EndsWithIgnoreCase(std::string_view s, std::string_view suffix) {
+            return s.size() >= suffix.size() &&
+                _stricmp(s.data() + (s.size() - suffix.size()), suffix.data()) == 0;
+        }
     }  // namespace base
 }  // namespace android

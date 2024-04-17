@@ -51,11 +51,24 @@ namespace android {
         bool EndsWith(const std::string& s, const std::string& suffix);
         bool EndsWithIgnoreCase(const std::string& s, const std::string& suffix);
 
+        // Tests whether 's' ends with 'suffix'.
+        bool EndsWith(std::string_view s, std::string_view suffix);
+        bool EndsWith(std::string_view s, char suffix);
+        bool EndsWithIgnoreCase(std::string_view s, std::string_view suffix);
+
         // Removes `prefix` from the start of the given string and returns true (if
         // it was present), false otherwise.
         inline bool ConsumePrefix(std::string_view* s, std::string_view prefix) {
-            if (!StartsWith(*s, prefix)) return false;
+            if(!StartsWith(*s, prefix)) return false;
             s->remove_prefix(prefix.size());
+            return true;
+        }
+
+        // Removes `suffix` from the end of the given string and returns true (if
+        // it was present), false otherwise.
+        inline bool ConsumeSuffix(std::string_view* s, std::string_view suffix) {
+            if(!EndsWith(*s, suffix)) return false;
+            s->remove_suffix(suffix.size());
             return true;
         }
     }  // namespace base
