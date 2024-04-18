@@ -1491,7 +1491,7 @@ int main(int argc,char* argv[],char* envp[]){
     __adb_argv = const_cast<const char**>(argv);
 	__adb_envp = const_cast<const char**>(envp);
 	
-	
-	return 0;
+    adb_trace_init(argv);
+    return 0;
 }
 

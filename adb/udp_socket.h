@@ -45,7 +45,7 @@ namespace openscreen {
             virtual void OnRead(UdpSocket* socket, ErrorOr<UdpPacket> packet) = 0;
 
         protected:
-            virtual ~Client();
+            virtual ~Client() = default;
         };
 
         // Constants used to specify how we want packets sent from this socket.
@@ -76,7 +76,7 @@ namespace openscreen {
             Client* client,
             const IPEndpoint& local_endpoint);
 
-        virtual ~UdpSocket();
+        virtual ~UdpSocket() = default;
 
         // Returns true if |socket| belongs to the IPv4/IPv6 address family.
         virtual bool IsIPv4() const = 0;
@@ -113,7 +113,7 @@ namespace openscreen {
         virtual void SetDscp(DscpMode state) = 0;
 
     protected:
-        UdpSocket();
+        UdpSocket() = default;
     };
 
 }  // namespace openscreen

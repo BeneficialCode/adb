@@ -49,7 +49,7 @@ namespace openscreen {
         IPEndpoint destination_ = {};
         UdpSocket* socket_ = nullptr;
 
-        OSP_DISALLOW_COPY_AND_ASSIGN(UdpPacket);
+        DISALLOW_COPY_AND_ASSIGN(UdpPacket);
     };
 
 }  // namespace openscreen

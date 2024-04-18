@@ -2944,13 +2944,13 @@ extern "C" int main(int argc, char** argv);
 // Link with -municode to cause this wmain() to be used as the program
 // entrypoint. It will convert the args from UTF-16 to UTF-8 and call the
 // regular main() with UTF-8 args.
-extern "C" int wmain(int argc, wchar_t** argv) {
-    // Convert args from UTF-16 to UTF-8 and pass that to main().
-    NarrowArgs narrow_args(argc, argv);
-
-    // Avoid destructing NarrowArgs: argv might have been mutated to point to string literals.
-    _exit(main(argc, narrow_args.data()));
-}
+//extern "C" int wmain(int argc, wchar_t** argv) {
+//    // Convert args from UTF-16 to UTF-8 and pass that to main().
+//    NarrowArgs narrow_args(argc, argv);
+//
+//    // Avoid destructing NarrowArgs: argv might have been mutated to point to string literals.
+//    _exit(main(argc, narrow_args.data()));
+//}
 
 // Shadow UTF-8 environment variable name/value pairs that are created from
 // _wenviron by _init_env(). Note that this is not currently updated if putenv, setenv, unsetenv are

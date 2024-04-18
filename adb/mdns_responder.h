@@ -68,7 +68,7 @@ namespace openscreen {
                 const Config& config);
             ~MdnsResponder();
 
-            OSP_DISALLOW_COPY_AND_ASSIGN(MdnsResponder);
+            DISALLOW_COPY_AND_ASSIGN(MdnsResponder);
 
         private:
             // Class which handles processing and responding to queries segmented into
