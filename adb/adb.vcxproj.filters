@@ -363,6 +363,27 @@
     <ClCompile Include="commandline.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="adb_install.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="file_sync_client.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="line_printer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="errno.cpp">
+      <Filter>sysdeps</Filter>
+    </ClCompile>
+    <ClCompile Include="app_processes.pb.cc">
+      <Filter>proto</Filter>
+    </ClCompile>
+    <ClCompile Include="ApkEntry.pb.cc">
+      <Filter>proto</Filter>
+    </ClCompile>
+    <ClCompile Include="console.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="commandline.h">
@@ -715,6 +736,45 @@
     </ClInclude>
     <ClInclude Include="chrono_helpers.h">
       <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="adb_install.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="file_sync_client.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="file_sync_protocol.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="compression_utils.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="line_printer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="errno.h">
+      <Filter>sysdeps</Filter>
+    </ClInclude>
+    <ClInclude Include="app_processes.pb.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="bugreport.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="fastdeploy.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ApkEntry.pb.h">
+      <Filter>proto</Filter>
+    </ClInclude>
+    <ClInclude Include="incremental_server.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="shell_protocol.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="asprintf.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

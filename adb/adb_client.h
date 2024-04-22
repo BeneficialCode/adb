@@ -39,7 +39,7 @@ bool adb_query(const std::string& service, std::string* result,
 
 // Set the preferred transport to connect to.
 void adb_set_transport(TransportType type, const char* serial, TransportId transport_id);
-void adb_get_transport(TransportType* type, const char* serial,
+void adb_get_transport(TransportType* type, const char** serial,
     TransportId* transport_id);
 
 // Set the server's "one device" id. This is either null, or a pointer to a serial number
@@ -53,7 +53,7 @@ void adb_set_socket_spec(const char* socket_spec);
 // Send commands to the current emulator instance. Will fail if there is not
 // exactly one emulator connected (or if you use -s <serial> with a <serial>
 // that does not designate an emulator).
-int adb_send_emulator_command(int argc, const char* argv,
+int adb_send_emulator_command(int argc, const char** argv,
     const char* serial);
 
 // Reads a standard adb status response (OKAY|FAIL) and returns true in the

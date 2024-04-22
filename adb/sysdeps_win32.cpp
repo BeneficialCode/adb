@@ -2300,7 +2300,7 @@ static int _console_read(const HANDLE console, void* buf, size_t len) {
 static DWORD _old_console_mode; // previous GetConsoleMode() result
 static HANDLE _console_handle;  // when set, console mode should be restored
 
-#define STDIN_FILENO	0
+
 
 void stdin_raw_init() {
     HANDLE in = _get_console_handle(STDIN_FILENO, &_old_console_mode);
@@ -3155,7 +3155,7 @@ int adb_thread_setname(const std::string& name) {
 #define DISABLE_NEWLINE_AUTO_RETURN 0x0008
 #endif
 
-#define STDOUT_FILENO	1
+
 
 static void _init_console() {
     DWORD old_out_console_mode;

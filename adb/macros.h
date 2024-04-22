@@ -142,3 +142,8 @@ void UNUSED(const T&...) {
   do {                       \
   } while (0)
 #endif
+
+#define STDOUT_FILENO	1
+#define STDIN_FILENO	0
+
+#define SIGPIPE 13
