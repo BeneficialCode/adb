@@ -143,6 +143,7 @@ void UNUSED(const T&...) {
   } while (0)
 #endif
 
+#define STDERR_FILENO	2
 #define STDOUT_FILENO	1
 #define STDIN_FILENO	0
 

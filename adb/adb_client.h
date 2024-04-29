@@ -71,5 +71,5 @@ const std::optional<FeatureSet>& adb_get_feature_set(std::string* error);
 #endif
 
 // Globally acccesible argv/envp, for the purpose of re-execing adb.
-extern const char*  __adb_argv;
-extern const char*  __adb_envp;
+extern const char**  __adb_argv;
+extern const char**  __adb_envp;

@@ -1,0 +1,335 @@
+#pragma once
+
+#include <iostream>
+
+#include "errors.h"
+#include "Unicode.h"
+#include "TypeHelpers.h"
+
+#include <string.h>
+#include <stdarg.h>
+
+#if __has_include(<string>)
+#include <string>
+#define HAS_STRING
+#endif
+
+#if __has_include(<string_view>)
+#include <string_view>
+#define HAS_STRING_VIEW
+#endif
+
+// ---------------------------------------------------------------------------
+
+namespace android {
+
+    class String16;
+
+    // DO NOT USE: please use std::string
+
+    //! This is a string holding UTF-8 characters. Does not allow the value more
+    // than 0x10FFFF, which is not valid unicode codepoint.
+    class String8
+    {
+    public:
+        String8();
+        String8(const String8& o);
+        explicit                    String8(const char* o);
+        explicit                    String8(const char* o, size_t numChars);
+
+        explicit                    String8(const String16& o);
+        explicit                    String8(const char16_t* o);
+        explicit                    String8(const char16_t* o, size_t numChars);
+        explicit                    String8(const char32_t* o);
+        explicit                    String8(const char32_t* o, size_t numChars);
+        ~String8();
+
+        static String8              format(const char* fmt, ...);
+        static String8              formatV(const char* fmt, va_list args);
+
+        inline  const char* c_str() const;
+
+        inline  size_t              size() const;
+        inline  size_t              bytes() const;
+        inline  bool                empty() const;
+
+        size_t              length() const;
+
+        void                clear();
+
+        void                setTo(const String8& other);
+        status_t            setTo(const char* other);
+        status_t            setTo(const char* other, size_t numChars);
+        status_t            setTo(const char16_t* other, size_t numChars);
+        status_t            setTo(const char32_t* other,
+            size_t length);
+
+        status_t            append(const String8& other);
+        status_t            append(const char* other);
+        status_t            append(const char* other, size_t numChars);
+
+        status_t            appendFormat(const char* fmt, ...)
+            __attribute__((format(printf, 2, 3)));
+        status_t            appendFormatV(const char* fmt, va_list args);
+
+        inline  String8& operator=(const String8& other);
+        inline  String8& operator=(const char* other);
+
+        inline  String8& operator+=(const String8& other);
+        inline  String8             operator+(const String8& other) const;
+
+        inline  String8& operator+=(const char* other);
+        inline  String8             operator+(const char* other) const;
+
+        inline  int                 compare(const String8& other) const;
+
+        inline  bool                operator<(const String8& other) const;
+        inline  bool                operator<=(const String8& other) const;
+        inline  bool                operator==(const String8& other) const;
+        inline  bool                operator!=(const String8& other) const;
+        inline  bool                operator>=(const String8& other) const;
+        inline  bool                operator>(const String8& other) const;
+
+        inline  bool                operator<(const char* other) const;
+        inline  bool                operator<=(const char* other) const;
+        inline  bool                operator==(const char* other) const;
+        inline  bool                operator!=(const char* other) const;
+        inline  bool                operator>=(const char* other) const;
+        inline  bool                operator>(const char* other) const;
+
+        inline                      operator const char* () const;
+
+#ifdef HAS_STRING_VIEW
+        inline explicit             operator std::string_view() const;
+#endif
+
+        char* lockBuffer(size_t size);
+        void                unlockBuffer();
+        status_t            unlockBuffer(size_t size);
+
+        // return the index of the first byte of other in this at or after
+        // start, or -1 if not found
+        ssize_t             find(const char* other, size_t start = 0) const;
+        inline  ssize_t             find(const String8& other, size_t start = 0) const;
+
+        // return true if this string contains the specified substring
+        inline  bool                contains(const char* other) const;
+        inline  bool                contains(const String8& other) const;
+
+        // removes all occurrence of the specified substring
+        // returns true if any were found and removed
+        bool                removeAll(const char* other);
+        inline  bool                removeAll(const String8& other);
+
+        void                toLower();
+
+    private:
+        String8 getPathDir(void) const;
+        String8 getPathExtension(void) const;
+
+        status_t            real_append(const char* other, size_t numChars);
+
+        const char* mString;
+
+        // These symbols are for potential backward compatibility with prebuilts. To be removed.
+#ifdef ENABLE_STRING8_OBSOLETE_METHODS
+    public:
+#else
+    private:
+#endif
+        inline  const char* string() const;
+        inline  bool                isEmpty() const;
+    };
+
+    // String8 can be trivially moved using memcpy() because moving does not
+    // require any change to the underlying SharedBuffer contents or reference count.
+    ANDROID_TRIVIAL_MOVE_TRAIT(String8)
+
+        static inline std::ostream& operator<<(std::ostream& os, const String8& str) {
+        os << str.c_str();
+        return os;
+    }
+
+    // ---------------------------------------------------------------------------
+    // No user servicable parts below.
+
+    inline int compare_type(const String8& lhs, const String8& rhs)
+    {
+        return lhs.compare(rhs);
+    }
+
+    inline int strictly_order_type(const String8& lhs, const String8& rhs)
+    {
+        return compare_type(lhs, rhs) < 0;
+    }
+
+    inline const char* String8::c_str() const
+    {
+        return mString;
+    }
+    inline const char* String8::string() const
+    {
+        return mString;
+    }
+
+    inline size_t String8::size() const
+    {
+        return length();
+    }
+
+    inline bool String8::empty() const
+    {
+        return length() == 0;
+    }
+
+    inline bool String8::isEmpty() const
+    {
+        return length() == 0;
+    }
+
+    inline size_t String8::bytes() const
+    {
+        return length();
+    }
+
+    inline ssize_t String8::find(const String8& other, size_t start) const
+    {
+        return find(other.c_str(), start);
+    }
+
+    inline bool String8::contains(const char* other) const
+    {
+        return find(other) >= 0;
+    }
+
+    inline bool String8::contains(const String8& other) const
+    {
+        return contains(other.c_str());
+    }
+
+    inline bool String8::removeAll(const String8& other)
+    {
+        return removeAll(other.c_str());
+    }
+
+    inline String8& String8::operator=(const String8& other)
+    {
+        setTo(other);
+        return *this;
+    }
+
+    inline String8& String8::operator=(const char* other)
+    {
+        setTo(other);
+        return *this;
+    }
+
+    inline String8& String8::operator+=(const String8& other)
+    {
+        append(other);
+        return *this;
+    }
+
+    inline String8 String8::operator+(const String8& other) const
+    {
+        String8 tmp(*this);
+        tmp += other;
+        return tmp;
+    }
+
+    inline String8& String8::operator+=(const char* other)
+    {
+        append(other);
+        return *this;
+    }
+
+    inline String8 String8::operator+(const char* other) const
+    {
+        String8 tmp(*this);
+        tmp += other;
+        return tmp;
+    }
+
+    inline int String8::compare(const String8& other) const
+    {
+        return strcmp(mString, other.mString);
+    }
+
+    inline bool String8::operator<(const String8& other) const
+    {
+        return strcmp(mString, other.mString) < 0;
+    }
+
+    inline bool String8::operator<=(const String8& other) const
+    {
+        return strcmp(mString, other.mString) <= 0;
+    }
+
+    inline bool String8::operator==(const String8& other) const
+    {
+        return strcmp(mString, other.mString) == 0;
+    }
+
+    inline bool String8::operator!=(const String8& other) const
+    {
+        return strcmp(mString, other.mString) != 0;
+    }
+
+    inline bool String8::operator>=(const String8& other) const
+    {
+        return strcmp(mString, other.mString) >= 0;
+    }
+
+    inline bool String8::operator>(const String8& other) const
+    {
+        return strcmp(mString, other.mString) > 0;
+    }
+
+    inline bool String8::operator<(const char* other) const
+    {
+        return strcmp(mString, other) < 0;
+    }
+
+    inline bool String8::operator<=(const char* other) const
+    {
+        return strcmp(mString, other) <= 0;
+    }
+
+    inline bool String8::operator==(const char* other) const
+    {
+        return strcmp(mString, other) == 0;
+    }
+
+    inline bool String8::operator!=(const char* other) const
+    {
+        return strcmp(mString, other) != 0;
+    }
+
+    inline bool String8::operator>=(const char* other) const
+    {
+        return strcmp(mString, other) >= 0;
+    }
+
+    inline bool String8::operator>(const char* other) const
+    {
+        return strcmp(mString, other) > 0;
+    }
+
+    inline String8::operator const char* () const
+    {
+        return mString;
+    }
+
+#ifdef HAS_STRING_VIEW
+    inline String8::operator std::string_view() const
+    {
+        return { mString, length() };
+    }
+#endif
+
+}  // namespace android
+
+// ---------------------------------------------------------------------------
+
+#undef HAS_STRING
+#undef HAS_STRING_VIEW

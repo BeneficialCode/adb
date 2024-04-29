@@ -100,6 +100,21 @@
     <Filter Include="client\platform">
       <UniqueIdentifier>{20e6d4c4-97b7-474f-8b33-41f0bcdd34a2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ziparchive">
+      <UniqueIdentifier>{8ad6bf8f-f057-48fa-9ec3-d7ad56a5b910}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="androidfw">
+      <UniqueIdentifier>{9b52fb0b-d2de-43b8-8930-f59357a5c812}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils">
+      <UniqueIdentifier>{6056aaa5-8346-4373-9cc9-4c4991fce6a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="system">
+      <UniqueIdentifier>{060a3a13-9dae-4521-8611-af125813c526}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="fastdeploy">
+      <UniqueIdentifier>{b282d3b1-34c1-4eb1-aa07-9360fc10a451}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="adb.cpp">
@@ -383,6 +398,45 @@
     </ClCompile>
     <ClCompile Include="console.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="incremental_server.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="incremental_utils.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="incremental.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="parsebool.cpp">
+      <Filter>android-base</Filter>
+    </ClCompile>
+    <ClCompile Include="fastdeploy.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="deploy_patch_generator.cpp">
+      <Filter>fastdeploy</Filter>
+    </ClCompile>
+    <ClCompile Include="patch_utils.cpp">
+      <Filter>fastdeploy</Filter>
+    </ClCompile>
+    <ClCompile Include="apk_archive.cpp">
+      <Filter>fastdeploy</Filter>
+    </ClCompile>
+    <ClCompile Include="fastdeploycallbacks.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Unicode.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="LocaleData.cpp">
+      <Filter>androidfw</Filter>
+    </ClCompile>
+    <ClCompile Include="LocaleDataTables.cpp">
+      <Filter>androidfw</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -776,5 +830,112 @@
     <ClInclude Include="asprintf.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="incremental_utils.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="zip_archive.h">
+      <Filter>ziparchive</Filter>
+    </ClInclude>
+    <ClInclude Include="zip_writer.h">
+      <Filter>ziparchive</Filter>
+    </ClInclude>
+    <ClInclude Include="incremental.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="parsebool.h">
+      <Filter>android-base</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceTypes.h">
+      <Filter>androidfw</Filter>
+    </ClInclude>
+    <ClInclude Include="expected.h">
+      <Filter>android-base</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset.h">
+      <Filter>androidfw</Filter>
+    </ClInclude>
+    <ClInclude Include="map_ptr.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="ZipFileRO.h">
+      <Filter>androidfw</Filter>
+    </ClInclude>
+    <ClInclude Include="Compat.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="FileMap.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="threads.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="AndroidThreads.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadDefs.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics-base.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics-base-v1.0.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics-base-v1.1.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics-base-v1.2.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics-sw.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="thread_defs.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="deploy_patch_generator.h">
+      <Filter>fastdeploy</Filter>
+    </ClInclude>
+    <ClInclude Include="patch_utils.h">
+      <Filter>fastdeploy</Filter>
+    </ClInclude>
+    <ClInclude Include="apk_archive.h">
+      <Filter>fastdeploy</Filter>
+    </ClInclude>
+    <ClInclude Include="fastdeploycallbacks.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Unicode.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="LocaleData.h">
+      <Filter>androidfw</Filter>
+    </ClInclude>
+    <ClInclude Include="StringPiece.h">
+      <Filter>androidfw</Filter>
+    </ClInclude>
+    <ClInclude Include="ByteOrder.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="String16.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="String8.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TypeHelpers.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="deployagent.inc">
+      <Filter>client</Filter>
+    </None>
+    <None Include="deployagentscript.inc">
+      <Filter>client</Filter>
+    </None>
   </ItemGroup>
 </Project>

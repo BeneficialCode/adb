@@ -44,14 +44,7 @@
 
 #include "usb.h"
 
-
-
 #pragma comment(lib,"Ws2_32.lib")
-
-const char** __adb_argv;
-const char** __adb_envp;
-
-
 
 std::string adb_version() {
     return android::base::StringPrintf(
@@ -1486,12 +1479,4 @@ void adb_wait_for_device_initialization() {
 }
 
 #endif  // ADB_HOST
-
-int main(int argc,char* argv[],char* envp[]){
-    __adb_argv = const_cast<const char**>(argv);
-	__adb_envp = const_cast<const char**>(envp);
-	
-    adb_trace_init(argv);
-    return 0;
-}
 
