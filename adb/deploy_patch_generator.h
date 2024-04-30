@@ -40,7 +40,7 @@ private:
     /**
      * Log function only logs data to stdout when |is_verbose_| is true.
      */
-    void Log(const char* fmt, ...) __attribute__((__format__(__printf__, 2, 3)));
+    void Log(const char* fmt, ...);
 
     /**
      * Helper function to log the APKMetaData structure. If |is_verbose_| is false this function

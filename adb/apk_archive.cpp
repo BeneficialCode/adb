@@ -113,6 +113,7 @@ off_t ApkArchive::FindEndOfCDRecord() const {
 }
 
 ApkArchive::Location ApkArchive::FindCDRecord(const char* cursor) {
+#pragma pack(push, 1)
     struct ecdr_t {
         int32_t signature;
         uint16_t diskNumber;
@@ -123,7 +124,8 @@ ApkArchive::Location ApkArchive::FindCDRecord(const char* cursor) {
         uint32_t offsetToCdHeader;
         uint16_t commentSize;
         uint8_t comment[0];
-    } __attribute__((packed));
+    };
+#pragma pack(pop)
     ecdr_t* header = (ecdr_t*)cursor;
 
     Location location;
@@ -199,6 +201,7 @@ size_t ApkArchive::ParseCentralDirectoryRecord(const char* input, size_t size, s
     // whose lengths are given by |file_name_length| and |extra_field_length|
     // respectively.
     static constexpr int kCDFileHeaderMagic = 0x02014b50;
+#pragma pack(push, 1)
     struct CentralDirectoryRecord {
         // The start of record signature. Must be |kSignature|.
         uint32_t record_signature;
@@ -245,7 +248,8 @@ size_t ApkArchive::ParseCentralDirectoryRecord(const char* input, size_t size, s
     private:
         CentralDirectoryRecord() = default;
         DISALLOW_COPY_AND_ASSIGN(CentralDirectoryRecord);
-    } __attribute__((packed));
+    };
+#pragma pack(pop)
 
     const CentralDirectoryRecord* cdr;
     if (size < sizeof(*cdr)) {
@@ -279,6 +283,7 @@ size_t ApkArchive::CalculateLocalFileEntrySize(int64_t localFileHeaderOffset,
     // the information here to be different from the central directory
     // information for a given entry.
     static constexpr int kLocalFileHeaderMagic = 0x04034b50;
+#pragma pack(push, 1)
     struct LocalFileHeader {
         // The local file header signature, must be |kSignature|.
         uint32_t lfh_signature;
@@ -310,7 +315,8 @@ size_t ApkArchive::CalculateLocalFileEntrySize(int64_t localFileHeaderOffset,
     private:
         LocalFileHeader() = default;
         DISALLOW_COPY_AND_ASSIGN(LocalFileHeader);
-    } __attribute__((packed));
+    };
+#pragma pack(pop)
     static constexpr int kLocalFileHeaderSize = sizeof(LocalFileHeader);
     CHECK(ready()) << path_;
 
@@ -333,6 +339,7 @@ size_t ApkArchive::CalculateLocalFileEntrySize(int64_t localFileHeaderOffset,
 
     // The *optional* data descriptor start signature.
     static constexpr int kOptionalDataDescriptorMagic = 0x08074b50;
+#pragma pack(push, 1)
     struct DataDescriptor {
         // CRC-32 checksum of the entry.
         uint32_t crc32;
@@ -344,7 +351,8 @@ size_t ApkArchive::CalculateLocalFileEntrySize(int64_t localFileHeaderOffset,
     private:
         DataDescriptor() = default;
         DISALLOW_COPY_AND_ASSIGN(DataDescriptor);
-    } __attribute__((packed));
+    };
+#pragma pack(pop)
     static constexpr int kDataDescriptorSize = sizeof(DataDescriptor);
 
     off_t ddOffset = localFileHeaderOffset + kLocalFileHeaderSize + lfh->file_name_length +

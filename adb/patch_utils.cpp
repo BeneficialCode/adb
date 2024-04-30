@@ -84,7 +84,6 @@ void PatchUtils::Pipe(borrowed_fd input, borrowed_fd output, size_t amount) {
         auto chunkAmount = std::min(amount - transferAmount, BUFFER_SIZE);
         auto readAmount = adb_read(input, buffer, chunkAmount);
         if (readAmount < 0) {
-            fprintf(stderr, "adb: failed to read from input: %s\n", strerror(errno));
             error_exit("Aborting");
         }
         WriteFdExactly(output, buffer, readAmount);

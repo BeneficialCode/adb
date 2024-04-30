@@ -275,6 +275,8 @@
     <ClInclude Include="app_processes.pb.h" />
     <ClInclude Include="asprintf.h" />
     <ClInclude Include="Asset.h" />
+    <ClInclude Include="AssetDir.h" />
+    <ClInclude Include="AssetManager.h" />
     <ClInclude Include="big_endian.h" />
     <ClInclude Include="bugreport.h" />
     <ClInclude Include="ByteOrder.h" />
@@ -287,6 +289,7 @@
     <ClInclude Include="Compat.h" />
     <ClInclude Include="compression_utils.h" />
     <ClInclude Include="config.h" />
+    <ClInclude Include="configuration.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="conversion_layer.h" />
     <ClInclude Include="deploy_patch_generator.h" />
@@ -330,6 +333,7 @@
     <ClInclude Include="ip_address.h" />
     <ClInclude Include="key.h" />
     <ClInclude Include="key_type.pb.h" />
+    <ClInclude Include="LightRefBase.h" />
     <ClInclude Include="line_printer.h" />
     <ClInclude Include="LocaleData.h" />
     <ClInclude Include="logging.h" />
@@ -356,6 +360,7 @@
     <ClInclude Include="mdns_trackers.h" />
     <ClInclude Include="mdns_utils.h" />
     <ClInclude Include="mdns_writer.h" />
+    <ClInclude Include="misc.h" />
     <ClInclude Include="network.h" />
     <ClInclude Include="network_interface.h" />
     <ClInclude Include="network_interface_config.h" />
@@ -372,6 +377,7 @@
     <ClInclude Include="properties.h" />
     <ClInclude Include="publisher_impl.h" />
     <ClInclude Include="querier_impl.h" />
+    <ClInclude Include="RefBase.h" />
     <ClInclude Include="reporting_client.h" />
     <ClInclude Include="ResourceTypes.h" />
     <ClInclude Include="rsa_2048_key.h" />
@@ -391,14 +397,17 @@
     <ClInclude Include="StringPiece.h" />
     <ClInclude Include="stringprintf.h" />
     <ClInclude Include="strings.h" />
+    <ClInclude Include="StrongPointer.h" />
     <ClInclude Include="sysdeps.h" />
     <ClInclude Include="task_runner.h" />
     <ClInclude Include="test_utils.h" />
+    <ClInclude Include="Thread.h" />
     <ClInclude Include="ThreadDefs.h" />
     <ClInclude Include="threads.h" />
     <ClInclude Include="thread_annotations.h" />
     <ClInclude Include="thread_defs.h" />
     <ClInclude Include="time.h" />
+    <ClInclude Include="Timers.h" />
     <ClInclude Include="tls_connection.h" />
     <ClInclude Include="transport.h" />
     <ClInclude Include="trivial_clock_traits.h" />

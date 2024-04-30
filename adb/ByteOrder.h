@@ -18,3 +18,14 @@
 #else
 #include <netinet/in.h>
 #endif
+
+
+ /* TODO: move this cruft to frameworks/. */
+
+#define dtohl(x) (x)
+#define dtohs(x) (x)
+#define htodl(x) (x)
+#define htods(x) (x)
+
+#define fromlel(x) (x)
+#define tolel(x) (x)

@@ -308,7 +308,7 @@ extern "C" {
                         }
                         /* skip if at the end of the string or invalid surrogate pair */
         }
-        return (in == end && utf8_len < SSIZE_MAX) ? utf8_len : -1;
+        return (in == end && utf8_len < SIZE_MAX) ? utf8_len : -1;
     }
 
     void utf16_to_utf8(const char16_t* src, size_t src_len, char* dst, size_t dst_len)
@@ -435,7 +435,7 @@ extern "C" {
                         }
         }
         if (in == in_end) {
-            return utf16_len < SSIZE_MAX ? utf16_len : -1;
+            return utf16_len < SIZE_MAX ? utf16_len : -1;
         }
         if (overreadIsFatal)
             return -1;

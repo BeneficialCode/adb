@@ -162,7 +162,7 @@ namespace android {
 
         // Class expected
         template <class T, class E>
-        class _NODISCARD_ expected {
+        class expected {
             static_assert(std::is_object_v<T> && !std::is_array_v<T> &&
                 !std::is_same_v<std::remove_cv_t<T>, std::in_place_t> &&
                 !std::is_same_v<std::remove_cv_t<T>, unexpect_t> &&

@@ -5,6 +5,11 @@
 #include <sys/types.h>
 #include <string>
 
+#include <optional>
+#include <variant>
+
+
+
 namespace android {
 	namespace base {
 		// Returns a string describing the given system error code. |error_code| must
@@ -59,4 +64,5 @@ namespace android {
 
     // Human readable name of error
     std::string statusToString(status_t status);
+
 }  // namespace android

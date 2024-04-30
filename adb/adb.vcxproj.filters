@@ -115,6 +115,9 @@
     <Filter Include="fastdeploy">
       <UniqueIdentifier>{b282d3b1-34c1-4eb1-aa07-9360fc10a451}</UniqueIdentifier>
     </Filter>
+    <Filter Include="android">
+      <UniqueIdentifier>{5eb8dff9-cd73-462f-a90c-ea26e1d01937}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="adb.cpp">
@@ -928,6 +931,33 @@
     </ClInclude>
     <ClInclude Include="TypeHelpers.h">
       <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="configuration.h">
+      <Filter>android</Filter>
+    </ClInclude>
+    <ClInclude Include="Timers.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Thread.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="RefBase.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="LightRefBase.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="StrongPointer.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetManager.h">
+      <Filter>androidfw</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetDir.h">
+      <Filter>androidfw</Filter>
+    </ClInclude>
+    <ClInclude Include="misc.h">
+      <Filter>androidfw</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

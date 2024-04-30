@@ -68,8 +68,7 @@ namespace android {
         status_t            append(const char* other);
         status_t            append(const char* other, size_t numChars);
 
-        status_t            appendFormat(const char* fmt, ...)
-            __attribute__((format(printf, 2, 3)));
+        status_t            appendFormat(const char* fmt, ...);
         status_t            appendFormatV(const char* fmt, va_list args);
 
         inline  String8& operator=(const String8& other);
@@ -109,8 +108,8 @@ namespace android {
 
         // return the index of the first byte of other in this at or after
         // start, or -1 if not found
-        ssize_t             find(const char* other, size_t start = 0) const;
-        inline  ssize_t             find(const String8& other, size_t start = 0) const;
+        size_t             find(const char* other, size_t start = 0) const;
+        inline  size_t             find(const String8& other, size_t start = 0) const;
 
         // return true if this string contains the specified substring
         inline  bool                contains(const char* other) const;
@@ -192,7 +191,7 @@ namespace android {
         return length();
     }
 
-    inline ssize_t String8::find(const String8& other, size_t start) const
+    inline size_t String8::find(const String8& other, size_t start) const
     {
         return find(other.c_str(), start);
     }

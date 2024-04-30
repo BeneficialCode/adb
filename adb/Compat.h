@@ -54,18 +54,7 @@ static inline int ftruncate64(int fd, off64_t length) {
 #define CONSTEXPR
 #endif
 
- /* TEMP_FAILURE_RETRY is not available on macOS, but still useful there. */
-#ifndef TEMP_FAILURE_RETRY
-/* Used to retry syscalls that can return EINTR. */
-#define TEMP_FAILURE_RETRY(exp)                \
-    ({                                         \
-        __typeof__(exp) _rc;                   \
-        do {                                   \
-            _rc = (exp);                       \
-        } while (_rc == -1 && errno == EINTR); \
-        _rc;                                   \
-    })
-#endif
+
 
 #if defined(_WIN32)
 #define OS_PATH_SEPARATOR '\\'
