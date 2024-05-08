@@ -118,6 +118,9 @@
     <Filter Include="android">
       <UniqueIdentifier>{5eb8dff9-cd73-462f-a90c-ea26e1d01937}</UniqueIdentifier>
     </Filter>
+    <Filter Include="incfs_support">
+      <UniqueIdentifier>{6f4ba6ea-eb06-4186-ae95-063d90dc47b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="adb.cpp">
@@ -439,6 +442,27 @@
       <Filter>androidfw</Filter>
     </ClCompile>
     <ClCompile Include="LocaleDataTables.cpp">
+      <Filter>androidfw</Filter>
+    </ClCompile>
+    <ClCompile Include="shell_service_protocol.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="zip_archive.cc">
+      <Filter>ziparchive</Filter>
+    </ClCompile>
+    <ClCompile Include="bugreport.cpp">
+      <Filter>client</Filter>
+    </ClCompile>
+    <ClCompile Include="ZipFileRO.cpp">
+      <Filter>androidfw</Filter>
+    </ClCompile>
+    <ClCompile Include="FileMap.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="map_ptr.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceTypes.cpp">
       <Filter>androidfw</Filter>
     </ClCompile>
   </ItemGroup>
@@ -957,6 +981,33 @@
       <Filter>androidfw</Filter>
     </ClInclude>
     <ClInclude Include="misc.h">
+      <Filter>androidfw</Filter>
+    </ClInclude>
+    <ClInclude Include="entry_name_utils-inl.h">
+      <Filter>ziparchive</Filter>
+    </ClInclude>
+    <ClInclude Include="signal_handling.h">
+      <Filter>incfs_support</Filter>
+    </ClInclude>
+    <ClInclude Include="util.h">
+      <Filter>incfs_support</Filter>
+    </ClInclude>
+    <ClInclude Include="zip_archive_common.h">
+      <Filter>ziparchive</Filter>
+    </ClInclude>
+    <ClInclude Include="zip_archive_private.h">
+      <Filter>ziparchive</Filter>
+    </ClInclude>
+    <ClInclude Include="zip_cd_entry_map.h">
+      <Filter>ziparchive</Filter>
+    </ClInclude>
+    <ClInclude Include="zip_error.h">
+      <Filter>ziparchive</Filter>
+    </ClInclude>
+    <ClInclude Include="memory.h">
+      <Filter>android-base</Filter>
+    </ClInclude>
+    <ClInclude Include="ByteBucketArray.h">
       <Filter>androidfw</Filter>
     </ClInclude>
   </ItemGroup>

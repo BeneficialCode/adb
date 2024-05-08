@@ -1,7 +1,8 @@
 #pragma once
 
+#include <errno.h>
 #include <stddef.h>
-
+#include <utility>
 
 template <typename Func, typename... Args>
 auto TEMP_FAILURE_RETRY(Func&& func,Args&& ... args) -> decltype(func(std::forward<Args>(args)...)) {
@@ -148,3 +149,7 @@ void UNUSED(const T&...) {
 #define STDIN_FILENO	0
 
 #define SIGPIPE 13
+
+#define S_IFBLK 0060000
+
+#define S_ISBLK(mode)  (((mode) & S_IFMT) == S_IFBLK)

@@ -80,9 +80,9 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NOMINMAX;WIN32_LEAN_AND_MEAN;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_SILENCE_ALL_CXX23_DEPRECATION_WARNINGS;NOMINMAX;WIN32_LEAN_AND_MEAN;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard_C>Default</LanguageStandard_C>
       <UndefinePreprocessorDefinitions>
@@ -99,9 +99,9 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NOMINMAX;WIN32_LEAN_AND_MEAN;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_SILENCE_ALL_CXX23_DEPRECATION_WARNINGS;NOMINMAX;WIN32_LEAN_AND_MEAN;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard_C>Default</LanguageStandard_C>
       <UndefinePreprocessorDefinitions>
@@ -163,6 +163,7 @@
     <ClCompile Include="app_processes.pb.cc" />
     <ClCompile Include="auth.cpp" />
     <ClCompile Include="big_endian.cc" />
+    <ClCompile Include="bugreport.cpp" />
     <ClCompile Include="commandline.cpp" />
     <ClCompile Include="console.cpp" />
     <ClCompile Include="conversion_layer.cc" />
@@ -181,6 +182,7 @@
     <ClCompile Include="fdevent.cpp" />
     <ClCompile Include="fdevent_poll.cpp" />
     <ClCompile Include="file.cpp" />
+    <ClCompile Include="FileMap.cpp" />
     <ClCompile Include="file_sync_client.cpp" />
     <ClCompile Include="incremental.cpp" />
     <ClCompile Include="incremental_server.cpp" />
@@ -195,6 +197,7 @@
     <ClCompile Include="LocaleDataTables.cpp" />
     <ClCompile Include="logging.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="map_ptr.cpp" />
     <ClCompile Include="mdnsresponder_client.cpp" />
     <ClCompile Include="mdns_probe.cc" />
     <ClCompile Include="mdns_probe_manager.cc" />
@@ -224,11 +227,13 @@
     <ClCompile Include="patch_utils.cpp" />
     <ClCompile Include="publisher_impl.cc" />
     <ClCompile Include="querier_impl.cc" />
+    <ClCompile Include="ResourceTypes.cpp" />
     <ClCompile Include="rsa_2048_key.cpp" />
     <ClCompile Include="services.cpp" />
     <ClCompile Include="service_dispatcher.cc" />
     <ClCompile Include="service_instance.cc" />
     <ClCompile Include="service_key.cc" />
+    <ClCompile Include="shell_service_protocol.cpp" />
     <ClCompile Include="sockets.cpp" />
     <ClCompile Include="socket_spec.cpp" />
     <ClCompile Include="stat.cpp" />
@@ -250,6 +255,8 @@
     <ClCompile Include="usb_windows.cpp" />
     <ClCompile Include="utf8.cpp" />
     <ClCompile Include="x509_generator.cpp" />
+    <ClCompile Include="ZipFileRO.cpp" />
+    <ClCompile Include="zip_archive.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="adb.h" />
@@ -279,6 +286,7 @@
     <ClInclude Include="AssetManager.h" />
     <ClInclude Include="big_endian.h" />
     <ClInclude Include="bugreport.h" />
+    <ClInclude Include="ByteBucketArray.h" />
     <ClInclude Include="ByteOrder.h" />
     <ClInclude Include="chrono.h" />
     <ClInclude Include="chrono_helpers.h" />
@@ -305,6 +313,7 @@
     <ClInclude Include="dns_sd_service_watcher.h" />
     <ClInclude Include="dns_sd_txt_record.h" />
     <ClInclude Include="endian.h" />
+    <ClInclude Include="entry_name_utils-inl.h" />
     <ClInclude Include="env.h" />
     <ClInclude Include="errno.h" />
     <ClInclude Include="error.h" />
@@ -360,6 +369,7 @@
     <ClInclude Include="mdns_trackers.h" />
     <ClInclude Include="mdns_utils.h" />
     <ClInclude Include="mdns_writer.h" />
+    <ClInclude Include="memory.h" />
     <ClInclude Include="misc.h" />
     <ClInclude Include="network.h" />
     <ClInclude Include="network_interface.h" />
@@ -387,6 +397,7 @@
     <ClInclude Include="service_instance.h" />
     <ClInclude Include="service_key.h" />
     <ClInclude Include="shell_protocol.h" />
+    <ClInclude Include="signal_handling.h" />
     <ClInclude Include="socket.h" />
     <ClInclude Include="sockets.h" />
     <ClInclude Include="socket_spec.h" />
@@ -420,9 +431,14 @@
     <ClInclude Include="unique_fd.h" />
     <ClInclude Include="usb.h" />
     <ClInclude Include="utf8.h" />
+    <ClInclude Include="util.h" />
     <ClInclude Include="x509_generator.h" />
     <ClInclude Include="ZipFileRO.h" />
     <ClInclude Include="zip_archive.h" />
+    <ClInclude Include="zip_archive_common.h" />
+    <ClInclude Include="zip_archive_private.h" />
+    <ClInclude Include="zip_cd_entry_map.h" />
+    <ClInclude Include="zip_error.h" />
     <ClInclude Include="zip_writer.h" />
   </ItemGroup>
   <ItemGroup>
