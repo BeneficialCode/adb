@@ -424,6 +424,7 @@
     <ClInclude Include="trivial_clock_traits.h" />
     <ClInclude Include="TypeHelpers.h" />
     <ClInclude Include="types.h" />
+    <ClInclude Include="TypeWrappers.h" />
     <ClInclude Include="udp_packet.h" />
     <ClInclude Include="udp_socket.h" />
     <ClInclude Include="uio.h" />

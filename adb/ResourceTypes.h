@@ -34,6 +34,16 @@ namespace android {
     // Represents an absent result or an I/O error.
     using NullOrIOError = std::variant<std::nullopt_t, IOError>;
 
+    // Checks whether the result holds an unexpected I/O error.
+    template <typename T>
+    static inline bool IsIOError(const base::expected<T, NullOrIOError>& result) {
+        return !result.has_value() && std::holds_alternative<IOError>(result.error());
+    }
+
+    static inline IOError GetIOError(const NullOrIOError& error) {
+        return std::get<IOError>(error);
+    }
+
     constexpr const uint32_t kIdmapMagic = 0x504D4449u;
     constexpr const uint32_t kIdmapCurrentVersion = 0x00000009u;
 

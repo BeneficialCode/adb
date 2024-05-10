@@ -1010,6 +1010,9 @@
     <ClInclude Include="ByteBucketArray.h">
       <Filter>androidfw</Filter>
     </ClInclude>
+    <ClInclude Include="TypeWrappers.h">
+      <Filter>androidfw</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="deployagent.inc">
