@@ -403,8 +403,6 @@
     <ClInclude Include="socket_spec.h" />
     <ClInclude Include="stat.h" />
     <ClInclude Include="std_util.h" />
-    <ClInclude Include="String16.h" />
-    <ClInclude Include="String8.h" />
     <ClInclude Include="StringPiece.h" />
     <ClInclude Include="stringprintf.h" />
     <ClInclude Include="strings.h" />

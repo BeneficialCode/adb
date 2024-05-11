@@ -1,7 +1,7 @@
 #pragma once
 
 #include "misc.h"
-#include "String8.h"
+#include <string>
 #include <vector>
 #include <set>
 #include <sys/types.h>
@@ -30,21 +30,21 @@ namespace android {
          * Vector-style access.
          */
         size_t getFileCount(void) { return mFileInfo->size(); }
-        const String8& getFileName(int idx) {
+        const std::string& getFileName(int idx) {
             if (idx < mFileInfo->size()) {
                 auto it = mFileInfo->begin();
                 std::advance(it, idx);
                 return it->getFileName();
             }
-            return String8("");
+            return std::string("");
         }
-        const String8& getSourceName(int idx) {
+        const std::string& getSourceName(int idx) {
             if (idx < mFileInfo->size()) {
 				auto it = mFileInfo->begin();
 				std::advance(it, idx);
 				return it->getSourceName();
 			}
-            return String8("");
+            return std::string("");
         }
 
         /*
@@ -73,7 +73,7 @@ namespace android {
         class FileInfo {
         public:
             FileInfo(void) {}
-            explicit FileInfo(const String8& path)      // useful for e.g. svect.indexOf
+            explicit FileInfo(const std::string& path)      // useful for e.g. svect.indexOf
                 : mFileName(path), mFileType(kFileTypeUnknown)
             {}
             ~FileInfo(void) {}
@@ -102,32 +102,32 @@ namespace android {
                 return mFileName == rhs.mFileName;
             }
 
-            void set(const String8& path, FileType type) {
+            void set(const std::string& path, FileType type) {
                 mFileName = path;
                 mFileType = type;
             }
 
-            const String8& getFileName(void) const { return mFileName; }
-            void setFileName(const String8& path) { mFileName = path; }
+            const std::string& getFileName(void) const { return mFileName; }
+            void setFileName(const std::string& path) { mFileName = path; }
 
             FileType getFileType(void) const { return mFileType; }
             void setFileType(FileType type) { mFileType = type; }
 
-            const String8& getSourceName(void) const { return mSourceName; }
-            void setSourceName(const String8& path) { mSourceName = path; }
+            const std::string& getSourceName(void) const { return mSourceName; }
+            void setSourceName(const std::string& path) { mSourceName = path; }
 
             /*
              * Handy utility for finding an entry in a sorted vector of FileInfo.
              * Returns the index of the matching entry, or -1 if none found.
              */
             static int findEntry(const std::set<FileInfo>* pVector,
-                const String8& fileName);
+                const std::string& fileName);
 
         private:
-            String8    mFileName;      // filename only
+            std::string mFileName;      // filename only
             FileType    mFileType;      // regular, directory, etc
 
-            String8    mSourceName;    // currently debug-only
+            std::string mSourceName;    // currently debug-only
         };
 
         /* AssetManager uses this to initialize us */

@@ -9,8 +9,8 @@
 #include "StringPiece.h"
 #include "ByteOrder.h"
 #include "errors.h"
-#include "String16.h"
 
+#include <string>
 #include <vector>
 #include <map>
 
@@ -536,7 +536,7 @@ namespace android {
 
         // Return string whether the pool is UTF8 or UTF16.  Does not allow you
         // to distinguish null.
-        base::expected<String8, IOError> string8ObjectAt(size_t idx) const;
+        base::expected<std::string, IOError> string8ObjectAt(size_t idx) const;
 
         base::expected<incfs::map_ptr<ResStringPool_span>, NullOrIOError> styleAt(
             const ResStringPool_ref& ref) const;
@@ -1324,7 +1324,7 @@ namespace android {
         // locale component of this Config. If the locale is only country
         // and language, it will look like en-rUS. If it has scripts and
         // variants, it will be a modified bcp47 tag: b+en+Latn+US.
-        void appendDirLocale(String8& str) const;
+        void appendDirLocale(std::string& str) const;
 
         // Sets the values of language, region, script, variant and numbering
         // system to the well formed BCP 47 locale contained in |in|.
@@ -1377,7 +1377,7 @@ namespace android {
 
         bool isBetterThanBeforeLocale(const ResTable_config& o, const ResTable_config* requested) const;
 
-        String8 toString() const;
+        std::string toString() const;
     };
 
     /**
@@ -1905,7 +1905,7 @@ namespace android {
 
         // Creates a mapping from build-time package ID to run-time package ID for
         // the given package.
-        status_t addMapping(const String16& packageName, uint8_t packageId);
+        status_t addMapping(const std::u16string& packageName, uint8_t packageId);
 
         void addMapping(uint8_t buildPackageId, uint8_t runtimePackageId);
 
@@ -1922,7 +1922,7 @@ namespace android {
         virtual status_t lookupResourceId(uint32_t* resId) const;
         status_t lookupResourceValue(Res_value* value) const;
 
-        inline const std::map<String16, uint8_t>& entries() const {
+        inline const std::map<std::u16string, uint8_t>& entries() const {
             return mEntries;
         }
 
@@ -1930,7 +1930,7 @@ namespace android {
         uint8_t mLookupTable[256];
         uint8_t mAssignedPackageId;
         bool mAppAsLib;
-        std::map<String16, uint8_t> mEntries;
+        std::map<std::u16string, uint8_t> mEntries;
         AliasMap mAliasId;
     };
 
@@ -2158,11 +2158,11 @@ namespace android {
             uint32_t* outTypeSpecFlags = NULL) const;
 
         static bool expandResourceRef(const char16_t* refStr, size_t refLen,
-            String16* outPackage,
-            String16* outType,
-            String16* outName,
-            const String16* defType = NULL,
-            const String16* defPackage = NULL,
+            std::u16string* outPackage,
+            std::u16string* outType,
+            std::u16string* outName,
+            const std::u16string* defType = NULL,
+            const std::u16string* defPackage = NULL,
             const char** outErrorMsg = NULL,
             bool* outPublicOnly = NULL);
 
@@ -2176,14 +2176,14 @@ namespace android {
         public:
             inline virtual ~Accessor() { }
 
-            virtual const String16& getAssetsPackage() const = 0;
+            virtual const std::u16string& getAssetsPackage() const = 0;
 
-            virtual uint32_t getCustomResource(const String16& package,
-                const String16& type,
-                const String16& name) const = 0;
-            virtual uint32_t getCustomResourceWithCreation(const String16& package,
-                const String16& type,
-                const String16& name,
+            virtual uint32_t getCustomResource(const std::u16string& package,
+                const std::u16string& type,
+                const std::u16string& name) const = 0;
+            virtual uint32_t getCustomResourceWithCreation(const std::u16string& package,
+                const std::u16string& type,
+                const std::u16string& name,
                 const bool createIfNeeded = false) = 0;
             virtual uint32_t getRemappedPackage(uint32_t origPackage) const = 0;
             virtual bool getAttributeType(uint32_t attrID, uint32_t* outType) = 0;
@@ -2209,26 +2209,26 @@ namespace android {
         // resolve resources that do not exist in this ResTable.  If 'attrType' is
         // supplied, the value will be type checked for this format if 'attrID'
         // is not supplied or found.
-        bool stringToValue(Res_value* outValue, String16* outString,
+        bool stringToValue(Res_value* outValue, std::u16string* outString,
             const char16_t* s, size_t len,
             bool preserveSpaces, bool coerceType,
             uint32_t attrID = 0,
-            const String16* defType = NULL,
-            const String16* defPackage = NULL,
+            const std::u16string* defType = NULL,
+            const std::u16string* defPackage = NULL,
             Accessor* accessor = NULL,
             void* accessorCookie = NULL,
             uint32_t attrType = ResTable_map::TYPE_ANY,
             bool enforcePrivate = true) const;
 
         // Perform processing of escapes and quotes in a string.
-        static bool collectString(String16* outString,
+        static bool collectString(std::u16string* outString,
             const char16_t* s, size_t len,
             bool preserveSpaces,
             const char** outErrorMsg = NULL,
             bool append = false);
 
         size_t getBasePackageCount() const;
-        const String16 getBasePackageName(size_t idx) const;
+        const std::u16string getBasePackageName(size_t idx) const;
         uint32_t getBasePackageId(size_t idx) const;
         uint32_t getLastTypeIdForPackage(size_t idx) const;
 
@@ -2248,7 +2248,7 @@ namespace android {
         void getConfigurations(std::vector<ResTable_config>* configs, bool ignoreMipmap = false,
             bool ignoreAndroidPackage = false, bool includeSystemConfigs = true) const;
 
-        void getLocales(std::vector<String8>* locales, bool includeSystemLocales = true,
+        void getLocales(std::vector<std::string>* locales, bool includeSystemLocales = true,
             bool mergeEquivalentLangs = false) const;
 
         // Generate an idmap.
@@ -2271,10 +2271,10 @@ namespace android {
         static bool getIdmapInfo(const void* idmap, size_t size,
             uint32_t* pVersion,
             uint32_t* pTargetCrc, uint32_t* pOverlayCrc,
-            String8* pTargetPath, String8* pOverlayPath);
+            std::string* pTargetPath, std::string* pOverlayPath);
 
         void print(bool inclValues) const;
-        static String8 normalizeForOutput(const char* input);
+        static std::string normalizeForOutput(const char* input);
 
     private:
         struct Header;

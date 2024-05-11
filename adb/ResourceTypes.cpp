@@ -16,6 +16,7 @@
 #include <type_traits>
 #include <vector>
 #include <atomic>
+#include <format>
 
 #include "file.h"
 #include "macros.h"
@@ -24,8 +25,7 @@
 #include "ResourceTypes.h"
 #include "TypeWrappers.h"
 #include "ByteOrder.h"
-#include "String16.h"
-#include "String8.h"
+#include <string>
 
 #ifndef INT32_MAX
 #define INT32_MAX ((int32_t)(2147483647))
@@ -944,14 +944,14 @@ namespace android {
         return base::unexpected(std::nullopt);
     }
 
-    base::expected<String8, IOError> ResStringPool::string8ObjectAt(size_t idx) const
+    base::expected<std::string, IOError> ResStringPool::string8ObjectAt(size_t idx) const
     {
         const base::expected<StringPiece, NullOrIOError> str = string8At(idx);
         if (UNLIKELY(IsIOError(str))) {
             return base::unexpected(GetIOError(str.error()));
         }
         if (str.has_value()) {
-            return String8(str->data(), str->size());
+            return std::string(str->data(), str->size());
         }
 
         const base::expected<StringPiece16, NullOrIOError> str16 = stringAt(idx);
@@ -959,10 +959,10 @@ namespace android {
             return base::unexpected(GetIOError(str16.error()));
         }
         if (str16.has_value()) {
-            return String8(str16->data(), str16->size());
+            return std::string((char*)str16->data(), str16->size());
         }
 
-        return String8();
+        return std::string();
     }
 
     base::expected<incfs::map_ptr<ResStringPool_span>, NullOrIOError> ResStringPool::styleAt(
@@ -1051,7 +1051,7 @@ namespace android {
                 // most often this happens because we want to get IDs for style
                 // span tags; since those always appear at the end of the string
                 // block, start searching at the back.
-                String8 str8(str, strLen);
+                std::string str8((char*)str, strLen);
                 const size_t str8Len = str8.size();
                 for (int i = mHeader->stringCount - 1; i >= 0; i--) {
                     const base::expected<StringPiece, NullOrIOError> s = string8At(i);
@@ -1487,8 +1487,8 @@ namespace android {
 
     size_t ResXMLParser::indexOfAttribute(const char* ns, const char* attr) const
     {
-        String16 nsStr(ns != NULL ? ns : "");
-        String16 attrStr(attr);
+        std::u16string nsStr(ns != NULL ? (char16_t*)ns : u"");
+        std::u16string attrStr((char16_t*)attr);
         return indexOfAttribute(ns ? nsStr.c_str() : NULL, ns ? nsStr.size() : 0,
             attrStr.c_str(), attrStr.size());
     }
@@ -1502,11 +1502,11 @@ namespace android {
             }
             const size_t N = getAttributeCount();
             if (mTree.mStrings.isUTF8()) {
-                String8 ns8, attr8;
+                std::string ns8, attr8;
                 if (ns != NULL) {
-                    ns8 = String8(ns, nsLen);
+                    ns8 = std::string((char*)ns, nsLen);
                 }
-                attr8 = String8(attr, attrLen);
+                attr8 = std::string((char*)attr, attrLen);
                 if (kDebugStringPoolNoisy) {
                    
                 }
@@ -3005,7 +3005,7 @@ namespace android {
         return true;
     }
 
-    void ResTable_config::appendDirLocale(String8& out) const {
+    void ResTable_config::appendDirLocale(std::string& out) const {
         if (!language[0]) {
             return;
         }
@@ -3277,16 +3277,18 @@ namespace android {
         }
     }
 
-    String8 ResTable_config::toString() const {
-        String8 res;
+    std::string ResTable_config::toString() const {
+        std::string res;
 
         if (mcc != 0) {
             if (res.size() > 0) res.append("-");
-            res.appendFormat("mcc%d", dtohs(mcc));
+            std::string smcc = std::format("mcc{:d}", dtohs(mcc));
+            res.append(smcc);
         }
         if (mnc != 0) {
             if (res.size() > 0) res.append("-");
-            res.appendFormat("mnc%d", dtohs(mnc));
+            std::string smnc = std::format("mnc{:d}", dtohs(mnc));
+            res.append(smnc);
         }
 
         appendDirLocale(res);
@@ -3310,22 +3312,26 @@ namespace android {
                 res.append("ldrtl");
                 break;
             default:
-                res.appendFormat("layoutDir=%d",
+                std::string layoutDir = std::format("layoutDir{:d}",
                     dtohs(screenLayout & ResTable_config::MASK_LAYOUTDIR));
+                res.append(layoutDir);
                 break;
             }
         }
         if (smallestScreenWidthDp != 0) {
             if (res.size() > 0) res.append("-");
-            res.appendFormat("sw%ddp", dtohs(smallestScreenWidthDp));
+            std::string sswdp = std::format("sw%ddp", dtohs(smallestScreenWidthDp));
+            res.append(sswdp);
         }
         if (screenWidthDp != 0) {
             if (res.size() > 0) res.append("-");
-            res.appendFormat("w%ddp", dtohs(screenWidthDp));
+            std::string swdp = std::format("w%ddp", dtohs(screenWidthDp));
+            res.append(swdp);
         }
         if (screenHeightDp != 0) {
             if (res.size() > 0) res.append("-");
-            res.appendFormat("h%ddp", dtohs(screenHeightDp));
+            std::string shdp = std::format("h%ddp", dtohs(screenHeightDp));
+            res.append(shdp);
         }
         if ((screenLayout & MASK_SCREENSIZE) != SCREENSIZE_ANY) {
             if (res.size() > 0) res.append("-");
@@ -3343,8 +3349,9 @@ namespace android {
                 res.append("xlarge");
                 break;
             default:
-                res.appendFormat("screenLayoutSize=%d",
-                    dtohs(screenLayout & ResTable_config::MASK_SCREENSIZE));
+                std::string screenLayoutSize = std::format("screenLayoutSize{:d}",
+                    										dtohs(screenLayout & ResTable_config::MASK_SCREENSIZE));
+                res.append(screenLayoutSize);
                 break;
             }
         }
@@ -3358,8 +3365,9 @@ namespace android {
                 res.append("long");
                 break;
             default:
-                res.appendFormat("screenLayoutLong=%d",
-                    dtohs(screenLayout & ResTable_config::MASK_SCREENLONG));
+                std::string screenLayoutLong = std::format("screenLayoutLong{:d}",
+                    	dtohs(screenLayout & ResTable_config::MASK_SCREENLONG));
+                res.append(screenLayoutLong);
                 break;
             }
         }
@@ -3373,7 +3381,9 @@ namespace android {
                 res.append("round");
                 break;
             default:
-                res.appendFormat("screenRound=%d", dtohs(screenLayout2 & MASK_SCREENROUND));
+                std::string screenRound = std::format("screenRound{:d}",
+                    						dtohs(screenLayout2 & MASK_SCREENROUND));
+                res.append(screenRound);
                 break;
             }
         }
@@ -3387,7 +3397,9 @@ namespace android {
                 res.append("widecg");
                 break;
             default:
-                res.appendFormat("wideColorGamut=%d", dtohs(colorMode & MASK_WIDE_COLOR_GAMUT));
+                std::string wideColorGamut = std::format("wideColorGamut{:d}",
+                    											dtohs(colorMode & MASK_WIDE_COLOR_GAMUT));
+                res.append(wideColorGamut);
                 break;
             }
         }
@@ -3401,7 +3413,8 @@ namespace android {
                 res.append("highdr");
                 break;
             default:
-                res.appendFormat("hdr=%d", dtohs(colorMode & MASK_HDR));
+                std::string hdr = std::format("hdr{:d}", dtohs(colorMode & MASK_HDR));
+                res.append(hdr);
                 break;
             }
         }
@@ -3418,7 +3431,8 @@ namespace android {
                 res.append("square");
                 break;
             default:
-                res.appendFormat("orientation=%d", dtohs(orientation));
+                std::string sorientation = std::format("orientation{:d}", dtohs(orientation));
+                res.append(sorientation);
                 break;
             }
         }
@@ -3444,8 +3458,9 @@ namespace android {
                 res.append("vrheadset");
                 break;
             default:
-                res.appendFormat("uiModeType=%d",
-                    dtohs(screenLayout & ResTable_config::MASK_UI_MODE_TYPE));
+                std::string uiModeType = std::format("uiModeType{:d}",
+                    	dtohs(uiMode & ResTable_config::MASK_UI_MODE_TYPE));
+                res.append(uiModeType);
                 break;
             }
         }
@@ -3459,8 +3474,9 @@ namespace android {
                 res.append("night");
                 break;
             default:
-                res.appendFormat("uiModeNight=%d",
-                    dtohs(uiMode & MASK_UI_MODE_NIGHT));
+                std::string uiModeNight = std::format("uiModeNight{:d}",
+                    dtohs(uiMode & ResTable_config::MASK_UI_MODE_NIGHT));
+                res.append(uiModeNight);
                 break;
             }
         }
@@ -3495,7 +3511,8 @@ namespace android {
                 res.append("anydpi");
                 break;
             default:
-                res.appendFormat("%ddpi", dtohs(density));
+                std::string sdensity = std::format("{:d}dpi", dtohs(density));
+                res.append(sdensity);
                 break;
             }
         }
@@ -3512,7 +3529,9 @@ namespace android {
                 res.append("stylus");
                 break;
             default:
-                res.appendFormat("touchscreen=%d", dtohs(touchscreen));
+                std::string stouchscreen = std::format("touchscreen{:d}",
+                    dtohs(touchscreen));
+                res.append(stouchscreen);
                 break;
             }
         }
@@ -3543,7 +3562,8 @@ namespace android {
                 res.append("12key");
                 break;
             default:
-                res.appendFormat("keyboard=%d", dtohs(keyboard));
+                std::string skeyboard = std::format("keyboard{:d}", dtohs(keyboard));
+                res.append(skeyboard);
                 break;
             }
         }
@@ -3557,8 +3577,9 @@ namespace android {
                 res.append("navhidden");
                 break;
             default:
-                res.appendFormat("inputFlagsNavHidden=%d",
+                std::string inputFlagsNavHidden = std::format("inputFlagsNavHidden{:d}",
                     dtohs(inputFlags & MASK_NAVHIDDEN));
+                res.append(inputFlagsNavHidden);
                 break;
             }
         }
@@ -3578,19 +3599,24 @@ namespace android {
                 res.append("wheel");
                 break;
             default:
-                res.appendFormat("navigation=%d", dtohs(navigation));
+                std::string snavigation = std::format("navigation{:d}",
+                    dtohs(navigation));
+                res.append(snavigation);
                 break;
             }
         }
         if (screenSize != 0) {
             if (res.size() > 0) res.append("-");
-            res.appendFormat("%dx%d", dtohs(screenWidth), dtohs(screenHeight));
+            std::string screen_width_height = std::format("%dx%d", dtohs(screenWidth), dtohs(screenHeight));
+            res.append(screen_width_height);
         }
         if (version != 0) {
             if (res.size() > 0) res.append("-");
-            res.appendFormat("v%d", dtohs(sdkVersion));
+            std::string ssdkVersion = std::format("v{:d}", dtohs(sdkVersion));
+            res.append(ssdkVersion);
             if (minorVersion != 0) {
-                res.appendFormat(".%d", dtohs(minorVersion));
+                std::string sminorVersion = std::format(".{:d}", dtohs(minorVersion));
+                res.append(sminorVersion);
             }
         }
 
@@ -3677,7 +3703,7 @@ namespace android {
     struct ResTable::PackageGroup
     {
         PackageGroup(
-            ResTable* _owner, const String16& _name, uint32_t _id,
+            ResTable* _owner, const std::u16string& _name, uint32_t _id,
             bool appAsLib, bool _isSystemAsset, bool _isDynamic)
             : owner(_owner)
             , name(_name)
@@ -3762,7 +3788,7 @@ namespace android {
         }
 
         const ResTable* const           owner;
-        String16 const                  name;
+        std::u16string const            name;
         uint32_t const                  id;
 
         // This is mainly used to keep track of the loaded packages
@@ -4544,14 +4570,7 @@ namespace android {
 
         if (kDebugTableNoisy) {
             size_t len;
-            printf("Found value: pkg=%zu, type=%d, str=%s, int=%d\n",
-                entry.package->header->index,
-                outValue->dataType,
-                outValue->dataType == Res_value::TYPE_STRING ?
-                String8(UnpackOptionalString(
-                    entry.package->header->values.stringAt(outValue->data), &len)).c_str() :
-                "",
-                outValue->data);
+            
         }
 
         if (outSpecFlags != NULL) {
@@ -5018,7 +5037,7 @@ namespace android {
                 if (name[1] == 'i' && name[2] == 'n'
                     && name[3] == 'd' && name[4] == 'e' && name[5] == 'x'
                     && name[6] == '_') {
-                    int index = atoi(String8(name + 7, nameLen - 7).c_str());
+                    int index = atoi(std::string((char*)name + 7, nameLen - 7).c_str());
                     if (Res_CHECKID(index)) {
                         
                         return 0;
@@ -5084,14 +5103,11 @@ namespace android {
         nameLen = nameEnd - name;
 
         if (kDebugTableNoisy) {
-            printf("Looking for identifier: type=%s, name=%s, package=%s\n",
-                String8(type, typeLen).c_str(),
-                String8(name, nameLen).c_str(),
-                String8(package, packageLen).c_str());
+            
         }
 
-        const String16 attr("attr");
-        const String16 attrPrivate("^attr-private");
+        const std::u16string attr(u"attr");
+        const std::u16string attrPrivate(u"^attr-private");
 
         const size_t NG = mPackageGroups.size();
         for (size_t ig = 0; ig < NG; ig++) {
@@ -5100,7 +5116,7 @@ namespace android {
             if (strzcmp16(package, packageLen,
                 group->name.c_str(), group->name.size())) {
                 if (kDebugTableNoisy) {
-                    printf("Skipping package group: %s\n", String8(group->name).c_str());
+                    
                 }
                 continue;
             }
@@ -5176,11 +5192,11 @@ namespace android {
     }
 
     bool ResTable::expandResourceRef(const char16_t* refStr, size_t refLen,
-        String16* outPackage,
-        String16* outType,
-        String16* outName,
-        const String16* defType,
-        const String16* defPackage,
+        std::u16string* outPackage,
+        std::u16string* outType,
+        std::u16string* outName,
+        const std::u16string* defType,
+        const std::u16string* defPackage,
         const char** outErrorMsg,
         bool* outPublicOnly)
     {
@@ -5210,7 +5226,7 @@ namespace android {
         }
 
         if (packageEnd) {
-            *outPackage = String16(p, packageEnd - p);
+            *outPackage = std::u16string(p, packageEnd - p);
             p = packageEnd + 1;
         }
         else {
@@ -5223,7 +5239,7 @@ namespace android {
             *outPackage = *defPackage;
         }
         if (typeEnd) {
-            *outType = String16(p, typeEnd - p);
+            *outType = std::u16string(p, typeEnd - p);
             p = typeEnd + 1;
         }
         else {
@@ -5235,7 +5251,7 @@ namespace android {
             }
             *outType = *defType;
         }
-        *outName = String16(p, end - p);
+        *outName = std::u16string(p, end - p);
         if (outPackage->empty()) {
             if (outErrorMsg) {
                 *outErrorMsg = "Resource package cannot be an empty string";
@@ -5551,12 +5567,12 @@ namespace android {
         return false;
     }
 
-    bool ResTable::stringToValue(Res_value* outValue, String16* outString,
+    bool ResTable::stringToValue(Res_value* outValue, std::u16string* outString,
         const char16_t* s, size_t len,
         bool preserveSpaces, bool coerceType,
         uint32_t attrID,
-        const String16* defType,
-        const String16* defPackage,
+        const std::u16string* defType,
+        const std::u16string* defPackage,
         Accessor* accessor,
         void* accessorCookie,
         uint32_t attrType,
@@ -5674,7 +5690,7 @@ namespace android {
                     resourceRefName = s + 1;
                     resourceNameLen = len - 1;
                 }
-                String16 package, type, name;
+                std::u16string package, type, name;
                 if (!expandResourceRef(resourceRefName, resourceNameLen, &package, &type, &name,
                     defType, defPackage, &errorMsg)) {
                     if (accessor != NULL) {
@@ -5845,8 +5861,8 @@ namespace android {
 
             //printf("Looking up attr: %s\n", String8(s, len).c_str());
 
-            static const String16 attr16("attr");
-            String16 package, type, name;
+            static const std::u16string attr16(u"attr");
+            std::u16string package, type, name;
             if (!expandResourceRef(s + 1, len - 1, &package, &type, &name,
                 &attr16, defPackage, &errorMsg)) {
                 if (accessor != NULL) {
@@ -6135,13 +6151,13 @@ namespace android {
         return true;
     }
 
-    bool ResTable::collectString(String16* outString,
+    bool ResTable::collectString(std::u16string* outString,
         const char16_t* s, size_t len,
         bool preserveSpaces,
         const char** outErrorMsg,
         bool append)
     {
-        String16 tmp;
+        std::u16string tmp;
 
         char quoted = 0;
         const char16_t* p = s;
@@ -6176,7 +6192,7 @@ namespace android {
             }
             if (p < (s + len)) {
                 if (p > s) {
-                    tmp.append(String16(s, p - s));
+                    tmp.append(std::u16string(s, p - s));
                 }
                 if (!preserveSpaces && (*p == '"' || *p == '\'')) {
                     if (quoted == 0) {
@@ -6190,7 +6206,7 @@ namespace android {
                 else if (!preserveSpaces && isspace16(*p)) {
                     // Space outside of a quote -- consume all spaces and
                     // leave a single plain space char.
-                    tmp.append(String16(" "));
+                    tmp.append(std::u16string(u" "));
                     p++;
                     while (p < (s + len) && isspace16(*p)) {
                         p++;
@@ -6201,28 +6217,28 @@ namespace android {
                     if (p < (s + len)) {
                         switch (*p) {
                         case 't':
-                            tmp.append(String16("\t"));
+                            tmp.append(std::u16string(u"\t"));
                             break;
                         case 'n':
-                            tmp.append(String16("\n"));
+                            tmp.append(std::u16string(u"\n"));
                             break;
                         case '#':
-                            tmp.append(String16("#"));
+                            tmp.append(std::u16string(u"#"));
                             break;
                         case '@':
-                            tmp.append(String16("@"));
+                            tmp.append(std::u16string(u"@"));
                             break;
                         case '?':
-                            tmp.append(String16("?"));
+                            tmp.append(std::u16string(u"?"));
                             break;
                         case '"':
-                            tmp.append(String16("\""));
+                            tmp.append(std::u16string(u"\""));
                             break;
                         case '\'':
-                            tmp.append(String16("'"));
+                            tmp.append(std::u16string(u"'"));
                             break;
                         case '\\':
-                            tmp.append(String16("\\"));
+                            tmp.append(std::u16string(u"\\"));
                             break;
                         case 'u':
                         {
@@ -6249,7 +6265,7 @@ namespace android {
                                 }
                                 chr = (chr << 4) | c;
                             }
-                            tmp.append(String16(&chr, 1));
+                            tmp.append(std::u16string(&chr, 1));
                         } break;
                         default:
                             // ignore unknown escape chars.
@@ -6265,7 +6281,7 @@ namespace android {
 
         if (tmp.size() != 0) {
             if (len > 0) {
-                tmp.append(String16(s, len));
+                tmp.append(std::u16string(s, len));
             }
             if (append) {
                 outString->append(tmp);
@@ -6276,10 +6292,10 @@ namespace android {
         }
         else {
             if (append) {
-                outString->append(String16(s, len));
+                outString->append(std::u16string(s, len));
             }
             else {
-                *outString = String16(s, len);
+                *outString = std::u16string(s, len);
             }
         }
 
@@ -6294,10 +6310,10 @@ namespace android {
         return mPackageGroups.size();
     }
 
-    const String16 ResTable::getBasePackageName(size_t idx) const
+    const std::u16string ResTable::getBasePackageName(size_t idx) const
     {
         if (mError != NO_ERROR) {
-            return String16();
+            return std::u16string();
         }
         
         return mPackageGroups[idx]->name;
@@ -6360,7 +6376,7 @@ namespace android {
     void ResTable::forEachConfiguration(bool ignoreMipmap, bool ignoreAndroidPackage,
         bool includeSystemConfigs, const Func& f) const {
         const size_t packageCount = mPackageGroups.size();
-        const String16 android("android");
+        const std::u16string android(u"android");
         for (size_t i = 0; i < packageCount; i++) {
             const PackageGroup* packageGroup = mPackageGroups[i];
             if (ignoreAndroidPackage && android == packageGroup->name) {
@@ -6376,7 +6392,7 @@ namespace android {
                 for (size_t k = 0; k < numTypes; k++) {
                     const Type* type = typeList[k];
                     const ResStringPool& typeStrings = type->package->typeStrings;
-                    const base::expected<String8, NullOrIOError> typeStr = typeStrings.string8ObjectAt(
+                    const base::expected<std::string, NullOrIOError> typeStr = typeStrings.string8ObjectAt(
                         type->typeSpec->id - 1);
                     if (ignoreMipmap && typeStr.has_value() && *typeStr == "mipmap") {
                         continue;
@@ -6410,11 +6426,11 @@ namespace android {
         forEachConfiguration(ignoreMipmap, ignoreAndroidPackage, includeSystemConfigs, func);
     }
 
-    static bool compareString8AndCString(const String8& str, const char* cStr) {
+    static bool compareString8AndCString(const std::string& str, const char* cStr) {
         return strcmp(str.c_str(), cStr) < 0;
     }
 
-    void ResTable::getLocales(std::vector<String8>* locales, bool includeSystemLocales,
+    void ResTable::getLocales(std::vector<std::string>* locales, bool includeSystemLocales,
         bool mergeEquivalentLangs) const {
         char locale[RESTABLE_MAX_LOCALE_LEN];
 
@@ -6426,7 +6442,7 @@ namespace android {
 
             auto iter = std::lower_bound(beginIter, endIter, locale, compareString8AndCString);
             if (iter == endIter || strcmp(iter->c_str(), locale) != 0) {
-                locales->insert(iter, String8(locale));
+                locales->insert(iter, std::string(locale));
             }
             });
     }
@@ -6831,7 +6847,7 @@ namespace android {
             idx = mPackageGroups.size() + 1;
             char16_t tmpName[sizeof(pkg->name) / sizeof(pkg->name[0])];
             strcpy16_dtoh(tmpName, pkg->name, sizeof(pkg->name) / sizeof(pkg->name[0]));
-            group = new PackageGroup(this, String16(tmpName), id, appAsLib, isSystemAsset, isDynamic);
+            group = new PackageGroup(this, std::u16string(tmpName), id, appAsLib, isSystemAsset, isDynamic);
             if (group == NULL) {
                 delete package;
                 return (mError = NO_MEMORY);
@@ -7094,7 +7110,7 @@ namespace android {
                 
                 return UNKNOWN_ERROR;
             }
-            mEntries[String16(tmpName)] = packageId;
+            mEntries[std::u16string(tmpName)] = packageId;
             // mEntries.replaceValueFor(String16(tmpName), (uint8_t)packageId);
             entry = entry + 1;
         }
@@ -7204,7 +7220,7 @@ namespace android {
         const size_t tmpNameSize = arraysize(targetPackageStruct->name);
         char16_t tmpName[tmpNameSize];
         strcpy16_dtoh(tmpName, targetPackageStruct->name, tmpNameSize);
-        const String16 targetPackageName(tmpName);
+        const std::u16string targetPackageName(tmpName);
 
         const PackageGroup* packageGroup = mPackageGroups[0];
 
@@ -7312,7 +7328,7 @@ namespace android {
     bool ResTable::getIdmapInfo(const void* idmap, size_t sizeBytes,
         uint32_t* pVersion,
         uint32_t* pTargetCrc, uint32_t* pOverlayCrc,
-        String8* pTargetPath, String8* pOverlayPath)
+        std::string* pTargetPath, std::string* pOverlayPath)
     {
         const uint32_t* map = (const uint32_t*)idmap;
         if (!assertIdmapHeader(map, sizeBytes)) {
@@ -7337,7 +7353,7 @@ namespace android {
     }
 
 
-#define CHAR16_TO_CSTR(c16, len) (String8(String16(c16,len)).c_str())
+#define CHAR16_TO_CSTR(c16, len) (std::string(std::u16string(c16,len)).c_str())
 
 #define CHAR16_ARRAY_EQ(constant, var, len) \
         (((len) == (sizeof(constant)/sizeof((constant)[0]))) && (0 == memcmp((var), (constant), (len))))
@@ -7378,9 +7394,9 @@ namespace android {
     }
 
     // Normalize a string for output
-    String8 ResTable::normalizeForOutput(const char* input)
+    std::string ResTable::normalizeForOutput(const char* input)
     {
-        String8 ret;
+        std::string ret;
         char buff[2];
         buff[1] = '\0';
 
@@ -7446,8 +7462,7 @@ namespace android {
                 const char16_t* str16 = UnpackOptionalString(pkg->header->values.stringAt(
                     value.data), &len);
                 if (str16 != NULL) {
-                    printf("(string16) \"%s\"\n",
-                        normalizeForOutput(String8(str16, len).c_str()).c_str());
+                    
                 }
                 else {
                     printf("(string) null\n");
@@ -7494,11 +7509,9 @@ namespace android {
         printf("Package Groups (%d)\n", (int)pgCount);
         for (size_t pgIndex = 0; pgIndex < pgCount; pgIndex++) {
             const PackageGroup* pg = mPackageGroups[pgIndex];
-            printf("Package Group %d id=0x%02x packageCount=%d name=%s\n",
-                (int)pgIndex, pg->id, (int)pg->packages.size(),
-                String8(pg->name).c_str());
+            
 
-            const std::map<String16, uint8_t>& refEntries = pg->dynamicRefTable.entries();
+            const std::map<std::u16string, uint8_t>& refEntries = pg->dynamicRefTable.entries();
             const size_t refEntryCount = refEntries.size();
             if (refEntryCount > 0) {
                 printf("  DynamicRefTable entryCount=%d:\n", (int)refEntryCount);
@@ -7526,8 +7539,6 @@ namespace android {
                     char16_t tmpName[sizeof(pkg->package->name) / sizeof(pkg->package->name[0])];
                     strcpy16_dtoh(tmpName, pkg->package->name,
                         sizeof(pkg->package->name) / sizeof(pkg->package->name[0]));
-                    printf("  Package %d id=0x%02x name=%s\n", (int)pkgIndex,
-                        pkg->package->id, String8(tmpName).c_str());
                 }
 
                 for (size_t typeIndex = 0; typeIndex < pg->types.size(); typeIndex++) {
@@ -7554,25 +7565,21 @@ namespace android {
 
                             resource_name resName;
                             if (this->getResourceName(resID, true, &resName)) {
-                                String8 type8;
-                                String8 name8;
+                                std::string type8;
+                                std::string name8;
                                 if (resName.type8 != NULL) {
-                                    type8 = String8(resName.type8, resName.typeLen);
+                                    type8 = std::string(resName.type8, resName.typeLen);
                                 }
                                 else {
-                                    type8 = String8(resName.type, resName.typeLen);
+                                    type8 = std::string((char*)(resName.type), resName.typeLen);
                                 }
                                 if (resName.name8 != NULL) {
-                                    name8 = String8(resName.name8, resName.nameLen);
+                                    name8 = std::string(resName.name8, resName.nameLen);
                                 }
                                 else {
-                                    name8 = String8(resName.name, resName.nameLen);
+                                    name8 = std::string((char*)(resName.name), resName.nameLen);
                                 }
-                                printf("      spec resource 0x%08x %s:%s/%s: flags=0x%08x\n",
-                                    resID,
-                                    CHAR16_TO_CSTR(resName.package, resName.packageLen),
-                                    type8.c_str(), name8.c_str(),
-                                    dtohl(typeConfigs->typeSpecFlags[entryIndex]));
+                                
                             }
                             else {
                                 printf("      INVALID TYPE CONFIG FOR RESOURCE 0x%08x\n", resID);
@@ -7591,7 +7598,7 @@ namespace android {
                         ResTable_config thisConfig;
                         thisConfig.copyFromDtoH(type->config);
 
-                        String8 configStr = thisConfig.toString();
+                        std::string configStr = thisConfig.toString();
                         printf("      config %s", configStr.size() > 0
                             ? configStr.c_str() : "(default)");
                         if (type->flags != 0u) {
@@ -7655,23 +7662,21 @@ namespace android {
                             }
                             resource_name resName;
                             if (this->getResourceName(resID, true, &resName)) {
-                                String8 type8;
-                                String8 name8;
+                                std::string type8;
+                                std::string name8;
                                 if (resName.type8 != NULL) {
-                                    type8 = String8(resName.type8, resName.typeLen);
+                                    type8 = std::string(resName.type8, resName.typeLen);
                                 }
                                 else {
-                                    type8 = String8(resName.type, resName.typeLen);
+                                    type8 = std::string((char*)(resName.type), resName.typeLen);
                                 }
                                 if (resName.name8 != NULL) {
-                                    name8 = String8(resName.name8, resName.nameLen);
+                                    name8 = std::string(resName.name8, resName.nameLen);
                                 }
                                 else {
-                                    name8 = String8(resName.name, resName.nameLen);
+                                    name8 = std::string((char*)(resName.name), resName.nameLen);
                                 }
-                                printf("        resource 0x%08x %s:%s/%s: ", resID,
-                                    CHAR16_TO_CSTR(resName.package, resName.packageLen),
-                                    type8.c_str(), name8.c_str());
+                                
                             }
                             else {
                                 printf("        INVALID RESOURCE 0x%08x: ", resID);
@@ -7808,7 +7813,7 @@ namespace android {
         return NO_ERROR;
     }
 
-    status_t DynamicRefTable::addMapping(const String16& packageName, uint8_t packageId)
+    status_t DynamicRefTable::addMapping(const std::u16string& packageName, uint8_t packageId)
     {
 
         // size_t index = mEntries.indexOfKey(packageName);

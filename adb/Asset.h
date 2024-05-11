@@ -10,7 +10,7 @@
 
 #include "Compat.h"
 #include "errors.h"
-#include "String8.h"
+#include <string>
 
 namespace android {
 
@@ -32,7 +32,7 @@ namespace android {
         Asset& operator=(const Asset& src) = delete;
 
         static int32_t getGlobalCount();
-        static String8 getAssetAllocations();
+        static std::u8string getAssetAllocations();
 
         /* used when opening an asset */
         typedef enum AccessMode {
@@ -141,7 +141,7 @@ namespace android {
         off64_t handleSeek(off64_t offset, int whence, off64_t curPosn, off64_t maxPosn);
 
         /* set the asset source string */
-        void setAssetSource(const String8& path) { mAssetSource = path; }
+        void setAssetSource(const std::string& path) { mAssetSource = path; }
 
         AccessMode getAccessMode(void) const { return mAccessMode; }
 
@@ -211,7 +211,7 @@ namespace android {
          // TODO
 
         AccessMode  mAccessMode;        // how the asset was opened
-        String8    mAssetSource;       // debug string
+        std::string    mAssetSource;       // debug string
 
         Asset* mNext;				// linked list.
         Asset* mPrev;

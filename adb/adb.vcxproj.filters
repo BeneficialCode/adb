@@ -947,12 +947,6 @@
     <ClInclude Include="ByteOrder.h">
       <Filter>utils</Filter>
     </ClInclude>
-    <ClInclude Include="String16.h">
-      <Filter>utils</Filter>
-    </ClInclude>
-    <ClInclude Include="String8.h">
-      <Filter>utils</Filter>
-    </ClInclude>
     <ClInclude Include="TypeHelpers.h">
       <Filter>utils</Filter>
     </ClInclude>

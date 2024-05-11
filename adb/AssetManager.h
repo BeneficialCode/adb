@@ -5,8 +5,7 @@
 #include "ZipFileRO.h"
 #include <map>
 #include <set>
-#include "String16.h"
-#include "String8.h"
+#include <string>
 #include "threads.h"
 #include <vector>
 
@@ -71,9 +70,9 @@ namespace android {
          * then on success, *cookie is set to the value corresponding to the
          * newly-added asset source.
          */
-        bool addAssetPath(const String8& path, int32_t* cookie,
+        bool addAssetPath(const std::string& path, int32_t* cookie,
             bool appAsLib = false, bool isSystemAsset = false);
-        bool addOverlayPath(const String8& path, int32_t* cookie);
+        bool addOverlayPath(const std::string& path, int32_t* cookie);
 
         /*
          * Add a new source for assets from an already open file descriptor.
@@ -86,7 +85,7 @@ namespace android {
          * then on success, *cookie is set to the value corresponding to the
          * newly-added asset source.
          */
-        bool addAssetFd(int fd, const String8& debugPathName, int32_t* cookie,
+        bool addAssetFd(int fd, const std::string& debugPathName, int32_t* cookie,
             bool appAsLib = false, bool assume_ownership = true);
 
         /*
@@ -108,7 +107,7 @@ namespace android {
          * Return an asset path in the manager.  'cookie' must be a non-negative value
          * previously returned from addAssetPath() or nextAssetPath().
          */
-        String8 getAssetPath(const int32_t cookie) const;
+        std::string getAssetPath(const int32_t cookie) const;
 
         /*
          * Sets various device configuration parameters, like screen orientation, layout,
@@ -183,7 +182,7 @@ namespace android {
         /**
          * Get the known locales for this asset manager object.
          */
-        void getLocales(std::vector<String8>* locales, bool includeSystemLocales = true) const;
+        void getLocales(std::vector<std::string>* locales, bool includeSystemLocales = true) const;
 
         /**
          * Generate idmap data to translate resources IDs between a package and a
@@ -199,10 +198,10 @@ namespace android {
         {
             asset_path() : path(""), rawFd(-1), type(kFileTypeRegular), idmap(""),
                 isSystemOverlay(false), isSystemAsset(false), assumeOwnership(false) {}
-            String8 path;
+            std::string path;
             int rawFd;
             FileType type;
-            String8 idmap;
+            std::string idmap;
             bool isSystemOverlay;
             bool isSystemAsset;
             bool assumeOwnership;
@@ -211,18 +210,18 @@ namespace android {
 
         Asset* openNonAssetInPathLocked(const char* fileName, AccessMode mode,
             asset_path& path);
-        String8 createPathNameLocked(const asset_path& path, const char* rootDir);
-        String8 createZipSourceNameLocked(const String8& zipFileName,
-            const String8& dirName, const String8& fileName);
+        std::string createPathNameLocked(const asset_path& path, const char* rootDir);
+        std::string createZipSourceNameLocked(const std::string& zipFileName,
+            const std::string& dirName, const std::string& fileName);
 
         ZipFileRO* getZipFileLocked(asset_path& path);
-        Asset* openAssetFromFileLocked(const String8& fileName, AccessMode mode);
+        Asset* openAssetFromFileLocked(const std::string& fileName, AccessMode mode);
         Asset* openAssetFromZipLocked(const ZipFileRO* pZipFile,
-            const ZipEntryRO entry, AccessMode mode, const String8& entryName);
+            const ZipEntryRO entry, AccessMode mode, const std::string& entryName);
 
         bool scanAndMergeDirLocked(std::set<AssetDir::FileInfo>* pMergedInfo,
             const asset_path& path, const char* rootDir, const char* dirName);
-        std::set<AssetDir::FileInfo>* scanDirLocked(const String8& path);
+        std::set<AssetDir::FileInfo>* scanDirLocked(const std::string& path);
         bool scanAndMergeZipLocked(std::set<AssetDir::FileInfo>* pMergedInfo,
             const asset_path& path, const char* rootDir, const char* dirName);
         void mergeInfoLocked(std::set<AssetDir::FileInfo>* pMergedInfo,
@@ -235,13 +234,13 @@ namespace android {
 
         Asset* openIdmapLocked(const struct asset_path& ap) const;
 
-        void addSystemOverlays(const char* pathOverlaysList, const String8& targetPackagePath,
+        void addSystemOverlays(const char* pathOverlaysList, const std::string& targetPackagePath,
             ResTable* sharedRes, size_t offset) const;
 
         class SharedZip : public RefBase {
         public:
-            static sp<SharedZip> get(const String8& path, bool createIfNotPresent = true);
-            static sp<SharedZip> create(int fd, const String8& path);
+            static sp<SharedZip> get(const std::string& path, bool createIfNotPresent = true);
+            static sp<SharedZip> create(int fd, const std::string& path);
 
             ZipFileRO* getZip();
 
@@ -260,11 +259,11 @@ namespace android {
             ~SharedZip();
 
         private:
-            SharedZip(const String8& path, time_t modWhen);
-            SharedZip(int fd, const String8& path);
+            SharedZip(const std::string& path, time_t modWhen);
+            SharedZip(int fd, const std::string& path);
             SharedZip(); // <-- not implemented
 
-            String8 mPath;
+            std::string mPath;
             ZipFileRO* mZipFile;
             time_t mModWhen;
 
@@ -274,7 +273,7 @@ namespace android {
             std::vector<asset_path> mOverlays;
 
             static std::mutex gLock;
-            static std::map<String8, wp<SharedZip> > gOpen;
+            static std::map<std::string, wp<SharedZip> > gOpen;
         };
 
         /*
@@ -293,29 +292,29 @@ namespace android {
              * Return a ZipFileRO structure for a ZipFileRO with the specified
              * parameters.
              */
-            ZipFileRO* getZip(const String8& path);
+            ZipFileRO* getZip(const std::string& path);
 
-            const sp<SharedZip> getSharedZip(const String8& path);
+            const sp<SharedZip> getSharedZip(const std::string& path);
 
-            Asset* getZipResourceTableAsset(const String8& path);
-            Asset* setZipResourceTableAsset(const String8& path, Asset* asset);
+            Asset* getZipResourceTableAsset(const std::string& path);
+            Asset* setZipResourceTableAsset(const std::string& path, Asset* asset);
 
-            ResTable* getZipResourceTable(const String8& path);
-            ResTable* setZipResourceTable(const String8& path, ResTable* res);
+            ResTable* getZipResourceTable(const std::string& path);
+            ResTable* setZipResourceTable(const std::string& path, ResTable* res);
 
             // generate path, e.g. "common/en-US-noogle.zip"
-            static String8 getPathName(const char* path);
+            static std::string getPathName(const char* path);
 
             bool isUpToDate();
 
-            void addOverlay(const String8& path, const asset_path& overlay);
-            bool getOverlay(const String8& path, size_t idx, asset_path* out) const;
+            void addOverlay(const std::string& path, const asset_path& overlay);
+            bool getOverlay(const std::string& path, size_t idx, asset_path* out) const;
 
         private:
             void closeZip(int idx);
 
-            int getIndex(const String8& zip) const;
-            mutable std::vector<String8> mZipPath;
+            int getIndex(const std::string& zip) const;
+            mutable std::vector<std::string> mZipPath;
             mutable std::vector<sp<SharedZip> > mZipFile;
         };
 
