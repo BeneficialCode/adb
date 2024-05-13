@@ -89,3 +89,7 @@ void adb_trace_init(char** argv){
 
     VLOG(ADB) << adb_version();
 }
+
+void adb_trace_enable(AdbTrace trace_tag) {
+    adb_trace_mask |= (1 << trace_tag);
+}

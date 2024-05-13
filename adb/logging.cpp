@@ -150,8 +150,6 @@ namespace android {
             static_assert(arraysize(log_characters) - 1 == FATAL + 1,
                 "Mismatch in size of log_characters and values in LogSeverity");
             char severity_char = log_characters[severity];
-            fprintf(stderr, "%s %c %s %5d %5" PRIu64 " %s:%u] %s\n", tag ? tag : "nullptr", severity_char,
-                timestamp, _getpid(), GetThreadId(GetCurrentThread()), file, line, message);
         }
         void StdioLogger(LogId, LogSeverity severity, const char* /*tag*/, const char* /*file*/,
             unsigned int /*line*/, const char* message) {

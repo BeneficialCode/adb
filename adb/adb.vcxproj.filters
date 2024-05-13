@@ -465,6 +465,18 @@
     <ClCompile Include="ResourceTypes.cpp">
       <Filter>androidfw</Filter>
     </ClCompile>
+    <ClCompile Include="TypeWrappers.cpp">
+      <Filter>androidfw</Filter>
+    </ClCompile>
+    <ClCompile Include="mapped_file.cpp">
+      <Filter>android-base</Filter>
+    </ClCompile>
+    <ClCompile Include="zip_cd_entry_map.cc">
+      <Filter>ziparchive</Filter>
+    </ClCompile>
+    <ClCompile Include="usb_libusb.cpp">
+      <Filter>client</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="commandline.h">
@@ -1006,6 +1018,9 @@
     </ClInclude>
     <ClInclude Include="TypeWrappers.h">
       <Filter>androidfw</Filter>
+    </ClInclude>
+    <ClInclude Include="transfer_id.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -197,6 +197,7 @@
     <ClCompile Include="LocaleDataTables.cpp" />
     <ClCompile Include="logging.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="mapped_file.cpp" />
     <ClCompile Include="map_ptr.cpp" />
     <ClCompile Include="mdnsresponder_client.cpp" />
     <ClCompile Include="mdns_probe.cc" />
@@ -249,14 +250,17 @@
     <ClCompile Include="transport_mdns.cpp" />
     <ClCompile Include="transport_usb.cpp" />
     <ClCompile Include="types.cpp" />
+    <ClCompile Include="TypeWrappers.cpp" />
     <ClCompile Include="udp_packet.cc" />
     <ClCompile Include="udp_socket.cpp" />
     <ClCompile Include="Unicode.cpp" />
+    <ClCompile Include="usb_libusb.cpp" />
     <ClCompile Include="usb_windows.cpp" />
     <ClCompile Include="utf8.cpp" />
     <ClCompile Include="x509_generator.cpp" />
     <ClCompile Include="ZipFileRO.cpp" />
     <ClCompile Include="zip_archive.cc" />
+    <ClCompile Include="zip_cd_entry_map.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="adb.h" />
@@ -418,6 +422,7 @@
     <ClInclude Include="time.h" />
     <ClInclude Include="Timers.h" />
     <ClInclude Include="tls_connection.h" />
+    <ClInclude Include="transfer_id.h" />
     <ClInclude Include="transport.h" />
     <ClInclude Include="trivial_clock_traits.h" />
     <ClInclude Include="TypeHelpers.h" />
