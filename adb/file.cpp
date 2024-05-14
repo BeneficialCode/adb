@@ -17,6 +17,7 @@
 
 #endif
 #if defined(_WIN32)
+#include <WinSock2.h>
 #include <direct.h>
 #include <windows.h>
 #define O_NOFOLLOW 0

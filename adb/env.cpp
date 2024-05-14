@@ -1,6 +1,7 @@
 #include "env.h"
 
 #ifdef _WIN32
+#include <WinSock2.h>
 #include <lmcons.h>
 #include <windows.h>
 #endif  // _WIN32

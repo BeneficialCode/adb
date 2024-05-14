@@ -2,4 +2,4 @@
 
 #include <sys/types.h>
 
-typedef off_t off64_t;
+typedef __int64 off64_t;

@@ -58,6 +58,10 @@ void adb_server_cleanup() {
     kick_all_transports();
     usb_cleanup();
     mdns_cleanup();
+
+#ifdef _WIN32
+    // ::WSACleanup();
+#endif
 }
 
 static void intentionally_leak() {
@@ -216,6 +220,20 @@ int adb_server_main(int is_daemon, const std::string& socket_spec, const char* o
     D("Event loop starting");
     fdevent_loop();
     return 0;
+}
+
+void init_winsock() {
+    WSADATA wsaData;
+    int rc = WSAStartup(MAKEWORD(2, 2), &wsaData);
+    if (rc != 0) {
+        LOG(FATAL) << "could not initialize Winsock: "
+            << android::base::SystemErrorCodeToString(rc);
+    }
+
+    if (LOBYTE(wsaData.wVersion) != 2 || HIBYTE(wsaData.wVersion) != 2) {
+        /* Tell the user that we could not find a usable WinSock DLL. */
+        LOG(FATAL) << "could not find a usable WinSock DLL";
+    }
 }
 
 int main(int argc, char* argv[], char* envp[]) {

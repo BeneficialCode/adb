@@ -4,8 +4,9 @@
 
 #include <mstcpip.h>
 #include <lmcons.h>
+#include <WinSock2.h>
+#include <WS2tcpip.h>
 #include <windows.h>
-#include <winsock2.h> /* winsock.h *must* be included before windows.h. */
 #include <sys/utime.h>
 
 #include <errno.h>
@@ -39,6 +40,10 @@
 
 
 #pragma comment(lib,"ntdllp")
+#pragma comment(lib,"ws2_32.lib")
+#pragma comment(lib,"iphlpapi.lib")
+#pragma comment(lib,"gdi32.lib")
+#pragma comment(lib,"userenv.lib")
 
 /* forward declarations */
 
@@ -763,6 +768,10 @@ static void _init_winsock() {
                 << android::base::SystemErrorCodeToString(rc);
         }
 
+        if (LOBYTE(wsaData.wVersion) != 2 || HIBYTE(wsaData.wVersion) != 2) {
+            /* Tell the user that we could not find a usable WinSock DLL. */
+            LOG(FATAL) << "could not find a usable WinSock DLL";
+        }
         // Note that we do not call atexit() to register WSACleanup to be called
         // at normal process termination because:
         // 1) When exit() is called, there are still threads actively using
@@ -2528,6 +2537,7 @@ int unix_open(std::string_view path, int options, ...) {
         mode = va_arg(args, int);
         va_end(args);
         int fd;
+        mode = _S_IREAD | _S_IWRITE;
         errno_t err = _wsopen_s(&fd, path_wide.c_str(), options, _SH_DENYNO, mode);
         return fd;
     }
@@ -2942,18 +2952,18 @@ static std::string ToLower(const std::string& anycase) {
     return str;
 }
 
-extern "C" int main(int argc, char** argv);
+// extern "C" int main(int argc, char** argv);
 
 // Link with -municode to cause this wmain() to be used as the program
 // entrypoint. It will convert the args from UTF-16 to UTF-8 and call the
 // regular main() with UTF-8 args.
-extern "C" int wmain(int argc, wchar_t** argv) {
-    // Convert args from UTF-16 to UTF-8 and pass that to main().
-    NarrowArgs narrow_args(argc, argv);
-
-    // Avoid destructing NarrowArgs: argv might have been mutated to point to string literals.
-    _exit(main(argc, narrow_args.data()));
-}
+//extern "C" int wmain(int argc, wchar_t** argv) {
+//    // Convert args from UTF-16 to UTF-8 and pass that to main().
+//    NarrowArgs narrow_args(argc, argv);
+//
+//    // Avoid destructing NarrowArgs: argv might have been mutated to point to string literals.
+//    _exit(main(argc, narrow_args.data()));
+//}
 
 // Shadow UTF-8 environment variable name/value pairs that are created from
 // _wenviron by _init_env(). Note that this is not currently updated if putenv, setenv, unsetenv are
@@ -3626,7 +3636,6 @@ static void _init_console() {
 }
 
 static bool _init_sysdeps() {
-    // _init_console() depends on _init_env() not being called yet.
     _init_console();
     _init_env();
     _init_winsock();

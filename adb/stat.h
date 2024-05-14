@@ -28,10 +28,7 @@ struct adb_stat : public stat {};
 #define S_IFLNK 0120000
 #define S_ISLNK(mode) (((mode) & S_IFMT) == S_IFLNK)
 
-// mingw defines S_IFBLK to a different value from bionic.
-#undef S_IFBLK
 #define S_IFBLK 0060000
-#undef S_ISBLK
 #define S_ISBLK(mode) (((mode) & S_IFMT) == S_IFBLK)
 
 // Make sure that host file mode values match the ones on the device.

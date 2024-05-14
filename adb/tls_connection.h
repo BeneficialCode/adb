@@ -8,8 +8,6 @@
 
 #include "unique_fd.h"
 
-
-
 #include <openssl/ssl.h>
 #include <openssl/x509.h>
 

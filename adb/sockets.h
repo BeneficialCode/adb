@@ -9,10 +9,10 @@
 
 #if defined(_WIN32)
 
-
-#include <Windows.h>
-#include <winsock2.h>
+#include <WinSock2.h>
 #include <ws2tcpip.h>
+#include <Windows.h>
+
 
 typedef int  socklen_t;
 typedef SOCKET cutils_socket_t;

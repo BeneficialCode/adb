@@ -11,9 +11,9 @@
 /* macOS has some of the basics. */
 #include <sys/_endian.h>
 #else
-#include <Windows.h>
 /* Windows has some of the basics as well. */
 #include <winsock2.h>
+#include <Windows.h>
 #endif
 /* Neither macOS nor Windows have the rest. */
 #define __LITTLE_ENDIAN 1234

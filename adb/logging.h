@@ -1,4 +1,5 @@
 #pragma once
+#include <WinSock2.h>
 #include <Windows.h>
 // NOTE: For Windows, you must include logging.h after windows.h to allow the
 // following code to suppress the evil ERROR macro:

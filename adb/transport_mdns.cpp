@@ -118,10 +118,10 @@ namespace {
         auto interface_infos = GetNetworkInterfaces();
 
         discovery::Config config;
-        for (const auto interface : interface_infos) {
-            if (interface.GetIpAddressV4() || interface.GetIpAddressV6()) {
-                config.network_info.push_back({ interface });
-                LOG(VERBOSE) << "Listening on interface [" << interface << "]";
+        for (const auto info : interface_infos) {
+            if (info.GetIpAddressV4() || info.GetIpAddressV6()) {
+                config.network_info.push_back({ info });
+                LOG(VERBOSE) << "Listening on interface [" << info << "]";
             }
         }
 

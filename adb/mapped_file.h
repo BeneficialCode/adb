@@ -9,6 +9,7 @@
 #if defined(_WIN32)
 #define PROT_READ 1
 #define PROT_WRITE 2
+#include <WinSock2.h>
 #include <Windows.h>
 using os_handle = HANDLE;
 #else

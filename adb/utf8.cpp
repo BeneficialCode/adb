@@ -1,7 +1,11 @@
 #include "utf8.h"
+
+#include <WinSock2.h>
 #include <Windows.h>
+
 #include <fcntl.h>
 #include <stdio.h>
+
 #include <algorithm>
 #include <string>
 

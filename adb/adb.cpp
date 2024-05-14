@@ -20,6 +20,7 @@
 #include <string_view>
 #include <thread>
 #include <vector>
+#include <codecvt>
 
 #include "errors.h"
 #include "file.h"
@@ -534,7 +535,7 @@ void handle_packet(apacket* p, atransport* t)
 // ignore such a failure.
 static bool _try_make_handle_noninheritable(HANDLE h) {
     if (h != INVALID_HANDLE_VALUE && h != NULL) {
-        return SetHandleInformation(h, HANDLE_FLAG_INHERIT, 0) ? true : false;
+        return SetHandleInformation(h, HANDLE_FLAG_INHERIT, HANDLE_FLAG_INHERIT) ? true : false;
     }
 
     return true;
@@ -783,8 +784,8 @@ int launch_server(const std::string& socket_spec, const char* one_device) {
     _try_make_handle_noninheritable(GetStdHandle(STD_OUTPUT_HANDLE));
     _try_make_handle_noninheritable(GetStdHandle(STD_ERROR_HANDLE));
 
-    STARTUPINFOW    startup;
-    ZeroMemory(&startup, sizeof(startup));
+    STARTUPINFO    startup = { sizeof(startup) };
+    // ZeroMemory(&startup, sizeof(startup));
     startup.cb = sizeof(startup);
     startup.hStdInput = nul_read.get();
     startup.hStdOutput = stdout_write.get();
@@ -813,34 +814,34 @@ int launch_server(const std::string& socket_spec, const char* one_device) {
         return -1;
     }
 
-    WCHAR args[4096];
+    WCHAR args[MAX_PATH];
+    std::wstring socket_spec_wide;
+    android::base::UTF8ToWide(socket_spec, &socket_spec_wide);
     if (one_device) {
         swprintf(args, arraysize(args),
-            L"adb -L %Ts fork-server server --reply-fd %d --one-device %s",
-            socket_spec.c_str(), ack_write_as_int, one_device);
+            L"%s -L %s fork-server server --reply-fd %d --one-device %s",
+            program_path, socket_spec_wide.c_str(), ack_write_as_int, one_device);
     }
     else {
-        swprintf(args, arraysize(args), L"adb -L %Ts fork-server server --reply-fd %d",
-            socket_spec.c_str(), ack_write_as_int);
+        swprintf(args, arraysize(args), L"%s -L %s fork-server server --reply-fd %d",
+            program_path, socket_spec_wide.c_str(), ack_write_as_int);
     }
 
     PROCESS_INFORMATION   pinfo;
     ZeroMemory(&pinfo, sizeof(pinfo));
 
-    if (!CreateProcessW(
-        program_path,                              /* program path  */
+    if (!::CreateProcess(
+        nullptr,  /* program path  */
         args,
-        /* the fork-server argument will set the
-           debug = 2 in the child           */
-        NULL,                   /* process handle is not inheritable */
-        NULL,                    /* thread handle is not inheritable */
+        nullptr,                   /* process handle is not inheritable */
+        nullptr,                    /* thread handle is not inheritable */
         TRUE,                          /* yes, inherit some handles */
-        DETACHED_PROCESS, /* the new process doesn't have a console */
-        NULL,                     /* use parent's environment block */
-        NULL,                    /* use parent's starting directory */
+        DETACHED_PROCESS,           /* the new process doesn't have a console */
+        nullptr,                     /* use parent's environment block */
+        nullptr,                    /* use parent's starting directory */
         &startup,                 /* startup info, i.e. std handles */
         &pinfo)) {
-        fprintf(stderr, "adb: CreateProcessW failed: %s\n",
+        fprintf(stderr, "adb: CreateProcess failed: %s\n",
             android::base::SystemErrorCodeToString(GetLastError()).c_str());
         return -1;
     }

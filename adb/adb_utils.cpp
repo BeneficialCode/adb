@@ -277,13 +277,15 @@ std::string GetLogFilePath() {
     const char log_name[] = "adb.log";
     WCHAR temp_path[MAX_PATH];
 
-    // https://msdn.microsoft.com/en-us/library/windows/desktop/aa364992%28v=vs.85%29.aspx
-    DWORD nchars = GetTempPathW(arraysize(temp_path), temp_path);
-    if (nchars >= arraysize(temp_path) || nchars == 0) {
-        // If string truncation or some other error.
-        LOG(FATAL) << "cannot retrieve temporary file path: "
-            << android::base::SystemErrorCodeToString(GetLastError());
-    }
+    WCHAR log_wname[] = L"adb.log";
+    size_t nchars = 0;
+    
+    WCHAR appdata_dir[MAX_PATH];
+    SHGetFolderPath(NULL, CSIDL_LOCAL_APPDATA, NULL, SHGFP_TYPE_CURRENT, appdata_dir);
+
+    wcscat_s(appdata_dir, L"\\Temp");
+
+    wcscpy_s(temp_path, appdata_dir);
 
     std::string temp_path_utf8;
     if (!android::base::WideToUTF8(temp_path, &temp_path_utf8)) {
