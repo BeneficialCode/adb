@@ -299,8 +299,18 @@ static void _init_env() {
     RTL_USER_PROCESS_PARAMETERS* params = peb.ProcessParameters;
 
     envs.reserve(64);
+
+    BYTE* buffer = nullptr;
+    int size = 1 << 16;
+    buffer = (BYTE*)malloc(size);
+    if (!buffer) {
+        return;
+    }
+
+    memcpy(buffer, params->Environment, size);
+
     // Read the environment block from the process.
-    for (auto p = (PWSTR)params->Environment; *p;) {
+    for (auto p = (PWSTR)buffer; *p;) {
         std::pair<std::wstring, std::wstring> var;
         auto equal = wcschr(p, L'=');
         if (!equal)
@@ -312,6 +322,8 @@ static void _init_env() {
         p += ::wcslen(p) + 1;
         envs.push_back(std::move(var));
     }
+
+    free(buffer);
 
     // Read name/value pairs from UTF-16 _wenviron and write new name/value
     // pairs to UTF-8 g_environ_utf8. Note that it probably does not make sense
