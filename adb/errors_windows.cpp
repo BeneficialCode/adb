@@ -38,7 +38,7 @@ namespace android {
             }
 
             // Messages returned by the system end with line breaks.
-            msg = android::base::Trim(msg);
+            // msg = android::base::Trim(msg);
 
             // There are many Windows error messages compared to POSIX, so include the
             // numeric error code for easier, quicker, accurate identification. Use

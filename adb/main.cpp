@@ -236,7 +236,153 @@ void init_winsock() {
     }
 }
 
+static void _init_console() {
+    DWORD old_out_console_mode;
+
+    HANDLE out = _get_console_handle(STDOUT_FILENO, &old_out_console_mode);
+    if (out == nullptr) {
+        return;
+    }
+
+    // Try to use ENABLE_VIRTUAL_TERMINAL_PROCESSING on the output console to process virtual
+    // terminal sequences on newer versions of Windows 10 and later.
+    // https://docs.microsoft.com/en-us/windows/console/console-virtual-terminal-sequences
+    // On older OSes that don't support the flag, SetConsoleMode() will return an error.
+    // ENABLE_VIRTUAL_TERMINAL_PROCESSING also solves a problem where the last column of the
+    // console cannot be overwritten.
+    //
+    // Note that we don't use DISABLE_NEWLINE_AUTO_RETURN because it doesn't seem to be necessary.
+    // If we use DISABLE_NEWLINE_AUTO_RETURN, _console_write_utf8() would need to be modified to
+    // translate \n to \r\n.
+    if (!SetConsoleMode(out, old_out_console_mode | ENABLE_VIRTUAL_TERMINAL_PROCESSING)) {
+        return;
+    }
+
+    // If SetConsoleMode() succeeded, the console supports virtual terminal processing, so we
+    // should set the TERM env var to match so that it will be propagated to adbd on devices.
+    //
+    // Below's direct manipulation of env vars and not g_environ_utf8 assumes that _init_env() has
+    // not yet been called. If this fails, _init_env() should be called after _init_console().
+    if (g_environ_utf8.size() > 0) {
+        LOG(FATAL) << "environment variables have already been converted to UTF-8";
+    }
+
+#pragma push_macro("getenv")
+#undef getenv
+#pragma push_macro("putenv")
+#undef putenv
+    char* tags;
+    size_t len;
+    errno_t err = _dupenv_s(&tags, &len, "TERM");
+    if (tags == nullptr) {
+        // This is the same TERM value used by Gnome Terminal and the version of ssh included with
+        // Windows.
+        _putenv("TERM=xterm-256color");
+    }
+#pragma pop_macro("putenv")
+#pragma pop_macro("getenv")
+}
+
+// Setup shadow UTF-8 environment variables.
+static void _init_env() {
+    // If some name/value pairs exist, then we've already done the setup below.
+    if (g_environ_utf8.size() != 0) {
+        return;
+    }
+
+    std::vector<std::pair<std::wstring, std::wstring>> envs;
+
+    PEB peb;
+    if (!GetProcessPeb(GetCurrentProcess(), &peb))
+        return;
+
+    RTL_USER_PROCESS_PARAMETERS* params = peb.ProcessParameters;
+
+    envs.reserve(64);
+    // Read the environment block from the process.
+    for (auto p = (PWSTR)params->Environment; *p;) {
+        std::pair<std::wstring, std::wstring> var;
+        auto equal = wcschr(p, L'=');
+        if (!equal)
+            break;
+        *equal = L'\0';
+        var.first = p;
+        p += ::wcslen(p) + 1;
+        var.second = p;
+        p += ::wcslen(p) + 1;
+        envs.push_back(std::move(var));
+    }
+
+    // Read name/value pairs from UTF-16 _wenviron and write new name/value
+    // pairs to UTF-8 g_environ_utf8. Note that it probably does not make sense
+    // to use the D() macro here because that tracing only works if the
+    // ADB_TRACE environment variable is setup, but that env var can't be read
+    // until this code completes.
+    for (auto env : envs) {
+        // If we encounter an error converting UTF-16, don't error-out on account of a single env
+        // var because the program might never even read this particular variable.
+        std::string name_utf8;
+        if (!android::base::WideToUTF8(env.first, &name_utf8)) {
+            continue;
+        }
+
+        // Store lowercase name so that we can do case-insensitive searches.
+        std::transform(name_utf8.begin(), name_utf8.end(), name_utf8.begin(), 
+            [](unsigned char c) { return std::tolower(c); });
+
+        std::string value_utf8;
+        if (!android::base::WideToUTF8(env.second, &value_utf8)) {
+            continue;
+        }
+
+        char* const value_dup = _strdup(value_utf8.c_str());
+
+        // Don't overwrite a previus env var with the same name. In reality,
+        // the system probably won't let two env vars with the same name exist
+        // in _wenviron.
+        g_environ_utf8.insert({ name_utf8, value_dup });
+    }
+}
+
+static void _init_winsock() {
+    static std::once_flag once;
+    std::call_once(once, []() {
+        WSADATA wsaData;
+        int rc = WSAStartup(MAKEWORD(2, 2), &wsaData);
+        if (rc != 0) {
+            LOG(FATAL) << "could not initialize Winsock: "
+                << android::base::SystemErrorCodeToString(rc);
+        }
+
+        if (LOBYTE(wsaData.wVersion) != 2 || HIBYTE(wsaData.wVersion) != 2) {
+            /* Tell the user that we could not find a usable WinSock DLL. */
+            LOG(FATAL) << "could not find a usable WinSock DLL";
+        }
+        // Note that we do not call atexit() to register WSACleanup to be called
+        // at normal process termination because:
+        // 1) When exit() is called, there are still threads actively using
+        //    Winsock because we don't cleanly shutdown all threads, so it
+        //    doesn't make sense to call WSACleanup() and may cause problems
+        //    with those threads.
+        // 2) A deadlock can occur when exit() holds a C Runtime lock, then it
+        //    calls WSACleanup() which tries to unload a DLL, which tries to
+        //    grab the LoaderLock. This conflicts with the device_poll_thread
+        //    which holds the LoaderLock because AdbWinApi.dll calls
+        //    setupapi.dll which tries to load wintrust.dll which tries to load
+        //    crypt32.dll which calls atexit() which tries to acquire the C
+        //    Runtime lock that the other thread holds.
+        });
+}
+
+static bool _init_sysdeps() {
+    _init_console();
+    _init_env();
+    _init_winsock();
+    return true;
+}
+
 int main(int argc, char* argv[], char* envp[]) {
+    bool _sysdeps_init = _init_sysdeps();
     __adb_argv = const_cast<const char**>(argv);
     __adb_envp = const_cast<const char**>(envp);
     adb_trace_init(argv);

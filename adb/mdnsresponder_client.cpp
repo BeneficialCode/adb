@@ -10,7 +10,8 @@
 
 #include "stringprintf.h"
 #include "strings.h"
-#include "dns_sd.h"
+
+#include <dns_sd.h>
 
 #include "adb_client.h"
 #include "adb_mdns.h"
