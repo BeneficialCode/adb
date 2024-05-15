@@ -126,11 +126,7 @@ bool TestEnumInterfaces() {
         if (interface_info->flags & SPINT_REMOVED)
             printf(" REMOVED");
         if (interface_info != nullptr) {
-            free(interface_info);
-            interface_info = nullptr;
-        }
-        if (interface_info != nullptr) {
-            free(interface_info);
+            VirtualFree(interface_info, 0, MEM_RELEASE);
             interface_info = nullptr;
         }
     }
@@ -172,7 +168,7 @@ bool TestInterfaces() {
                 TestInterface(interface_info->device_name);
         }
 
-        free(interface_info);  
+        ::VirtualFree(interface_info,0,MEM_RELEASE);  
 
         if (GetLastError() != ERROR_NO_MORE_ITEMS) {
             printf("\n--- AdbNextInterface failure %u", GetLastError());
@@ -775,7 +771,7 @@ bool TestCloseRaceCondition() {
     }
 
     if (interface_info != nullptr) {
-        free(interface_info);
+        VirtualFree(interface_info,0,MEM_RELEASE);
         interface_info = nullptr;
     }
 

@@ -42,12 +42,12 @@ public:
 	*/
 	void Save(AdbInterfaceInfo** pInfo,ULONG* size) const {
 		ULONG totalSize = *size;
-		AdbInterfaceInfo* info = (AdbInterfaceInfo*)malloc(totalSize);
-		ZeroMemory(info, totalSize);
-		if (info == NULL) {
+		AdbInterfaceInfo* info = (AdbInterfaceInfo*)VirtualAlloc(nullptr, totalSize, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
+		if (info == nullptr) {
 			SetLastError(ERROR_OUTOFMEMORY);
 			return;
 		}
+		ZeroMemory(info, totalSize);
 		*pInfo = info;
 		info->class_id = class_id_;
 		info->flags = flags_;

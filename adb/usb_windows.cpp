@@ -596,7 +596,7 @@ void find_devices() {
         }
 
         if (next_interface != nullptr) {
-            free(next_interface);
+            VirtualFree(next_interface, 0, MEM_RELEASE);
             next_interface = nullptr;
         }
     }

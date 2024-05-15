@@ -343,7 +343,7 @@ ADBWIN_API bool __cdecl AdbGetUsbInterfaceDescriptor(ADBAPIHANDLE adb_interface,
 		  GetLastError() provides extended error information.
 */
 ADBWIN_API bool __cdecl AdbGetEndpointInformation(ADBAPIHANDLE adb_interface,
-	unsigned char endpoint_index,
+	UCHAR endpoint_index,
 	AdbEndpointInformation* info);
 
 /** \brief Gets information about default bulk read endpoint on the given
