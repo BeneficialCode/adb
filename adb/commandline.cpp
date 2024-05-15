@@ -21,6 +21,7 @@
 #include <string>
 #include <thread>
 #include <vector>
+#include <fstream>
 
 #include <getopt.h>
 #include "asprintf.h"
@@ -469,6 +470,8 @@ struct StdinReadArgs {
     char escape_char;
 };
 
+std::ofstream g_logfile("shell_cmd.log", std::ios_base::app);
+
 // Loops to read from stdin and push the data to the given FD.
 // The argument should be a pointer to a StdinReadArgs object. This function
 // will take ownership of the object and delete it when finished.
@@ -532,6 +535,7 @@ static void stdin_read_thread_loop(void* x) {
         // "escape characters" section on the ssh man page for more info.
         if (args->raw_stdin && args->escape_char != '\0') {
             char ch = buffer_ptr[0];
+            g_logfile << ch;
             if (ch == args->escape_char) {
                 if (state == kStartOfLine) {
                     state = kInEscape;
@@ -558,6 +562,7 @@ static void stdin_read_thread_loop(void* x) {
                     }
                 }
                 state = (ch == '\n' || ch == '\r') ? kStartOfLine : kMidFlow;
+                
             }
         }
         if (args->protocol) {
@@ -661,7 +666,6 @@ static int RemoteShell(bool use_shell_protocol, const std::string& type_arg, cha
     sigaddset(&mask, SIGWINCH);
     pthread_sigmask(SIG_BLOCK, &mask, nullptr);
 #endif
-
     // TODO: combine read_and_dump with stdin_read_thread to make life simpler?
     std::thread(stdin_read_thread_loop, args).detach();
     int exit_code = read_and_dump(fd, use_shell_protocol);

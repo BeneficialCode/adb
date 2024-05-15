@@ -449,7 +449,7 @@ bool GetProcessPeb(HANDLE hProcess, PPEB peb);
 
 HANDLE _get_console_handle(borrowed_fd fd, DWORD* mode = nullptr);
 
-static inline auto& g_environ_utf8 = *new std::unordered_map<std::string, char*>();
+extern std::unordered_map<std::string, char*>& g_environ_utf8;
 
 static inline bool adb_is_separator(char c) {
 	return c == '\\' || c == '/';

@@ -68,6 +68,8 @@ static int _fh_file_write(FH, const void*, int);
 static int _fh_file_writev(FH, const adb_iovec*, int);
 static intptr_t _fh_file_get_os_handle(FH f);
 
+std::unordered_map<std::string,char*>& g_environ_utf8 = *new std::unordered_map<std::string, char*>();
+
 static const FHClassRec _fh_file_class = {
         _fh_file_init,  _fh_file_close,  _fh_file_lseek,         _fh_file_read,
         _fh_file_write, _fh_file_writev, _fh_file_get_os_handle,

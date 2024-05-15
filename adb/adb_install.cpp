@@ -180,7 +180,7 @@ static int install_app_streamed(int argc, const char** argv, bool use_fastdeploy
         return 1;
     }
 
-    unique_fd local_fd(adb_open(file, O_RDONLY | O_CLOEXEC));
+    unique_fd local_fd(adb_open(file, O_RDONLY));
     if (local_fd < 0) {
         
         return 1;

@@ -22,7 +22,7 @@ void AdbLogger(android::base::LogId id,android::base::LogSeverity severity,
 int adb_trace_mask;
 
 std::string get_trace_setting() {
-	const char* setting = getenv("ADB_TRACE");
+	const char* setting = g_environ_utf8["adb_trace"];
     if (setting == nullptr) {
         setting = "";
     }
