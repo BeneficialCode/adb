@@ -563,7 +563,8 @@ std::optional<size_t> network_peek(borrowed_fd fd);
 
 extern int adb_socket_accept(borrowed_fd serverfd, struct sockaddr* addr, socklen_t* addrlen);
 
-
+#undef   accept
+#define  accept  ___xxx_accept
 
 int adb_getsockname(borrowed_fd fd, struct sockaddr* sockaddr, socklen_t* addrlen);
 
@@ -573,13 +574,15 @@ int adb_socket_get_local_port(borrowed_fd fd);
 extern int adb_setsockopt(borrowed_fd fd, int level, int optname, const void* optval,
 	socklen_t optlen);
 
-
+#undef   setsockopt
+#define  setsockopt  ___xxx_setsockopt
 
 // Wrapper around socket() call. On Windows, ADB has an indirection layer for file descriptors.
 extern int adb_socket(int domain, int type, int protocol);
 
+
 // Wrapper around bind() call, as Windows has indirection layer.
-extern int adb_bind(borrowed_fd fd, const sockaddr* addr, int namelen);
+extern int adb_bind(borrowed_fd fd, const sockaddr* addr, socklen_t namelen);
 
 extern int adb_socketpair(int sv[2]);
 

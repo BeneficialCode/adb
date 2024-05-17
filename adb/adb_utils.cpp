@@ -283,7 +283,7 @@ std::string GetLogFilePath() {
     WCHAR appdata_dir[MAX_PATH];
     SHGetFolderPath(NULL, CSIDL_LOCAL_APPDATA, NULL, SHGFP_TYPE_CURRENT, appdata_dir);
 
-    wcscat_s(appdata_dir, L"\\Temp");
+    wcscat_s(appdata_dir, L"\\Temp\\");
 
     wcscpy_s(temp_path, appdata_dir);
 
