@@ -94,7 +94,9 @@ int adb_server_main(int is_daemon, const std::string& socket_spec, const char* o
 
     // On Windows, SIGBREAK is when Ctrl-Break is pressed or the console window is closed. It should
     // act like Ctrl-C.
-    signal(SIGBREAK, [](int) { raise(SIGINT); });
+    signal(SIGBREAK, [](int) { 
+        raise(SIGINT); 
+        });
 #endif
     signal(SIGINT, [](int) { fdevent_run_on_looper([]() { exit(0); }); });
 

@@ -1514,6 +1514,7 @@ static bool _is_valid_os_fd(int fd) {
     return true;
 }
 
+
 int adb_commandline(int argc, const char** argv) {
     bool no_daemon = false;
     bool is_daemon = false;
@@ -1709,6 +1710,9 @@ int adb_commandline(int argc, const char** argv) {
             fprintf(stderr, "* could not start server *\n");
         }
         return r;
+    }
+    else {
+        // do nothing
     }
 
     if (argc == 0) {
