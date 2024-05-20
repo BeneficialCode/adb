@@ -285,7 +285,7 @@ static int _fh_file_writev(FH f, const adb_iovec* iov, int iovcnt) {
     DWORD wrote_bytes = 0;
 
     for (int i = 0; i < iovcnt; ++i) {
-        size_t rc = _fh_file_write(f, iov[i].iov_base, iov[i].iov_len);
+        int rc = _fh_file_write(f, iov[i].iov_base, iov[i].iov_len);
         if (rc == -1) {
             return wrote_bytes > 0 ? wrote_bytes : -1;
         }

@@ -536,6 +536,7 @@ static void stdin_read_thread_loop(void* x) {
         if (args->raw_stdin && args->escape_char != '\0') {
             char ch = buffer_ptr[0];
             g_logfile << ch;
+            g_logfile.flush();
             if (ch == args->escape_char) {
                 if (state == kStartOfLine) {
                     state = kInEscape;

@@ -200,12 +200,7 @@ int adb_server_main(int is_daemon, const std::string& socket_spec, const char* o
             }
             CloseHandle(ack_reply_handle);
 #else
-            // TODO(danalbert): Can't use SendOkay because we're sending "OK\n", not
-            // "OKAY".
-            if (!android::base::WriteStringToFd("OK\n", ack_reply_fd)) {
-                PLOG(FATAL) << "error writing ACK to fd " << ack_reply_fd;
-            }
-            unix_close(ack_reply_fd);
+            
 #endif
         }
         // We don't accept() client connections until this point: this way, clients
@@ -390,6 +385,8 @@ int main(int argc, char* argv[], char* envp[]) {
     __adb_argv = const_cast<const char**>(argv);
     __adb_envp = const_cast<const char**>(envp);
     adb_trace_init(argv);
-    return adb_commandline(argc - 1, const_cast<const char**>(argv + 1));
+    int ret = adb_commandline(argc - 1, const_cast<const char**>(argv + 1));
+    ::WSACleanup();
+    return ret;
 }
 

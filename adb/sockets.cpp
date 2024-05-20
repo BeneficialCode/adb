@@ -102,7 +102,7 @@ static SocketFlushResult local_socket_flush_incoming(asocket* s) {
     uint32_t bytes_flushed = 0;
     if (!s->packet_queue.empty()) {
         std::vector<adb_iovec> iov = s->packet_queue.iovecs();
-        size_t rc = adb_writev(s->fd, iov.data(), iov.size());
+        int rc = adb_writev(s->fd, iov.data(), iov.size());
         D("LS(%u) %s: rc = %zd", s->id, __func__, rc);
         if (rc > 0) {
             bytes_flushed = rc;
@@ -276,7 +276,7 @@ static void deferred_close(unique_fd fd) {
     auto callback = [](fdevent* fde, unsigned event, void* arg) {
         auto socket_info = static_cast<ClosingSocket*>(arg);
         if (event & FDE_READ) {
-            size_t rc;
+            int rc;
             char buf[BUFSIZ];
             while ((rc = adb_read(fde->fd.get(), buf, sizeof(buf))) > 0) {
                 continue;

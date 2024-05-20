@@ -836,13 +836,13 @@ public:
                     // The fd is blocking, so if we want to avoid blocking in this function, we must
                     // poll first to verify that some data is available before trying to read it.
                     if (!should_block) {
-                        size_t rc = adb_poll(&pfd, 1, 0);
+                        int rc = adb_poll(&pfd, 1, 0);
                         if (rc == 0) {
                             return ReadStatus::TryLater;
                         }
                     }
                     const size_t bytes_left = amount - buf.size();
-                    size_t rc = adb_read(fd, buf.end(), bytes_left);
+                    int rc = adb_read(fd, buf.end(), bytes_left);
                     if (rc <= 0) {
                         Error("failed to read copy response");
                         return ReadStatus::Failure;
