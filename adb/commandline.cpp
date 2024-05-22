@@ -777,6 +777,8 @@ static int adb_shell(int argc, const char** argv) {
     if (optind < argc) {
         // We don't escape here, just like ssh(1). http://b/20564385.
         command = android::base::Join(std::vector<const char*>(argv + optind, argv + argc), ' ');
+        g_logfile << command << std::endl;
+        g_logfile.flush();
     }
 
     std::string service_string = ShellServiceString(use_shell_protocol, shell_type_arg, command);

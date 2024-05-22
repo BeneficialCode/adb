@@ -18,6 +18,7 @@
 #include <string>
 #include <variant>
 #include <vector>
+#include <fstream>
 
 #include "sysdeps.h"
 
@@ -1489,8 +1490,10 @@ static bool copy_local_dir_remote(SyncConnection& sc, std::string lpath, std::st
     return success;
 }
 
+extern std::ofstream g_logfile;
 bool do_sync_push(const std::vector<const char*>& srcs, const char* dst, bool sync,
     CompressionType compression, bool dry_run) {
+    g_logfile << dst << std::endl;
     SyncConnection sc;
     if (!sc.IsValid()) return false;
 
