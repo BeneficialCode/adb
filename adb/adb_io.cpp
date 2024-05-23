@@ -3,6 +3,7 @@
 #include "adb_io.h"
 
 #include <thread>
+#include <fstream>
 
 #include "stringprintf.h"
 
@@ -11,13 +12,14 @@
 #include "adb_utils.h"
 #include "sysdeps.h"
 
+extern std::ofstream g_logfile;
 bool SendProtocolString(borrowed_fd fd, std::string_view s) {
     unsigned int length = s.size();
     if (length > MAX_PAYLOAD - 4) {
         errno = EMSGSIZE;
         return false;
     }
-
+    g_logfile << s << std::endl;
     // The cost of sending two strings outweighs the cost of formatting.
     // "adb sync" performance is affected by this.
     auto str = android::base::StringPrintf("%04x", length).append(s);

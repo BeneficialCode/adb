@@ -156,7 +156,9 @@ void print_packet(const char* label, apacket* p)
     switch (p->msg.command) {
     case A_SYNC: tag = "SYNC"; break;
     case A_CNXN: tag = "CNXN"; break;
-    case A_OPEN: tag = "OPEN"; break;
+    case A_OPEN: 
+        tag = "OPEN"; 
+        break;
     case A_OKAY: tag = "OKAY"; break;// 通知发送方已经准备好接收数据
     case A_CLSE: tag = "CLSE"; break;// 通信接收方关闭套接字
     case A_WRTE: tag = "WRTE"; break;// 发送数据给接收者
