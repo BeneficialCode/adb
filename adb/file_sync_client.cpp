@@ -1158,7 +1158,9 @@ static bool sync_recv_v1(SyncConnection& sc, const char* rpath, const char* lpat
             return false;
         }
 
-        char buffer[SYNC_DATA_MAX];
+        // char buffer[SYNC_DATA_MAX];
+        std::unique_ptr<char[]> data = std::make_unique<char[]>(SYNC_DATA_MAX);
+        char* buffer = data.get();
         if (!ReadFdExactly(sc.fd, buffer, msg.data.size)) {
             adb_unlink(lpath);
             return false;

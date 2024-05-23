@@ -157,10 +157,10 @@ void print_packet(const char* label, apacket* p)
     case A_SYNC: tag = "SYNC"; break;
     case A_CNXN: tag = "CNXN"; break;
     case A_OPEN: tag = "OPEN"; break;
-    case A_OKAY: tag = "OKAY"; break;
-    case A_CLSE: tag = "CLSE"; break;
-    case A_WRTE: tag = "WRTE"; break;
-    case A_AUTH: tag = "AUTH"; break;
+    case A_OKAY: tag = "OKAY"; break;// 通知发送方已经准备好接收数据
+    case A_CLSE: tag = "CLSE"; break;// 通信接收方关闭套接字
+    case A_WRTE: tag = "WRTE"; break;// 发送数据给接收者
+    case A_AUTH: tag = "AUTH"; break;// adbd对adb server进行验证
     case A_STLS:
         tag = "STLS";
         break;
@@ -344,6 +344,7 @@ void handle_packet(apacket* p, atransport* t)
         ((char*)(&(p->msg.command)))[1],
         ((char*)(&(p->msg.command)))[2],
         ((char*)(&(p->msg.command)))[3]);
+    // 表示接收到的数据包
     print_packet("recv", p);
     CHECK_EQ(p->payload.size(), p->msg.data_length);
 
@@ -414,12 +415,13 @@ void handle_packet(apacket* p, atransport* t)
                 << t->serial_name();
         }
 #endif
+        // 初始化本地socket
         asocket* s = create_local_service_socket(address, t);
         if (s == nullptr) {
             send_close(0, p->msg.arg0, t);
             break;
         }
-
+        // 远程socket相关信息
         s->peer = create_remote_socket(p->msg.arg0, t);
         s->peer->peer = s;
 

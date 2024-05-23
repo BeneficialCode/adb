@@ -197,7 +197,7 @@ static bool local_socket_flush_outgoing(asocket* s) {
         if (s->available_send_bytes) {
             *s->available_send_bytes -= data.size();
         }
-
+        // 把数据发送给远程socket的队列处理
         r = s->peer->enqueue(s->peer, std::move(data));
         D("LS(%u): fd=%d post peer->enqueue(). r=%d", saved_id, saved_fd, r);
 

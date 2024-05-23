@@ -545,6 +545,8 @@ void send_packet(apacket* p, atransport* t) {
 
     VLOG(TRANSPORT) << dump_packet(t->serial.c_str(), "to remote", p);
 
+    print_packet("send", p);
+
     if (t == nullptr) {
         LOG(FATAL) << "Transport is null";
     }

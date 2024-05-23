@@ -80,7 +80,7 @@ void connect_device(const std::string& address, std::string* response) {
     else {
         prefix_addr = "tcp:" + address;
     }
-
+    // 发起tcp连接请求
     socket_spec_connect(&fd, prefix_addr, &port, &serial, response);
     if (fd.get() == -1) {
         return;
@@ -104,6 +104,7 @@ void connect_device(const std::string& address, std::string* response) {
         };
 
     int error;
+    // 注册到transport列表中
     if (!register_socket_transport(std::move(fd), serial, port, 0, std::move(reconnect), false,
         &error)) {
         if (error == EALREADY) {
