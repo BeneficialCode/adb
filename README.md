@@ -18,12 +18,12 @@ git clone https://github.com/BeneficialCode/adb
 
 ```
 vcpkg install abseil:x86-windows-static
-vcpkg install boringssl-x86-windows-static // WSAStartup
+vcpkg install boringssl:x86-windows-static
 vcpkg install protobuf:x86-windows-static
 vcpkg install brotli:x86-windows-static
 vcpkg install libusb:x86-windows-static
 vcpkg install lz4:x86-windows-static
-vcpkg install mdnsresponder:x86-windows-static // WSAStartup
+vcpkg install mdnsresponder:x86-windows-static
 vcpkg install zstd:x86-windows-static
 ```
 
