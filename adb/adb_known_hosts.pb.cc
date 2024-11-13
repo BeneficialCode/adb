@@ -4,280 +4,309 @@
 #include "adb_known_hosts.pb.h"
 
 #include <algorithm>
-
-#include <google/protobuf/io/coded_stream.h>
-#include <google/protobuf/extension_set.h>
-#include <google/protobuf/wire_format_lite.h>
-#include <google/protobuf/descriptor.h>
-#include <google/protobuf/generated_message_reflection.h>
-#include <google/protobuf/reflection_ops.h>
-#include <google/protobuf/wire_format.h>
+#include "google/protobuf/io/coded_stream.h"
+#include "google/protobuf/extension_set.h"
+#include "google/protobuf/wire_format_lite.h"
+#include "google/protobuf/descriptor.h"
+#include "google/protobuf/generated_message_reflection.h"
+#include "google/protobuf/reflection_ops.h"
+#include "google/protobuf/wire_format.h"
+#include "google/protobuf/generated_message_tctable_impl.h"
 // @@protoc_insertion_point(includes)
-#include <google/protobuf/port_def.inc>
 
+// Must be included last.
+#include "google/protobuf/port_def.inc"
 PROTOBUF_PRAGMA_INIT_SEG
-
-namespace _pb = ::PROTOBUF_NAMESPACE_ID;
-namespace _pbi = _pb::internal;
-
+namespace _pb = ::google::protobuf;
+namespace _pbi = ::google::protobuf::internal;
+namespace _fl = ::google::protobuf::internal::field_layout;
 namespace adb {
 namespace proto {
-PROTOBUF_CONSTEXPR HostInfo::HostInfo(
-    ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.guid_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_._cached_size_)*/{}} {}
+
+inline constexpr HostInfo::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : guid_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        _cached_size_{0} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR HostInfo::HostInfo(::_pbi::ConstantInitialized)
+    : _impl_(::_pbi::ConstantInitialized()) {}
 struct HostInfoDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR HostInfoDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR HostInfoDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~HostInfoDefaultTypeInternal() {}
   union {
     HostInfo _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 HostInfoDefaultTypeInternal _HostInfo_default_instance_;
-PROTOBUF_CONSTEXPR AdbKnownHosts::AdbKnownHosts(
-    ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.host_infos_)*/{}
-  , /*decltype(_impl_._cached_size_)*/{}} {}
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 HostInfoDefaultTypeInternal _HostInfo_default_instance_;
+
+inline constexpr AdbKnownHosts::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : host_infos_{},
+        _cached_size_{0} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR AdbKnownHosts::AdbKnownHosts(::_pbi::ConstantInitialized)
+    : _impl_(::_pbi::ConstantInitialized()) {}
 struct AdbKnownHostsDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR AdbKnownHostsDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR AdbKnownHostsDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~AdbKnownHostsDefaultTypeInternal() {}
   union {
     AdbKnownHosts _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 AdbKnownHostsDefaultTypeInternal _AdbKnownHosts_default_instance_;
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 AdbKnownHostsDefaultTypeInternal _AdbKnownHosts_default_instance_;
 }  // namespace proto
 }  // namespace adb
 static ::_pb::Metadata file_level_metadata_adb_5fknown_5fhosts_2eproto[2];
-static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_adb_5fknown_5fhosts_2eproto = nullptr;
-static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_adb_5fknown_5fhosts_2eproto = nullptr;
-
-const uint32_t TableStruct_adb_5fknown_5fhosts_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::adb::proto::HostInfo, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::adb::proto::HostInfo, _impl_.guid_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::adb::proto::AdbKnownHosts, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::adb::proto::AdbKnownHosts, _impl_.host_infos_),
+static constexpr const ::_pb::EnumDescriptor**
+    file_level_enum_descriptors_adb_5fknown_5fhosts_2eproto = nullptr;
+static constexpr const ::_pb::ServiceDescriptor**
+    file_level_service_descriptors_adb_5fknown_5fhosts_2eproto = nullptr;
+const ::uint32_t TableStruct_adb_5fknown_5fhosts_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
+    protodesc_cold) = {
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::adb::proto::HostInfo, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::adb::proto::HostInfo, _impl_.guid_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::adb::proto::AdbKnownHosts, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::adb::proto::AdbKnownHosts, _impl_.host_infos_),
 };
-static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, -1, -1, sizeof(::adb::proto::HostInfo)},
-  { 7, -1, -1, sizeof(::adb::proto::AdbKnownHosts)},
+
+static const ::_pbi::MigrationSchema
+    schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
+        {0, -1, -1, sizeof(::adb::proto::HostInfo)},
+        {9, -1, -1, sizeof(::adb::proto::AdbKnownHosts)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
-  &::adb::proto::_HostInfo_default_instance_._instance,
-  &::adb::proto::_AdbKnownHosts_default_instance_._instance,
+    &::adb::proto::_HostInfo_default_instance_._instance,
+    &::adb::proto::_AdbKnownHosts_default_instance_._instance,
 };
-
-const char descriptor_table_protodef_adb_5fknown_5fhosts_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\025adb_known_hosts.proto\022\tadb.proto\"\030\n\010Ho"
-  "stInfo\022\014\n\004guid\030\001 \001(\t\"8\n\rAdbKnownHosts\022\'\n"
-  "\nhost_infos\030\001 \003(\0132\023.adb.proto.HostInfoB3"
-  "\n\035com.android.server.adb.protosB\022AdbKnow"
-  "nHostsProtob\006proto3"
-  ;
-static ::_pbi::once_flag descriptor_table_adb_5fknown_5fhosts_2eproto_once;
+const char descriptor_table_protodef_adb_5fknown_5fhosts_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
+    "\n\025adb_known_hosts.proto\022\tadb.proto\"\030\n\010Ho"
+    "stInfo\022\014\n\004guid\030\001 \001(\t\"8\n\rAdbKnownHosts\022\'\n"
+    "\nhost_infos\030\001 \003(\0132\023.adb.proto.HostInfoB3"
+    "\n\035com.android.server.adb.protosB\022AdbKnow"
+    "nHostsProtob\006proto3"
+};
+static ::absl::once_flag descriptor_table_adb_5fknown_5fhosts_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_adb_5fknown_5fhosts_2eproto = {
-    false, false, 179, descriptor_table_protodef_adb_5fknown_5fhosts_2eproto,
+    false,
+    false,
+    179,
+    descriptor_table_protodef_adb_5fknown_5fhosts_2eproto,
     "adb_known_hosts.proto",
-    &descriptor_table_adb_5fknown_5fhosts_2eproto_once, nullptr, 0, 2,
-    schemas, file_default_instances, TableStruct_adb_5fknown_5fhosts_2eproto::offsets,
-    file_level_metadata_adb_5fknown_5fhosts_2eproto, file_level_enum_descriptors_adb_5fknown_5fhosts_2eproto,
+    &descriptor_table_adb_5fknown_5fhosts_2eproto_once,
+    nullptr,
+    0,
+    2,
+    schemas,
+    file_default_instances,
+    TableStruct_adb_5fknown_5fhosts_2eproto::offsets,
+    file_level_metadata_adb_5fknown_5fhosts_2eproto,
+    file_level_enum_descriptors_adb_5fknown_5fhosts_2eproto,
     file_level_service_descriptors_adb_5fknown_5fhosts_2eproto,
 };
+
+// This function exists to be marked as weak.
+// It can significantly speed up compilation by breaking up LLVM's SCC
+// in the .pb.cc translation units. Large translation units see a
+// reduction of more than 35% of walltime for optimized builds. Without
+// the weak attribute all the messages in the file, including all the
+// vtables and everything they use become part of the same SCC through
+// a cycle like:
+// GetMetadata -> descriptor table -> default instances ->
+//   vtables -> GetMetadata
+// By adding a weak function here we break the connection from the
+// individual vtables back into the descriptor table.
 PROTOBUF_ATTRIBUTE_WEAK const ::_pbi::DescriptorTable* descriptor_table_adb_5fknown_5fhosts_2eproto_getter() {
   return &descriptor_table_adb_5fknown_5fhosts_2eproto;
 }
-
 // Force running AddDescriptors() at dynamic initialization time.
-PROTOBUF_ATTRIBUTE_INIT_PRIORITY2 static ::_pbi::AddDescriptorsRunner dynamic_init_dummy_adb_5fknown_5fhosts_2eproto(&descriptor_table_adb_5fknown_5fhosts_2eproto);
+PROTOBUF_ATTRIBUTE_INIT_PRIORITY2
+static ::_pbi::AddDescriptorsRunner dynamic_init_dummy_adb_5fknown_5fhosts_2eproto(&descriptor_table_adb_5fknown_5fhosts_2eproto);
 namespace adb {
 namespace proto {
-
 // ===================================================================
 
 class HostInfo::_Internal {
  public:
 };
 
-HostInfo::HostInfo(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor(arena, is_message_owned);
+HostInfo::HostInfo(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:adb.proto.HostInfo)
 }
-HostInfo::HostInfo(const HostInfo& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  HostInfo* const _this = this; (void)_this;
-  new (&_impl_) Impl_{
-      decltype(_impl_.guid_){}
-    , /*decltype(_impl_._cached_size_)*/{}};
+inline PROTOBUF_NDEBUG_INLINE HostInfo::Impl_::Impl_(
+    ::google::protobuf::internal::InternalVisibility visibility, ::google::protobuf::Arena* arena,
+    const Impl_& from)
+      : guid_(arena, from.guid_),
+        _cached_size_{0} {}
 
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  _impl_.guid_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.guid_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_guid().empty()) {
-    _this->_impl_.guid_.Set(from._internal_guid(), 
-      _this->GetArenaForAllocation());
-  }
+HostInfo::HostInfo(
+    ::google::protobuf::Arena* arena,
+    const HostInfo& from)
+    : ::google::protobuf::Message(arena) {
+  HostInfo* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_);
+
   // @@protoc_insertion_point(copy_constructor:adb.proto.HostInfo)
 }
+inline PROTOBUF_NDEBUG_INLINE HostInfo::Impl_::Impl_(
+    ::google::protobuf::internal::InternalVisibility visibility,
+    ::google::protobuf::Arena* arena)
+      : guid_(arena),
+        _cached_size_{0} {}
 
-inline void HostInfo::SharedCtor(
-    ::_pb::Arena* arena, bool is_message_owned) {
-  (void)arena;
-  (void)is_message_owned;
-  new (&_impl_) Impl_{
-      decltype(_impl_.guid_){}
-    , /*decltype(_impl_._cached_size_)*/{}
-  };
-  _impl_.guid_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.guid_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+inline void HostInfo::SharedCtor(::_pb::Arena* arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
 }
-
 HostInfo::~HostInfo() {
   // @@protoc_insertion_point(destructor:adb.proto.HostInfo)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void HostInfo::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  ABSL_DCHECK(GetArena() == nullptr);
   _impl_.guid_.Destroy();
+  _impl_.~Impl_();
 }
 
-void HostInfo::SetCachedSize(int size) const {
-  _impl_._cached_size_.Set(size);
-}
-
-void HostInfo::Clear() {
+PROTOBUF_NOINLINE void HostInfo::Clear() {
 // @@protoc_insertion_point(message_clear_start:adb.proto.HostInfo)
-  uint32_t cached_has_bits = 0;
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   _impl_.guid_.ClearToEmpty();
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* HostInfo::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // string guid = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_guid();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "adb.proto.HostInfo.guid"));
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* HostInfo::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
 
-uint8_t* HostInfo::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 0, 31, 2> HostInfo::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    &_HostInfo_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // string guid = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(HostInfo, _impl_.guid_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string guid = 1;
+    {PROTOBUF_FIELD_OFFSET(HostInfo, _impl_.guid_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+  }},
+  // no aux_entries
+  {{
+    "\22\4\0\0\0\0\0\0"
+    "adb.proto.HostInfo"
+    "guid"
+  }},
+};
+
+::uint8_t* HostInfo::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:adb.proto.HostInfo)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
 
   // string guid = 1;
   if (!this->_internal_guid().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_guid().data(), static_cast<int>(this->_internal_guid().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "adb.proto.HostInfo.guid");
-    target = stream->WriteStringMaybeAliased(
-        1, this->_internal_guid(), target);
+    const std::string& _s = this->_internal_guid();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "adb.proto.HostInfo.guid");
+    target = stream->WriteStringMaybeAliased(1, _s, target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:adb.proto.HostInfo)
   return target;
 }
 
-size_t HostInfo::ByteSizeLong() const {
+::size_t HostInfo::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:adb.proto.HostInfo)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // string guid = 1;
   if (!this->_internal_guid().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_guid());
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_guid());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData HostInfo::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
-    HostInfo::MergeImpl
+const ::google::protobuf::Message::ClassData HostInfo::_class_data_ = {
+    HostInfo::MergeImpl,
+    nullptr,  // OnDemandRegisterArenaDtor
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*HostInfo::GetClassData() const { return &_class_data_; }
+const ::google::protobuf::Message::ClassData* HostInfo::GetClassData() const {
+  return &_class_data_;
+}
 
-
-void HostInfo::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+void HostInfo::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
   auto* const _this = static_cast<HostInfo*>(&to_msg);
   auto& from = static_cast<const HostInfo&>(from_msg);
   // @@protoc_insertion_point(class_specific_merge_from_start:adb.proto.HostInfo)
-  GOOGLE_DCHECK_NE(&from, _this);
-  uint32_t cached_has_bits = 0;
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   if (!from._internal_guid().empty()) {
     _this->_internal_set_guid(from._internal_guid());
   }
-  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void HostInfo::CopyFrom(const HostInfo& from) {
@@ -287,187 +316,182 @@ void HostInfo::CopyFrom(const HostInfo& from) {
   MergeFrom(from);
 }
 
-bool HostInfo::IsInitialized() const {
+PROTOBUF_NOINLINE bool HostInfo::IsInitialized() const {
   return true;
 }
 
-void HostInfo::InternalSwap(HostInfo* other) {
+::_pbi::CachedSize* HostInfo::AccessCachedSize() const {
+  return &_impl_._cached_size_;
+}
+void HostInfo::InternalSwap(HostInfo* PROTOBUF_RESTRICT other) {
   using std::swap;
-  auto* lhs_arena = GetArenaForAllocation();
-  auto* rhs_arena = other->GetArenaForAllocation();
+  auto* arena = GetArena();
+  ABSL_DCHECK_EQ(arena, other->GetArena());
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.guid_, lhs_arena,
-      &other->_impl_.guid_, rhs_arena
-  );
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.guid_, &other->_impl_.guid_, arena);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata HostInfo::GetMetadata() const {
+::google::protobuf::Metadata HostInfo::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_adb_5fknown_5fhosts_2eproto_getter, &descriptor_table_adb_5fknown_5fhosts_2eproto_once,
       file_level_metadata_adb_5fknown_5fhosts_2eproto[0]);
 }
-
 // ===================================================================
 
 class AdbKnownHosts::_Internal {
  public:
 };
 
-AdbKnownHosts::AdbKnownHosts(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor(arena, is_message_owned);
+AdbKnownHosts::AdbKnownHosts(::google::protobuf::Arena* arena)
+    : ::google::protobuf::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:adb.proto.AdbKnownHosts)
 }
-AdbKnownHosts::AdbKnownHosts(const AdbKnownHosts& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  AdbKnownHosts* const _this = this; (void)_this;
-  new (&_impl_) Impl_{
-      decltype(_impl_.host_infos_){from._impl_.host_infos_}
-    , /*decltype(_impl_._cached_size_)*/{}};
+inline PROTOBUF_NDEBUG_INLINE AdbKnownHosts::Impl_::Impl_(
+    ::google::protobuf::internal::InternalVisibility visibility, ::google::protobuf::Arena* arena,
+    const Impl_& from)
+      : host_infos_{visibility, arena, from.host_infos_},
+        _cached_size_{0} {}
 
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+AdbKnownHosts::AdbKnownHosts(
+    ::google::protobuf::Arena* arena,
+    const AdbKnownHosts& from)
+    : ::google::protobuf::Message(arena) {
+  AdbKnownHosts* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_);
+
   // @@protoc_insertion_point(copy_constructor:adb.proto.AdbKnownHosts)
 }
+inline PROTOBUF_NDEBUG_INLINE AdbKnownHosts::Impl_::Impl_(
+    ::google::protobuf::internal::InternalVisibility visibility,
+    ::google::protobuf::Arena* arena)
+      : host_infos_{visibility, arena},
+        _cached_size_{0} {}
 
-inline void AdbKnownHosts::SharedCtor(
-    ::_pb::Arena* arena, bool is_message_owned) {
-  (void)arena;
-  (void)is_message_owned;
-  new (&_impl_) Impl_{
-      decltype(_impl_.host_infos_){arena}
-    , /*decltype(_impl_._cached_size_)*/{}
-  };
+inline void AdbKnownHosts::SharedCtor(::_pb::Arena* arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
 }
-
 AdbKnownHosts::~AdbKnownHosts() {
   // @@protoc_insertion_point(destructor:adb.proto.AdbKnownHosts)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
+  _internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   SharedDtor();
 }
-
 inline void AdbKnownHosts::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  _impl_.host_infos_.~RepeatedPtrField();
+  ABSL_DCHECK(GetArena() == nullptr);
+  _impl_.~Impl_();
 }
 
-void AdbKnownHosts::SetCachedSize(int size) const {
-  _impl_._cached_size_.Set(size);
-}
-
-void AdbKnownHosts::Clear() {
+PROTOBUF_NOINLINE void AdbKnownHosts::Clear() {
 // @@protoc_insertion_point(message_clear_start:adb.proto.AdbKnownHosts)
-  uint32_t cached_has_bits = 0;
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   _impl_.host_infos_.Clear();
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
-const char* AdbKnownHosts::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // repeated .adb.proto.HostInfo host_infos = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          ptr -= 1;
-          do {
-            ptr += 1;
-            ptr = ctx->ParseMessage(_internal_add_host_infos(), ptr);
-            CHK_(ptr);
-            if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<10>(ptr));
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
+const char* AdbKnownHosts::_InternalParse(
+    const char* ptr, ::_pbi::ParseContext* ctx) {
+  ptr = ::_pbi::TcParser::ParseLoop(this, ptr, ctx, &_table_.header);
   return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
 }
 
-uint8_t* AdbKnownHosts::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 1, 1, 0, 2> AdbKnownHosts::_table_ = {
+  {
+    0,  // no _has_bits_
+    0, // no _extensions_
+    1, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967294,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    1,  // num_field_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    &_AdbKnownHosts_default_instance_._instance,
+    ::_pbi::TcParser::GenericFallback,  // fallback
+  }, {{
+    // repeated .adb.proto.HostInfo host_infos = 1;
+    {::_pbi::TcParser::FastMtR1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(AdbKnownHosts, _impl_.host_infos_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // repeated .adb.proto.HostInfo host_infos = 1;
+    {PROTOBUF_FIELD_OFFSET(AdbKnownHosts, _impl_.host_infos_), 0, 0,
+    (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
+  }}, {{
+    {::_pbi::TcParser::GetTable<::adb::proto::HostInfo>()},
+  }}, {{
+  }},
+};
+
+::uint8_t* AdbKnownHosts::_InternalSerialize(
+    ::uint8_t* target,
+    ::google::protobuf::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:adb.proto.AdbKnownHosts)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
 
   // repeated .adb.proto.HostInfo host_infos = 1;
   for (unsigned i = 0,
       n = static_cast<unsigned>(this->_internal_host_infos_size()); i < n; i++) {
-    const auto& repfield = this->_internal_host_infos(i);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+    const auto& repfield = this->_internal_host_infos().Get(i);
+    target = ::google::protobuf::internal::WireFormatLite::
         InternalWriteMessage(1, repfield, repfield.GetCachedSize(), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:adb.proto.AdbKnownHosts)
   return target;
 }
 
-size_t AdbKnownHosts::ByteSizeLong() const {
+::size_t AdbKnownHosts::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:adb.proto.AdbKnownHosts)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // repeated .adb.proto.HostInfo host_infos = 1;
   total_size += 1UL * this->_internal_host_infos_size();
-  for (const auto& msg : this->_impl_.host_infos_) {
+  for (const auto& msg : this->_internal_host_infos()) {
     total_size +=
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+      ::google::protobuf::internal::WireFormatLite::MessageSize(msg);
   }
-
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData AdbKnownHosts::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
-    AdbKnownHosts::MergeImpl
+const ::google::protobuf::Message::ClassData AdbKnownHosts::_class_data_ = {
+    AdbKnownHosts::MergeImpl,
+    nullptr,  // OnDemandRegisterArenaDtor
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*AdbKnownHosts::GetClassData() const { return &_class_data_; }
+const ::google::protobuf::Message::ClassData* AdbKnownHosts::GetClassData() const {
+  return &_class_data_;
+}
 
-
-void AdbKnownHosts::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+void AdbKnownHosts::MergeImpl(::google::protobuf::Message& to_msg, const ::google::protobuf::Message& from_msg) {
   auto* const _this = static_cast<AdbKnownHosts*>(&to_msg);
   auto& from = static_cast<const AdbKnownHosts&>(from_msg);
   // @@protoc_insertion_point(class_specific_merge_from_start:adb.proto.AdbKnownHosts)
-  GOOGLE_DCHECK_NE(&from, _this);
-  uint32_t cached_has_bits = 0;
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  _this->_impl_.host_infos_.MergeFrom(from._impl_.host_infos_);
-  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_mutable_host_infos()->MergeFrom(
+      from._internal_host_infos());
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void AdbKnownHosts::CopyFrom(const AdbKnownHosts& from) {
@@ -477,35 +501,30 @@ void AdbKnownHosts::CopyFrom(const AdbKnownHosts& from) {
   MergeFrom(from);
 }
 
-bool AdbKnownHosts::IsInitialized() const {
+PROTOBUF_NOINLINE bool AdbKnownHosts::IsInitialized() const {
   return true;
 }
 
-void AdbKnownHosts::InternalSwap(AdbKnownHosts* other) {
+::_pbi::CachedSize* AdbKnownHosts::AccessCachedSize() const {
+  return &_impl_._cached_size_;
+}
+void AdbKnownHosts::InternalSwap(AdbKnownHosts* PROTOBUF_RESTRICT other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   _impl_.host_infos_.InternalSwap(&other->_impl_.host_infos_);
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata AdbKnownHosts::GetMetadata() const {
+::google::protobuf::Metadata AdbKnownHosts::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_adb_5fknown_5fhosts_2eproto_getter, &descriptor_table_adb_5fknown_5fhosts_2eproto_once,
       file_level_metadata_adb_5fknown_5fhosts_2eproto[1]);
 }
-
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace proto
 }  // namespace adb
-PROTOBUF_NAMESPACE_OPEN
-template<> PROTOBUF_NOINLINE ::adb::proto::HostInfo*
-Arena::CreateMaybeMessage< ::adb::proto::HostInfo >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::adb::proto::HostInfo >(arena);
-}
-template<> PROTOBUF_NOINLINE ::adb::proto::AdbKnownHosts*
-Arena::CreateMaybeMessage< ::adb::proto::AdbKnownHosts >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::adb::proto::AdbKnownHosts >(arena);
-}
-PROTOBUF_NAMESPACE_CLOSE
-
+namespace google {
+namespace protobuf {
+}  // namespace protobuf
+}  // namespace google
 // @@protoc_insertion_point(global_scope)
-#include <google/protobuf/port_undef.inc>
+#include "google/protobuf/port_undef.inc"

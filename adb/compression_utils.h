@@ -77,13 +77,14 @@ struct NullDecoder final : public Decoder {
     DecodeResult Decode(std::span<char>* output) final {
         size_t available_out = output_buffer_.size();
         void* p = output_buffer_.data();
+        size_t len = 0;
         while (available_out > 0 && !input_buffer_.empty()) {
-            size_t len = std::min(available_out, input_buffer_.front_size());
+            len = std::min(available_out, input_buffer_.front_size());
             p = memcpy(p, input_buffer_.front_data(), len);
             available_out -= len;
             input_buffer_.drop_front(len);
         }
-        *output = std::span(output_buffer_.data(), static_cast<char*>(p));
+        *output = std::span(output_buffer_.data(), static_cast<char*>(p) + len);
         if (input_buffer_.empty()) {
             return finished_ ? DecodeResult::Done : DecodeResult::NeedInput;
         }

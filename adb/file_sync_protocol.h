@@ -131,7 +131,7 @@ union syncmsg {
     sync_data data;
     sync_status status;
     sync_send_v2 send_v2_setup;
-    sync_recv_v2 recv_v2_setup;
+    struct sync_recv_v2 recv_v2_setup;
 };
 
 #define SYNC_DATA_MAX (64 * 1024)

@@ -513,7 +513,7 @@ static inline int unix_write(borrowed_fd fd, const void* buf, size_t len) {
 	return _write(fd.get(), buf, len);
 }
 #undef   write
-#define  write  ___xxx_write
+
 
 #undef pwrite
 #define pwrite ___xxx_pwrite
