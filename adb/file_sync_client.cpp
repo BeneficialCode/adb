@@ -382,9 +382,9 @@ public:
 
         void* p = buf.data();
 
-        p = memcpy(p, &req, sizeof(SyncRequest));
-        p = memcpy(p, path.data(), path.length());
-        p = memcpy(p, &msg.send_v2_setup, sizeof(msg.send_v2_setup));
+        p = static_cast<char*>(memcpy(p, &req, sizeof(SyncRequest))) + sizeof(SyncRequest);
+        p = static_cast<char*>(memcpy(p, path.data(), path.length())) + path.length();
+        p = static_cast<char*>(memcpy(p, &msg.send_v2_setup, sizeof(msg.send_v2_setup))) + sizeof(msg.send_v2_setup);
 
         return WriteFdExactly(fd, buf.data(), buf.size());
     }
