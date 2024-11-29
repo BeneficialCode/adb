@@ -4255,7 +4255,11 @@ namespace android {
                 }
 
                 TypeList& typeList = pg->types.editItemAt(j);
+#ifdef __cpp_lib_containers_ranges
                 typeList.append_range(srcPg->types[j]);
+#else
+                typeList.insert(typeList.end(), srcPg->types[j].cbegin(), srcPg->types[j].cend());
+#endif
             }
             pg->dynamicRefTable.addMappings(srcPg->dynamicRefTable);
             pg->largestTypeId = max(pg->largestTypeId, srcPg->largestTypeId);
