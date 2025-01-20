@@ -340,7 +340,7 @@ namespace android {
             bool follow_symlinks) {
             int flags = O_WRONLY | O_CREAT | O_TRUNC | O_CLOEXEC | O_BINARY |
                 (follow_symlinks ? 0 : O_NOFOLLOW);
-            android::base::unique_fd fd(TEMP_FAILURE_RETRY(open, path.c_str(), flags, 0666));
+            android::base::unique_fd fd(TEMP_FAILURE_RETRY(open, path.c_str(), flags, _S_IREAD | _S_IWRITE));
             if (fd == -1) {
                 return false;
             }

@@ -58,7 +58,7 @@ static bool generate_key(const std::string& file) {
         return false;
     }
     int old_mask = 0;
-    _umask_s(077,&old_mask);
+    _umask_s(_S_IREAD | _S_IWRITE,&old_mask);
     int mask = 0;
     std::unique_ptr<FILE, decltype(&fclose)> f(nullptr, &fclose);
     f.reset(fopen(file.c_str(), "w"));
