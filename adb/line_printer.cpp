@@ -47,11 +47,7 @@ LinePrinter::LinePrinter() : have_blank_line_(true) {
 static void Out(const std::string& s) {
     // Avoid printf and C strings, since the actual output might contain null
     // bytes like UTF-16 does (yuck).
-    DWORD written;
-    std::wstring to_print_wide;
-    to_print_wide = android::base::StringToWstring(s);
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    WriteConsole(hConsole, to_print_wide.c_str(), to_print_wide.size(), &written, nullptr);
+    fwrite(s.data(), 1, s.size(), stdout);
 }
 
 void LinePrinter::Print(string to_print, LineType type) {
@@ -78,7 +74,7 @@ void LinePrinter::Print(string to_print, LineType type) {
         to_print = ElideMiddle(to_print, static_cast<size_t>(csbi.dwSize.X));
         std::wstring to_print_wide;
         // ElideMiddle may create invalid UTF-8, so ignore conversion errors.
-        to_print_wide = android::base::StringToWstring(to_print);
+        (void)android::base::UTF8ToWide(to_print, &to_print_wide);
         // We don't want to have the cursor spamming back and forth, so instead of
         // printf use WriteConsoleOutput which updates the contents of the buffer,
         // but doesn't move the cursor position.

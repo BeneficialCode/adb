@@ -511,142 +511,47 @@ namespace android {
             char* path_end;
         };
 #define IS_DIR_SEP(c)  ((c) == '/' || (c) == '\\')
-        static
-            void
-            do_get_path_info(struct path_info* info, char* path)
-        {
+        
+        char* basename(char* path) {
+            if (path == NULL || path[0] == 0) {
+                return (char*)".";
+            }
+
+            char* last_sep = NULL;
             char* pos = path;
-            int unc_ncoms = 0;
-            DWORD cp;
-            int dbcs_tb, prev_dir_sep, dir_sep;
-
-            /* Get the code page for paths in the same way as `fopen()`.  */
-            cp = AreFileApisANSI() ? CP_ACP : CP_OEMCP;
-
-            /* Set the structure to 'no data'.  */
-            info->prefix_end = NULL;
-            info->base_sep_begin = NULL;
-            info->base_sep_end = NULL;
-            info->term_sep_begin = NULL;
-
-            if (IS_DIR_SEP(pos[0]) && IS_DIR_SEP(pos[1])) {
-                /* The path is UNC.  */
-                pos += 2;
-
-                /* Seek to the end of the share/device name.  */
-                dbcs_tb = 0;
-                prev_dir_sep = 0;
-
-                while (*pos != 0) {
-                    dir_sep = 0;
-
-                    if (dbcs_tb)
-                        dbcs_tb = 0;
-                    else if (IsDBCSLeadByteEx(cp, *pos))
-                        dbcs_tb = 1;
-                    else
-                        dir_sep = IS_DIR_SEP(*pos);
-
-                    /* If a separator has been encountered and the previous character
-                     * was not, mark this as the end of the current component.  */
-                    if (dir_sep && !prev_dir_sep) {
-                        unc_ncoms++;
-
-                        /* The first component is the host name, and the second is the
-                         * share name. So  we stop at the end of the second component.  */
-                        if (unc_ncoms == 2)
-                            break;
-                    }
-
-                    prev_dir_sep = dir_sep;
-                    pos++;
-                }
-
-                /* The UNC prefix terminates here. The terminating directory separator
-                 * is not part of the prefix, and initiates a new absolute path.  */
-                info->prefix_end = pos;
-            }
-            else if ((pos[0] >= 'A' && pos[0] <= 'Z' && pos[1] == ':')
-                || (pos[0] >= 'a' && pos[0] <= 'z' && pos[1] == ':')) {
-                /* The path contains a DOS drive letter in the beginning.  */
-                pos += 2;
-
-                /* The DOS drive prefix terminates here. Unlike UNC paths, the remaing
-                 * part can be relative. For example, `C:foo` denotes `foo` in the
-                 * working directory of drive `C:`.  */
-                info->prefix_end = pos;
-            }
-
-            /* The remaining part of the path is almost the same as POSIX.  */
-            dbcs_tb = 0;
-            prev_dir_sep = 0;
 
             while (*pos != 0) {
-                dir_sep = 0;
-
-                if (dbcs_tb)
-                    dbcs_tb = 0;
-                else if (IsDBCSLeadByteEx(cp, *pos))
-                    dbcs_tb = 1;
-                else
-                    dir_sep = IS_DIR_SEP(*pos);
-
-                /* If a separator has been encountered and the previous character
-                 * was not, mark this as the beginning of the terminating separator
-                 * sequence.  */
-                if (dir_sep && !prev_dir_sep)
-                    info->term_sep_begin = pos;
-
-                /* If a non-separator character has been encountered and a previous
-                 * terminating separator sequence exists, start a new component.  */
-                if (!dir_sep && prev_dir_sep) {
-                    info->base_sep_begin = info->term_sep_begin;
-                    info->base_sep_end = pos;
-                    info->term_sep_begin = NULL;
+                if (IS_DIR_SEP(*pos)) {
+                    last_sep = pos;
                 }
-
-                prev_dir_sep = dir_sep;
                 pos++;
             }
 
-            /* Store the end of the path for convenience.  */
-            info->path_end = pos;
-        }
-        char* basename(char* path)
-        {
-            struct path_info info;
-            char* upath;
+            // If the path ends with a separator, ignore it
+            if (last_sep != NULL && *(last_sep + 1) == 0) {
+                *last_sep = 0;
+                pos = last_sep;
+                while (pos > path && IS_DIR_SEP(*(pos - 1))) {
+                    pos--;
+                }
+                if (pos == path) {
+                    return (char*)"\\";
+                }
+                last_sep = NULL;
+                pos = path;
+                while (*pos != 0) {
+                    if (IS_DIR_SEP(*pos)) {
+                        last_sep = pos;
+                    }
+                    pos++;
+                }
+            }
 
-            if (path == NULL || path[0] == 0)
-                return (char*)".";
+            if (last_sep == NULL) {
+                return path;
+            }
 
-            do_get_path_info(&info, path);
-            upath = info.prefix_end ? info.prefix_end : path;
-
-            /* If the path is non-UNC and empty, then it's relative. POSIX says '.'
-             * shall be returned.  */
-            if (IS_DIR_SEP(path[0]) == 0 && upath[0] == 0)
-                return (char*)".";
-
-            /* If a terminating separator sequence exists, it is not part of the
-             * name and shall be truncated.  */
-            if (info.term_sep_begin)
-                info.term_sep_begin[0] = 0;
-
-            /* If some other separator sequence has been found, the basename
-             * immediately follows it.  */
-            if (info.base_sep_end)
-                return info.base_sep_end;
-
-            /* If removal of the terminating separator sequence has caused the
-             * unprefixed path to become empty, it must have comprised only
-             * separators. POSIX says `/` shall be returned, but on Windows, we
-             * return `\` instead.  */
-            if (upath[0] == 0)
-                return (char*)"\\";
-
-            /* Return the unprefixed path.  */
-            return upath;
+            return last_sep + 1;
         }
         std::string Basename(std::string_view path) {
             // TODO: how much of this is actually necessary for mingw?

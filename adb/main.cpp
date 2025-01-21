@@ -380,15 +380,23 @@ static bool _init_sysdeps() {
     return true;
 }
 
-int main(int argc, char* argv[], char* envp[]) {
+int real_main(int argc, char* argv[]) {
     SetConsoleCP(CP_UTF8);
     SetConsoleOutputCP(CP_UTF8);
     bool _sysdeps_init = _init_sysdeps();
     __adb_argv = const_cast<const char**>(argv);
-    __adb_envp = const_cast<const char**>(envp);
     adb_trace_init(argv);
     int ret = adb_commandline(argc - 1, const_cast<const char**>(argv + 1));
     ::WSACleanup();
     return ret;
 }
+
+int wmain(int argc, wchar_t** argv) {
+    NarrowArgs narrow_args(argc, argv);
+
+    return real_main(argc, narrow_args.data());
+}
+
+
+
 
