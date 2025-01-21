@@ -47,7 +47,11 @@ LinePrinter::LinePrinter() : have_blank_line_(true) {
 static void Out(const std::string& s) {
     // Avoid printf and C strings, since the actual output might contain null
     // bytes like UTF-16 does (yuck).
-    fwrite(s.data(), 1, s.size(), stdout);
+    DWORD written;
+    std::wstring to_print_wide;
+    to_print_wide = android::base::StringToWstring(s);
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    WriteConsole(hConsole, to_print_wide.c_str(), to_print_wide.size(), &written, nullptr);
 }
 
 void LinePrinter::Print(string to_print, LineType type) {
