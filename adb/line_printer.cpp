@@ -74,7 +74,7 @@ void LinePrinter::Print(string to_print, LineType type) {
         to_print = ElideMiddle(to_print, static_cast<size_t>(csbi.dwSize.X));
         std::wstring to_print_wide;
         // ElideMiddle may create invalid UTF-8, so ignore conversion errors.
-        (void)android::base::UTF8ToWide(to_print, &to_print_wide);
+        to_print_wide = android::base::StringToWstring(to_print);
         // We don't want to have the cursor spamming back and forth, so instead of
         // printf use WriteConsoleOutput which updates the contents of the buffer,
         // but doesn't move the cursor position.
@@ -86,9 +86,22 @@ void LinePrinter::Print(string to_print, LineType type) {
           csbi.dwCursorPosition.Y
         };
         vector<CHAR_INFO> char_data(csbi.dwSize.X);
-        for (size_t i = 0; i < static_cast<size_t>(csbi.dwSize.X); ++i) {
-            char_data[i].Char.UnicodeChar = i < to_print_wide.size() ? to_print_wide[i] : L' ';
-            char_data[i].Attributes = csbi.wAttributes;
+        for (size_t i = 0, j = 0; i < static_cast<size_t>(csbi.dwSize.X); ++i, ++j) {
+            WCHAR uchar = j < to_print_wide.size() ? to_print_wide[j] : L' ';
+            if (uchar >= 0x4E00 && uchar <= 0x9FFF) {
+                // Add a space placeholder
+                char_data[i].Char.UnicodeChar = uchar;
+                char_data[i].Attributes = csbi.wAttributes;
+                ++i;
+                if (i < static_cast<size_t>(csbi.dwSize.X)) {
+                    char_data[i].Char.UnicodeChar = L' ';
+                    char_data[i].Attributes = csbi.wAttributes;
+                }
+            }
+            else {
+                char_data[i].Char.UnicodeChar = uchar;
+                char_data[i].Attributes = csbi.wAttributes;
+            }
         }
         WriteConsoleOutputW(console_, &char_data[0], buf_size, zero_zero, &target);
 #else
