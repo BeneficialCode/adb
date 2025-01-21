@@ -415,9 +415,7 @@ int adb_creat(const char* path, int mode) {
     }
 
     std::wstring path_wide;
-    if (!android::base::UTF8ToWide(path, &path_wide)) {
-        return -1;
-    }
+    path_wide = android::base::StringToWstring(path);
     f->fh_handle = CreateFileW(path_wide.c_str(), GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE,
         nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
 

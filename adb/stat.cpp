@@ -28,10 +28,7 @@ int adb_stat(const char* path, struct adb_stat* s) {
 #endif
 
     std::wstring path_wide;
-    if (!android::base::UTF8ToWide(path, &path_wide)) {
-        errno = ENOENT;
-        return -1;
-    }
+    path_wide = android::base::StringToWstring(path);
 
     // If the path has a trailing slash, stat will fail with ENOENT regardless of whether the path
     // is a directory or not.

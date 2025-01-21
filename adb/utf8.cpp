@@ -108,6 +108,17 @@ namespace android {
             errno = saved_errno;
             return false;
         }
+
+        std::wstring StringToWstring(const std::string& str) {
+            int len = MultiByteToWideChar(CP_ACP, 0, str.c_str(), -1, nullptr, 0);
+            len += 1;
+            std::unique_ptr<wchar_t[]> buffer = std::make_unique<wchar_t[]>(len);
+            memset(buffer.get(), 0, sizeof(wchar_t) * len);
+            MultiByteToWideChar(CP_ACP, 0, str.c_str(), str.size(), buffer.get(), len);
+            std::wstring wstr(buffer.get());
+            return wstr;
+        }
+
         bool UTF8ToWide(const char* utf8, std::wstring* utf16) {
             // Compute string length of NULL-terminated string with strlen().
             return UTF8ToWide(utf8, strlen(utf8), utf16);
@@ -121,9 +132,7 @@ namespace android {
             return (c >= L'a' && c <= L'z') || (c >= L'A' && c <= L'Z');
         }
         bool UTF8PathToWindowsLongPath(const char* utf8, std::wstring* utf16) {
-            if (!UTF8ToWide(utf8, utf16)) {
-                return false;
-            }
+            *utf16 = android::base::StringToWstring(utf8);
             // Note: Although most Win32 File I/O API are limited to MAX_PATH (260
             //       characters), the CreateDirectory API is limited to 248 characters.
             if (utf16->length() >= 248) {

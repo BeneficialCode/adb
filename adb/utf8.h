@@ -21,6 +21,8 @@ namespace android {
 		// UTF-16. Returns whether the conversion was done successfully.
 		bool UTF8ToWide(const std::string& utf8, std::wstring* utf16);
 
+		std::wstring StringToWstring(const std::string& str);
+
 		namespace utf8 {
 			int open(const char* name, int flags, ...);
 			int unlink(const char* name);
