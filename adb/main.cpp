@@ -381,6 +381,8 @@ static bool _init_sysdeps() {
 }
 
 int main(int argc, char* argv[], char* envp[]) {
+    SetConsoleCP(CP_UTF8);
+    SetConsoleOutputCP(CP_UTF8);
     bool _sysdeps_init = _init_sysdeps();
     __adb_argv = const_cast<const char**>(argv);
     __adb_envp = const_cast<const char**>(envp);
