@@ -690,6 +690,7 @@ static int adb_shell(int argc, const char** argv) {
     PtyAllocationMode tty = use_shell_protocol ? kPtyAuto : kPtyDefinitely; // -t/-T
 
     // Parse shell-specific command-line options.
+    const char* p_old = argv[0];
     argv[0] = "adb shell"; // So getopt(3) error messages start "adb shell".
 #ifdef _WIN32
     // fixes "adb shell -l" crash on Windows, b/37284906
@@ -782,8 +783,10 @@ static int adb_shell(int argc, const char** argv) {
     }
 
     std::string service_string = ShellServiceString(use_shell_protocol, shell_type_arg, command);
-    return RemoteShell(use_shell_protocol, shell_type_arg, escape_char, command.empty(),
+    int ret = RemoteShell(use_shell_protocol, shell_type_arg, escape_char, command.empty(),
         service_string);
+    argv[0] = p_old;
+    return ret;
 }
 
 static int adb_abb(int argc, const char** argv) {
